@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2273ffeb-a051-4343-a821-e9d49193394a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="11"/>
+	<parameter name="pathmarcadagua" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cli_tx_logradouro" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_logradouro]]></fieldDescription>
+	</field>
+	<field name="cli_tx_municipio" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_municipio]]></fieldDescription>
+	</field>
+	<field name="cli_tx_nome" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_nome]]></fieldDescription>
+	</field>
+	<field name="cli_tx_numero" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_numero]]></fieldDescription>
+	</field>
+	<field name="cli_tx_tipologradouro" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_tipologradouro]]></fieldDescription>
+	</field>
+	<field name="cli_tx_uf" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_uf]]></fieldDescription>
+	</field>
+	<field name="cli_tx_bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_bairro]]></fieldDescription>
+	</field>
+	<field name="cli_tx_cep" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_cep]]></fieldDescription>
+	</field>
+	<field name="cli_tx_complemento" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_complemento]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="800" splitType="Stretch">
+			<staticText>
+				<reportElement x="61" y="343" width="432" height="142" uuid="02a92102-5b7c-4687-b34a-f75d6139c175"/>
+				<textElement textAlignment="Justified">
+					<font fontName="SansSerif" size="17"/>
+				</textElement>
+				<text><![CDATA[Sempre nos sentimos muito felizes por ter alguém tão distinto e especial em nossa carteira de clientes. Que Deus ilumine o seu caminho e que esta data se repita por muitos e muitos anos. Receba os nossos mais sinceros votos de felicidade. Parabéns pelo seu aniversário!]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="43" y="157" width="495" height="20" uuid="8b40ff59-7a93-4f6b-8abb-88b4556f3d85"/>
+				<textElement>
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="110" width="495" height="20" uuid="62761935-8b5f-45ee-b5df-672f26ae1d12"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_bairro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="70" width="495" height="20" uuid="c6963aee-6c0e-4e53-be1d-66ce08cbb1d0"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CEP: "+$F{cli_tx_cep}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="90" width="495" height="20" uuid="2a1cc306-c625-43b4-849e-b15f992b2cf1"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="50" width="495" height="20" uuid="16a2b214-d031-4108-84bd-1a7a0f758f33"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_tipologradouro}+" "+$F{cli_tx_logradouro}+", "+$F{cli_tx_numero}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="61" y="489" width="70" height="64" uuid="17374d52-f4c9-4ecc-ac2a-f8ebed7a6094"/>
+				<imageExpression><![CDATA[$P{pathmarcadagua}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="43" y="284" width="286" height="54" uuid="dee9b132-8f8e-4366-a506-54518fef6943"/>
+				<textElement>
+					<font fontName="SansSerif" size="30"/>
+				</textElement>
+				<text><![CDATA[Parabéns]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="131" y="503" width="286" height="54" uuid="48dff8c5-3f1d-4d47-8bff-6d1cf5fd23ee"/>
+				<textElement>
+					<font fontName="SansSerif" size="30"/>
+				</textElement>
+				<text><![CDATA[Família Casserp]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="43" y="130" width="495" height="20" uuid="6dadf9ba-386b-47ba-854b-0942db8f709d"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_municipio}+" - "+$F{cli_tx_uf}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

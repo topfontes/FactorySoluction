@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8dede81e-8c18-4995-80de-f939c6aeb2eb">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pathlogoSistema" class="java.lang.String"/>
+	<parameter name="titulo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cli_tx_nome" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_nome]]></fieldDescription>
+	</field>
+	<field name="cli_tx_telefone1" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_telefone1]]></fieldDescription>
+	</field>
+	<field name="cli_tx_telefone2" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_telefone2]]></fieldDescription>
+	</field>
+	<field name="cli_dt_nascimento" class="java.util.Date">
+		<fieldDescription><![CDATA[cli_dt_nascimento]]></fieldDescription>
+	</field>
+	<field name="cli_tx_matricula" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_matricula]]></fieldDescription>
+	</field>
+	<field name="cli_tx_cpf" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_cpf]]></fieldDescription>
+	</field>
+	<field name="cli_tx_ramal" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_ramal]]></fieldDescription>
+	</field>
+	<variable name="contador" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA["1"]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="104" splitType="Stretch">
+			<image>
+				<reportElement x="11" y="13" width="59" height="46" uuid="1695dfb7-0208-4ddc-9674-c824ee831cc0"/>
+				<imageExpression><![CDATA[$P{pathlogoSistema}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="77" y="46" width="330" height="14" uuid="e862cfca-d87f-4ea5-ae49-c6c982e3730b"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{titulo}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="10" y="62" width="534" height="1" uuid="f00ea4ee-591c-4f97-afc4-dc165a0bcd6c"/>
+			</line>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="444" y="48" width="100" height="12" uuid="a3f3d8c0-3884-472f-8f6b-28c3a9dec1c6"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="77" y="15" width="419" height="17" uuid="6f9de5cb-e35c-47e0-98d3-38542937cc0a"/>
+				<textElement>
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<text><![CDATA[CASSERP-CAIXA DE ASSISTÊNCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="77" y="36" width="302" height="14" uuid="34379f74-6491-4539-83e9-58a086646756"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[CNPJ: 04.683.415/0001-83  INSC.ESTADUAL: 04269-3]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<staticText>
+				<reportElement x="162" y="3" width="100" height="11" uuid="820ed8a1-c497-41c6-9b5a-5e9c72c079dc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="3" width="70" height="11" uuid="7d840f8f-6319-4fca-88c3-1b148e5c7bce"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Matrícula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="81" y="3" width="74" height="11" uuid="b7062739-c02c-400f-9ba3-4b7033a9055b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CPF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="433" y="3" width="75" height="11" uuid="f6c98dcf-8cc2-4525-bf39-99f40c84f068"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Dt. Nanscimento]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="13" width="555" height="1" uuid="6a0292ec-96ff-4a25-9e18-108932175879"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="2" width="555" height="1" uuid="fc1288fb-78ff-4641-b9c4-901688fa7a7f"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="516" y="2" width="28" height="11" uuid="6e8b1ea2-11ed-462e-af9d-dd729374705f"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Idade]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="11" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="10" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="df0e5158-5409-4080-ac0b-7be4d269ff62">
+					<printWhenExpression><![CDATA[new Boolean(new Integer(($V{contador}.intValue())%2).equals(new Integer("0")))]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<textField>
+				<reportElement x="162" y="0" width="266" height="11" uuid="1e332947-a4c6-453c-bb7a-a31063a68dec"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="0" width="66" height="11" uuid="e9a16e1c-3d5b-4a0b-a46e-2adf49a3f978"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_matricula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="81" y="0" width="74" height="11" uuid="4dbe9414-22bd-4434-8634-d29550ebf2ef"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_cpf}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="433" y="0" width="75" height="11" uuid="2c53691b-c2e0-44f3-bf8b-d3aa9131388f"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_dt_nascimento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="522" y="0" width="21" height="11" uuid="57b2fbd0-8117-4070-84f8-6d6e53df1932"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_ramal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<line>
+				<reportElement x="6" y="4" width="538" height="1" uuid="bee9d228-5c3f-4ebe-8757-8541fa31bb0f"/>
+			</line>
+			<textField>
+				<reportElement x="7" y="10" width="63" height="12" uuid="4ae50c86-c13a-4fe2-80ed-60d74f92c5f8"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="70" y="10" width="107" height="12" uuid="dbd29418-3512-42b4-bb81-a93df7229549"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

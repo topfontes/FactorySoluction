@@ -1,0 +1,389 @@
+package br.com.i9factory.client.i9factory.factory.dao;
+
+import br.com.i9factory.client.Constantes;
+import br.com.easynet.gwt.client.EasyAccessURL;
+import br.com.easynet.gwt.client.EasyContainer;
+import br.com.easynet.gwt.client.IListenetResponse;
+import br.com.i9factory.client.i9factory.factory.transfer.Vw_parcelasTGWT;
+import com.extjs.gxt.ui.client.store.ListStore;
+import com.extjs.gxt.ui.client.widget.Info;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.Window;
+
+import java.util.*;
+
+public class Vw_parcelasDAOGWT implements IListenetResponse {
+
+    public static final String PAGE_INSERIR = "i9factory/factory/vw_parcelas/vw_parcelasInsertGWT.jsp";
+    public static final String PAGE_CONSULTAR = "i9factory/factory/vw_parcelas/vw_parcelasConsultGWT.jsp";
+    public static final String PAGE_CONSULTAR_REMESSA = "i9factory/factory/remessa/remessa.jsp";
+    public static final String PAGE_ALTERAR_EXCLUIR = "i9factory/factory/vw_parcelas/vw_parcelasUpdateDeleteGWT.jsp";
+    private DateTimeFormat dtfDate = DateTimeFormat.getFormat("dd/MM/yyyy");
+    private DateTimeFormat dtfDateTime = DateTimeFormat.getFormat("dd/MM/yyyy HH:mm");
+    private String msg;
+    private ListStore list;
+    private boolean pago;
+    private Vw_parcelasTGWT vw_parcelasT;
+
+    public void consultarTodos() {
+        EasyAccessURL eaurl = new EasyAccessURL(this);
+        eaurl.accessJSon(Constantes.URL + PAGE_CONSULTAR);
+        list = null;
+        msg = null;
+    }
+
+    public void consultarTodos12Mensalidade() {
+        EasyAccessURL eaurl = new EasyAccessURL(this);
+        HashMap<String, String> param = new HashMap<String, String>();
+        param.put("op", "consultar_11_Mensalidade");
+        eaurl.accessJSonMapNoMessage(Constantes.URL + PAGE_CONSULTAR,param);
+        list = null;
+        msg = null;
+    }
+
+    public void consultarParcelasRemessa(Vw_parcelasTGWT vw_parcelasTGWT, String id_orgaos, boolean salariominimo) {
+        EasyAccessURL eaurl = new EasyAccessURL(this);
+        HashMap<String, String> param = new HashMap<String, String>();
+        //param.put("op", "consult");
+        param.put("op", "consultarParcelasRemessa");
+        param.put("vw_parcelasT.ple_dt_vencimento", dtfDate.format(vw_parcelasTGWT.getPle_dt_vencimento()));
+        param.put("vw_parcelasT.bco_nr_id", vw_parcelasTGWT.getBco_nr_id() + "");
+        param.put("vw_parcelasT.ple_tx_tipo", vw_parcelasTGWT.getPle_tx_tipo());
+        param.put("id_orgaos", id_orgaos);
+        param.put("vw_parcelasT.cli_tx_salario_minimo",salariominimo?"S":"N");
+
+        eaurl.accessJSonMap(Constantes.URL + PAGE_CONSULTAR, param);
+        list = null;
+        msg = null;
+    }
+
+    public void consultarComissao(Date dt_inicio, Date dt_fim, int cor_nr_id) {
+        EasyAccessURL eaurl = new EasyAccessURL(this);
+        HashMap<String, String> param = new HashMap<String, String>();
+        param.put("op", "consultarComissao");
+        param.put("dt_inicio", dtfDate.format(dt_inicio));
+        param.put("dt_fim", dtfDate.format(dt_fim));
+        param.put("vw_parcelasT.cor_nr_id", cor_nr_id + "");
+        eaurl.accessJSonMap(Constantes.URL + PAGE_CONSULTAR, param);
+        list = null;
+        msg = null;
+    }
+
+    public void consultarParcelasCliente(String tipo, String dt_inicio, String dt_fim, int cli_nr_id, String status) {
+        EasyAccessURL eaurl = new EasyAccessURL(this);
+        HashMap<String, String> param = new HashMap<String, String>();
+        param.put("op", "consult");
+        param.put("vw_parcelasT.ple_tx_tipo", tipo);
+        param.put("dt_inicio", dt_inicio);
+        param.put("dt_fim", dt_fim);
+        param.put("status", status);
+        pago = status.equalsIgnoreCase("P");
+
+        param.put("vw_parcelasT.cli_nr_id", cli_nr_id + "");
+        eaurl.accessJSonMap(Constantes.URL + PAGE_CONSULTAR, param);
+
+        list = null;
+        msg = null;
+    }
+
+    public void gerarRemessaIdsParcela(String idsParcelas) {
+        msg = null;
+        list = null;
+        IListenetResponse listener = new IListenetResponse() {
+
+            public void read(JSONValue jsonValue) {
+                JSONObject jsonObject;
+                if (jsonValue != null && (jsonObject = jsonValue.isObject()) != null) {
+                    String result = jsonObject.get("resultado").isString().stringValue();
+                    msg = result;
+                }
+            }
+        };
+        String url = Constantes.URL + PAGE_CONSULTAR_REMESSA;
+        HashMap<String, String> param = new HashMap<String, String>();
+        param.put("op", "gerarRemessaIdsParcela");
+        param.put("idsParcelas", idsParcelas);
+
+        EasyAccessURL eaurl = new EasyAccessURL(listener);
+        eaurl.accessJSonMap(url, param);
+    }
+
+    public void inserir(Vw_parcelasTGWT vw_parcelasT) {
+        msg = null;
+        list = null;
+        IListenetResponse listener = new IListenetResponse() {
+
+            public void read(JSONValue jsonValue) {
+                JSONObject jsonObject;
+                if (jsonValue != null && (jsonObject = jsonValue.isObject()) != null) {
+                    String result = jsonObject.get("resultado").isString().stringValue();
+                    msg = result;
+                }
+            }
+        };
+        String url = Constantes.URL + PAGE_INSERIR;
+        HashMap<String, String> param = new HashMap<String, String>();
+        param.put("op", "insert");
+        param.put("vw_parcelasT.ple_nr_id", vw_parcelasT.getPle_nr_id() + "");
+        param.put("vw_parcelasT.emp_nr_id", vw_parcelasT.getEmp_nr_id() + "");
+        param.put("vw_parcelasT.ple_dt_vencimento", dtfDate.format(vw_parcelasT.getPle_dt_vencimento()));
+        param.put("vw_parcelasT.ple_dt_pagamento", dtfDate.format(vw_parcelasT.getPle_dt_pagamento()));
+        param.put("vw_parcelasT.ple_nr_valorparcela", vw_parcelasT.getPle_nr_valorparcela() + "");
+        param.put("vw_parcelasT.ple_nr_valordesconto", vw_parcelasT.getPle_nr_valordesconto() + "");
+        param.put("vw_parcelasT.ple_nr_cdformapagto", vw_parcelasT.getPle_nr_cdformapagto() + "");
+        param.put("vw_parcelasT.ple_tx_parcela", vw_parcelasT.getPle_tx_parcela());
+        param.put("vw_parcelasT.ple_tx_tipo", vw_parcelasT.getPle_tx_tipo());
+        param.put("vw_parcelasT.emp_dt_emprestimo", dtfDate.format(vw_parcelasT.getEmp_dt_emprestimo()));
+        param.put("vw_parcelasT.emp_nr_proposta", vw_parcelasT.getEmp_nr_proposta() + "");
+        param.put("vw_parcelasT.emp_nr_valor", vw_parcelasT.getEmp_nr_valor() + "");
+        param.put("vw_parcelasT.emp_nr_valor_afin_liquido", vw_parcelasT.getEmp_nr_valor_afin_liquido() + "");
+        param.put("vw_parcelasT.cli_nr_id", vw_parcelasT.getCli_nr_id() + "");
+        param.put("vw_parcelasT.org_nr_id", vw_parcelasT.getOrg_nr_id() + "");
+        param.put("vw_parcelasT.cli_tx_cpf", vw_parcelasT.getCli_tx_cpf());
+        param.put("vw_parcelasT.cli_tx_nome", vw_parcelasT.getCli_tx_nome());
+        param.put("vw_parcelasT.cco_tx_nragencia", vw_parcelasT.getCco_tx_nragencia());
+        param.put("vw_parcelasT.cco_tx_nrcontacorrente", vw_parcelasT.getCco_tx_nrcontacorrente());
+        param.put("vw_parcelasT.bco_nr_id", vw_parcelasT.getBco_nr_id() + "");
+        param.put("vw_parcelasT.bco_tx_nome", vw_parcelasT.getBco_tx_nome());
+        param.put("vw_parcelasT.bco_tx_codigo", vw_parcelasT.getBco_tx_codigo());
+
+        EasyAccessURL eaurl = new EasyAccessURL(listener);
+        eaurl.accessJSonMap(url, param);
+    }
+
+    public void pesquisar(Vw_parcelasTGWT vw_parcelasT) {
+        IListenetResponse listener = new IListenetResponse() {
+
+            public void read(JSONValue jsonValue) {
+                JSONObject jsonObject;
+                if (jsonValue != null && (jsonObject = jsonValue.isObject()) != null) {
+
+                    JSONObject result = jsonObject.get("resultado").isObject();
+                    msg = result.get("msg").isString().stringValue();
+                    JSONObject registro = result.get("vw_parcelas").isObject();
+                    Vw_parcelasDAOGWT.this.vw_parcelasT = lerRegistroJson(registro);
+                }
+            }
+        };
+        this.vw_parcelasT = null;
+        list = null;
+        msg = null;
+        String url = Constantes.URL + PAGE_ALTERAR_EXCLUIR;
+        HashMap<String, String> param = new HashMap<String, String>();
+        param.put("op", "findbyid");
+
+
+        EasyAccessURL eaurl = new EasyAccessURL(listener);
+        eaurl.accessJSonMap(url, param);
+
+    }
+
+    public void excluir(Vw_parcelasTGWT vw_parcelasT) {
+        IListenetResponse listener = new IListenetResponse() {
+
+            public void read(JSONValue jsonValue) {
+                JSONObject jsonObject;
+                if (jsonValue != null && (jsonObject = jsonValue.isObject()) != null) {
+//                    String result = jsonObject.get("resultado").toString();
+                    JSONObject result = jsonObject.get("resultado").isObject();
+                    msg = result.get("msg").isString().stringValue();
+
+//                    msg = result;
+                }
+            }
+        };
+
+        list = null;
+        msg = null;
+        String url = Constantes.URL + PAGE_ALTERAR_EXCLUIR;
+        HashMap<String, String> param = new HashMap<String, String>();
+        param.put("op", "delete");
+
+
+        EasyAccessURL eaurl = new EasyAccessURL(listener);
+        eaurl.accessJSonMap(url, param);
+    }
+
+    public void alterar(Vw_parcelasTGWT vw_parcelasT) {
+        IListenetResponse listener = new IListenetResponse() {
+
+            public void read(JSONValue jsonValue) {
+                JSONObject jsonObject;
+                if (jsonValue != null && (jsonObject = jsonValue.isObject()) != null) {
+                    JSONObject result = jsonObject.get("resultado").isObject();
+                    msg = result.get("msg").isString().stringValue();
+
+//                    String result = jsonObject.get("resultado").toString();
+//                    msg = result;
+                }
+            }
+        };
+        msg = null;
+        list = null;
+        String url = Constantes.URL + PAGE_ALTERAR_EXCLUIR;
+        HashMap<String, String> param = new HashMap<String, String>();
+        param.put("op", "update");
+        param.put("vw_parcelasT.ple_nr_id", vw_parcelasT.getPle_nr_id() + "");
+        param.put("vw_parcelasT.emp_nr_id", vw_parcelasT.getEmp_nr_id() + "");
+        param.put("vw_parcelasT.ple_dt_vencimento", dtfDate.format(vw_parcelasT.getPle_dt_vencimento()));
+        param.put("vw_parcelasT.ple_dt_pagamento", dtfDate.format(vw_parcelasT.getPle_dt_pagamento()));
+        param.put("vw_parcelasT.ple_nr_valorparcela", vw_parcelasT.getPle_nr_valorparcela() + "");
+        param.put("vw_parcelasT.ple_nr_valordesconto", vw_parcelasT.getPle_nr_valordesconto() + "");
+        param.put("vw_parcelasT.ple_nr_cdformapagto", vw_parcelasT.getPle_nr_cdformapagto() + "");
+        param.put("vw_parcelasT.ple_tx_parcela", vw_parcelasT.getPle_tx_parcela());
+        param.put("vw_parcelasT.ple_tx_tipo", vw_parcelasT.getPle_tx_tipo());
+        param.put("vw_parcelasT.emp_dt_emprestimo", dtfDate.format(vw_parcelasT.getEmp_dt_emprestimo()));
+        param.put("vw_parcelasT.emp_nr_proposta", vw_parcelasT.getEmp_nr_proposta() + "");
+        param.put("vw_parcelasT.emp_nr_valor", vw_parcelasT.getEmp_nr_valor() + "");
+        param.put("vw_parcelasT.emp_nr_valor_afin_liquido", vw_parcelasT.getEmp_nr_valor_afin_liquido() + "");
+        param.put("vw_parcelasT.cli_nr_id", vw_parcelasT.getCli_nr_id() + "");
+        param.put("vw_parcelasT.org_nr_id", vw_parcelasT.getOrg_nr_id() + "");
+        param.put("vw_parcelasT.cli_tx_cpf", vw_parcelasT.getCli_tx_cpf());
+        param.put("vw_parcelasT.cli_tx_nome", vw_parcelasT.getCli_tx_nome());
+        param.put("vw_parcelasT.cco_tx_nragencia", vw_parcelasT.getCco_tx_nragencia());
+        param.put("vw_parcelasT.cco_tx_nrcontacorrente", vw_parcelasT.getCco_tx_nrcontacorrente());
+        param.put("vw_parcelasT.bco_nr_id", vw_parcelasT.getBco_nr_id() + "");
+        param.put("vw_parcelasT.bco_tx_nome", vw_parcelasT.getBco_tx_nome());
+        param.put("vw_parcelasT.bco_tx_codigo", vw_parcelasT.getBco_tx_codigo());
+
+
+        EasyAccessURL eaurl = new EasyAccessURL(listener);
+        eaurl.accessJSonMap(url, param);
+    }
+
+    public void read(JSONValue jsonValue) {
+        JSONObject jsonObject;
+        if (jsonValue != null && (jsonObject = jsonValue.isObject()) != null) {
+            JSONArray resultado = jsonObject.get("resultado").isArray();
+
+            ListStore<Vw_parcelasTGWT> lista = new ListStore<Vw_parcelasTGWT>();
+
+            for (int i = 1; i < resultado.size(); i++) {
+                JSONObject registro = resultado.get(i).isObject();
+                Vw_parcelasTGWT vw_parcelasT = lerRegistroJson(registro);
+                lista.add(vw_parcelasT);
+            }
+            list = lista;
+        }
+    }
+
+    /**
+     * Ler os dados o conteúdo json 
+     */
+    private Vw_parcelasTGWT lerRegistroJson(JSONObject registro) {
+        Vw_parcelasTGWT vw_parcelasTGWT = new Vw_parcelasTGWT();
+        Integer ple_nr_id = Integer.parseInt(EasyContainer.clearAspas(registro.get("ple_nr_id").toString()));
+        vw_parcelasTGWT.setPle_nr_id(ple_nr_id);
+        Integer emp_nr_id = Integer.parseInt(EasyContainer.clearAspas(registro.get("emp_nr_id").toString()));
+        vw_parcelasTGWT.setEmp_nr_id(emp_nr_id);
+        Date ple_dt_vencimento = dtfDate.parse(EasyContainer.clearAspas(registro.get("ple_dt_vencimento").toString()));
+        vw_parcelasTGWT.setPle_dt_vencimento(ple_dt_vencimento);
+        if (!EasyContainer.clearAspas(registro.get("ple_dt_pagamento").toString()).isEmpty()) {
+            Date ple_dt_pagamento = dtfDate.parse(EasyContainer.clearAspas(registro.get("ple_dt_pagamento").toString()));
+            vw_parcelasTGWT.setPle_dt_pagamento(ple_dt_pagamento);
+        }
+        float ple_nr_valorparcela = Float.parseFloat(EasyContainer.clearAspas(registro.get("ple_nr_valorparcela").toString()));
+        vw_parcelasTGWT.setPle_nr_valorparcela(ple_nr_valorparcela);
+        float ple_nr_valordesconto = Float.parseFloat(EasyContainer.clearAspas(registro.get("ple_nr_valordesconto").toString()));
+        vw_parcelasTGWT.setPle_nr_valordesconto(ple_nr_valordesconto);
+        Integer ple_nr_cdformapagto = Integer.parseInt(EasyContainer.clearAspas(registro.get("ple_nr_cdformapagto").toString()));
+        vw_parcelasTGWT.setPle_nr_cdformapagto(ple_nr_cdformapagto);
+        String ple_tx_parcela = EasyContainer.clearAspas(registro.get("ple_tx_parcela").toString());
+        vw_parcelasTGWT.setPle_tx_parcela(ple_tx_parcela);
+        String ple_tx_tipo = EasyContainer.clearAspas(registro.get("ple_tx_tipo").toString());
+        vw_parcelasTGWT.setPle_tx_tipo(ple_tx_tipo);
+        Date emp_dt_emprestimo = dtfDate.parse(EasyContainer.clearAspas(registro.get("emp_dt_emprestimo").toString()));
+        vw_parcelasTGWT.setEmp_dt_emprestimo(emp_dt_emprestimo);
+        Integer emp_nr_proposta = Integer.parseInt(EasyContainer.clearAspas(registro.get("emp_nr_proposta").toString()));
+        vw_parcelasTGWT.setEmp_nr_proposta(emp_nr_proposta);
+        float emp_nr_valor = Float.parseFloat(EasyContainer.clearAspas(registro.get("emp_nr_valor").toString()));
+        vw_parcelasTGWT.setEmp_nr_valor(emp_nr_valor);
+        float emp_nr_valor_afin_liquido = Float.parseFloat(EasyContainer.clearAspas(registro.get("emp_nr_valor_afin_liquido").toString()));
+        vw_parcelasTGWT.setEmp_nr_valor_afin_liquido(emp_nr_valor_afin_liquido);
+        Integer cli_nr_id = Integer.parseInt(EasyContainer.clearAspas(registro.get("cli_nr_id").toString()));
+        vw_parcelasTGWT.setCli_nr_id(cli_nr_id);
+        Integer org_nr_id = Integer.parseInt(EasyContainer.clearAspas(registro.get("org_nr_id").toString()));
+        vw_parcelasTGWT.setOrg_nr_id(org_nr_id);
+        String cli_tx_cpf = EasyContainer.clearAspas(registro.get("cli_tx_cpf").toString());
+        vw_parcelasTGWT.setCli_tx_cpf(cli_tx_cpf);
+        String cli_tx_nome = EasyContainer.clearAspas(registro.get("cli_tx_nome").toString());
+        vw_parcelasTGWT.setCli_tx_nome(cli_tx_nome);
+        String cco_tx_nragencia = EasyContainer.clearAspas(registro.get("cco_tx_nragencia").toString());
+        vw_parcelasTGWT.setCco_tx_nragencia(cco_tx_nragencia);
+        String cco_tx_nrcontacorrente = EasyContainer.clearAspas(registro.get("cco_tx_nrcontacorrente").toString());
+        vw_parcelasTGWT.setCco_tx_nrcontacorrente(cco_tx_nrcontacorrente);
+        Integer bco_nr_id = Integer.parseInt(EasyContainer.clearAspas(registro.get("bco_nr_id").toString()));
+        vw_parcelasTGWT.setBco_nr_id(bco_nr_id);
+        String bco_tx_nome = EasyContainer.clearAspas(registro.get("bco_tx_nome").toString());
+        vw_parcelasTGWT.setBco_tx_nome(bco_tx_nome);
+        String cor_tx_nome = EasyContainer.clearAspas(registro.get("cor_tx_nome").toString());
+        vw_parcelasTGWT.setCor_tx_nome(cor_tx_nome);
+        String org_tx_nome = EasyContainer.clearAspas(registro.get("org_tx_nome").toString());
+        vw_parcelasTGWT.setOrg_tx_nome(org_tx_nome);
+        String bco_tx_codigo = EasyContainer.clearAspas(registro.get("bco_tx_codigo").toString());
+        vw_parcelasTGWT.setBco_tx_codigo(bco_tx_codigo);
+        String cli_dt_nascimento = EasyContainer.clearAspas(registro.get("cli_dt_nascimento").toString());
+        if (!cli_dt_nascimento.isEmpty()) {
+            vw_parcelasTGWT.setCli_dt_nascimento(dtfDate.parse(cli_dt_nascimento));
+        }
+        String cli_tx_matricula = EasyContainer.clearAspas(registro.get("cli_tx_matricula").toString());
+        vw_parcelasTGWT.setCli_tx_matricula(cli_tx_matricula);
+        
+        String ple_tx_historico = EasyContainer.clearAspas(registro.get("ple_tx_historico").toString());
+        vw_parcelasTGWT.setPle_tx_historico(ple_tx_historico);
+
+        vw_parcelasTGWT.setPle_nr_saldo(0);
+        if(pago){
+          vw_parcelasTGWT.setPle_nr_saldo(vw_parcelasTGWT.getPle_nr_valorparcela() - vw_parcelasTGWT.getPle_nr_valordesconto());
+        }
+
+        Integer ple_nr_id_vinculo = Integer.parseInt(EasyContainer.clearAspas(registro.get("ple_nr_id_vinculo").toString()));
+        vw_parcelasTGWT.setPle_nr_id_vinculo(ple_nr_id_vinculo);
+        return vw_parcelasTGWT;
+    }
+
+    /**
+     * @return the list
+     */
+    public ListStore getList() {
+        return list;
+    }
+
+    /**
+     * @param list the list to set
+     */
+    public void setList(ListStore list) {
+        this.list = list;
+    }
+
+    /**
+     * @return the msg
+     */
+    public String getMsg() {
+        return msg;
+    }
+
+    /**
+     * @param msg the msg to set
+     */
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    /**
+     * @return the vw_parcelasT
+     */
+    public Vw_parcelasTGWT getVw_parcelasT() {
+        return vw_parcelasT;
+    }
+
+    /**
+     * @param vw_parcelasTGWT the vw_parcelasTGWT to set
+     */
+    public void setVw_parcelasTGWT(Vw_parcelasTGWT vw_parcelasT) {
+        this.vw_parcelasT = vw_parcelasT;
+    }
+}

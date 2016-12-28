@@ -1,0 +1,1218 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.i9factory.client.i9factory.factory.emp_emprestimo;
+
+import br.com.i9factory.client.i9factory.factory.transfer.*;
+import br.com.i9factory.client.i9factory.factory.dao.*;
+import br.com.easynet.gwt.client.CadastrarBaseGWT;
+import br.com.i9factory.client.i9factory.factory.cli_cliente.Locate_ClienteGWT;
+import com.extjs.gxt.ui.client.Style.HorizontalAlignment;
+import com.extjs.gxt.ui.client.Style.Orientation;
+import com.extjs.gxt.ui.client.Style.SelectionMode;
+import com.extjs.gxt.ui.client.data.ModelData;
+import com.extjs.gxt.ui.client.event.BaseEvent;
+import com.extjs.gxt.ui.client.widget.grid.ColumnData;
+
+import com.extjs.gxt.ui.client.widget.layout.TableLayout;
+import com.extjs.gxt.ui.client.widget.form.TextField;
+import com.extjs.gxt.ui.client.widget.form.LabelField;
+import com.extjs.gxt.ui.client.widget.form.DateField;
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.extjs.gxt.ui.client.widget.MessageBox;
+import com.extjs.gxt.ui.client.event.ButtonEvent;
+import com.extjs.gxt.ui.client.event.ComponentEvent;
+import com.extjs.gxt.ui.client.event.Events;
+import com.extjs.gxt.ui.client.event.FieldEvent;
+import com.extjs.gxt.ui.client.event.Listener;
+import com.extjs.gxt.ui.client.event.SelectionChangedEvent;
+import com.extjs.gxt.ui.client.event.SelectionListener;
+import com.extjs.gxt.ui.client.event.TabPanelEvent;
+import com.extjs.gxt.ui.client.store.ListStore;
+import com.extjs.gxt.ui.client.store.Record;
+import com.extjs.gxt.ui.client.util.Margins;
+import com.extjs.gxt.ui.client.util.SwallowEvent;
+import com.extjs.gxt.ui.client.widget.ContentPanel;
+import com.extjs.gxt.ui.client.widget.DatePicker;
+import com.extjs.gxt.ui.client.widget.Info;
+import com.extjs.gxt.ui.client.widget.TabItem;
+import com.extjs.gxt.ui.client.widget.TabPanel;
+import com.extjs.gxt.ui.client.widget.button.Button;
+import com.extjs.gxt.ui.client.widget.form.ComboBox;
+import com.extjs.gxt.ui.client.widget.form.NumberField;
+import com.extjs.gxt.ui.client.widget.form.Radio;
+import com.extjs.gxt.ui.client.widget.form.RadioGroup;
+import com.extjs.gxt.ui.client.widget.form.TextArea;
+import com.extjs.gxt.ui.client.widget.grid.AggregationRowConfig;
+import com.extjs.gxt.ui.client.widget.grid.CellEditor;
+import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
+import com.extjs.gxt.ui.client.widget.grid.ColumnModel;
+import com.extjs.gxt.ui.client.widget.grid.EditorGrid;
+import com.extjs.gxt.ui.client.widget.grid.Grid;
+import com.extjs.gxt.ui.client.widget.grid.GridCellRenderer;
+import com.extjs.gxt.ui.client.widget.grid.SummaryType;
+import com.extjs.gxt.ui.client.widget.grid.filters.GridFilters;
+import com.extjs.gxt.ui.client.widget.grid.filters.ListFilter;
+import com.extjs.gxt.ui.client.widget.grid.filters.NumericFilter;
+import com.extjs.gxt.ui.client.widget.layout.FillLayout;
+import com.extjs.gxt.ui.client.widget.layout.RowData;
+import com.extjs.gxt.ui.client.widget.layout.RowLayout;
+import com.extjs.gxt.ui.client.widget.toolbar.LabelToolItem;
+import com.extjs.gxt.ui.client.widget.toolbar.SeparatorToolItem;
+import com.extjs.gxt.ui.client.widget.toolbar.ToolBar;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.i18n.client.NumberFormat;
+import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.datepicker.client.CalendarUtil;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+/**
+ *
+ * @author geoleite
+ */
+public class Emp_emprestimoInsertGWTCopia extends CadastrarBaseGWT {
+
+    private Emp_emprestimoConsultGWT emp_emprestimoConsult;
+    private DateTimeFormat dtfDate = DateTimeFormat.getFormat("dd/MM/yyyy");
+    private DateTimeFormat dtfDia = DateTimeFormat.getFormat("dd");
+    private DateTimeFormat dtfMes = DateTimeFormat.getFormat("MM");
+    private DateTimeFormat dtfAno = DateTimeFormat.getFormat("yyyy");
+    private DateTimeFormat dtfDateTime = DateTimeFormat.getFormat("dd/MM/yyyy HH:mm:ss");
+    private Emp_emprestimoDAOGWT emp_emprestimoDao = new Emp_emprestimoDAOGWT();
+    private TextField<String> emp_nr_id = new TextField<String>();
+    private TextField<String> cli_nr_id = new TextField<String>();
+    private TextField<String> age_nr_id = new TextField<String>();
+    private TextField<String> cor_nr_id = new TextField<String>();
+    private int idc_nr_id;
+    private int org_nr_id;
+    private DateField emp_dt_emprestimo = new DateField();
+    private TextField<String> emp_nr_valor = new TextField<String>();
+    private TextField<String> emp_tx_status = new TextField<String>();
+    private TextArea emp_tx_observacoes = new TextArea();
+    private DateField emp_dt_aprovacao = new DateField();
+    private DateField emp_dt_liberacao = new DateField();
+    private DateField emp_dt_quitacao = new DateField();
+    private DateField emp_dt_enviobanco = new DateField();
+    private DateField emp_dt_retornobanco = new DateField();
+    private TextField<String> emp_tx_cdlancamentobanco = new TextField<String>();
+    private TextField<String> emp_tx_cdlancamentopendente = new TextField<String>();
+    private TextField<String> emp_tx_numerocheque = new TextField<String>();
+    private RadioGroup radioGroup = new RadioGroup();
+    private TextField<String> tx_locate = new TextField<String>();
+    private ContentPanel mainCpMaster = new ContentPanel();
+    private Button btnLoc = new Button("");
+    private Button btnNew = new Button("Novo");
+    private TextField<String> cli_tx_nome = new TextField<String>();
+    private TextField<String> cli_tx_cpf = new TextField<String>();
+    private TextField<String> cli_tx_matricula = new TextField<String>();
+    private TextField<String> bco_tx_nome = new TextField<String>();
+    private TextField<String> org_tx_nome = new TextField<String>();
+    private Cor_corretoraDAOGWT cor_corretoraDAOGWT = new Cor_corretoraDAOGWT();
+    private ComboBox<Cor_corretoraTGWT> comboCorretor = new ComboBox<Cor_corretoraTGWT>();
+    private Idc_indiceDAOGWT idc_indiceDAOGWT = new Idc_indiceDAOGWT();
+    private DateField dataIndice = new DateField();
+    private DateField dataAverbacao = new DateField();
+    private LabelField lblIndex = new LabelField();
+    private NumberFormat formatReal = NumberFormat.getFormat("#,##0.00");
+    private NumberField menSocial = new NumberField();
+    private NumberField numParcMenSocial = new NumberField();
+    private NumberField valorParcelaMenSocial = new NumberField();
+    private NumberField valorAfin = new NumberField();
+    private NumberField numParcValorAfin = new NumberField();
+    private NumberField valorParcelaAFIN = new NumberField();
+    private NumberField valorAFIN_Bruto = new NumberField();
+    private NumberField valorAFIN_Liquido = new NumberField();
+    private NumberField valorParcelaAFIN_Anterior = new NumberField();
+    private NumberField valorDescParcelaAFIN_Anterior = new NumberField();
+    private NumberField numeroProposta = new NumberField();
+    private float indice;
+    private ContentPanel cpParcela = new ContentPanel(new FillLayout());
+    private Button btnGeraParcela = new Button("Gera Parcela Emprestimo");
+    private Grid<Idc_indiceTGWT> gridIndx;
+    private TabItem tbiParcelas = new TabItem("Parcelas Pendentes");
+    private TabPanel tpProposta = new TabPanel();
+    private ListStore<Ple_parcelaemprestimoTGWT> storeParcelasAberto;// = new ListStore<Ple_parcelaemprestimoTGWT>();
+    private ContentPanel cpParcelasAberto = new ContentPanel(new FillLayout());
+    private List<ColumnConfig> configsParcelaAberto = new ArrayList<ColumnConfig>();
+    private ColumnModel cmParcelaAberto = new ColumnModel(configsParcelaAberto);
+    private int id_emprestimoBaixa;
+    private TabItem tabItemProposta = new TabItem("Proposta");
+    private ContentPanel cpIndex = new ContentPanel(new FillLayout());
+    private ContentPanel cpObs = new ContentPanel();
+    ContentPanel cpProposta;
+
+    public Emp_emprestimoInsertGWTCopia() {
+//        idc_indiceDAOGWT.consultarTodos();
+//        cor_corretoraDAOGWT.consultarTodos();
+
+        //storeParcelasAberto.setMonitorChanges(true);
+        cpParcelasAberto.setHeaderVisible(false);
+        cpParcelasAberto.setBodyBorder(false);
+
+        TableLayout layoutProposta = new TableLayout(8);
+        layoutProposta.setCellPadding(3);
+        cpProposta = new ContentPanel(layoutProposta);
+        cpProposta.setHeaderVisible(false);
+        cpProposta.setBodyBorder(false);
+
+        btnLoc.setIcon(ICONS.find());
+        btnNew.setIcon(ICONS.novo());
+        this.setHeading("Proposta/Emprestimo");
+        this.setSize(700, 518);
+
+        mainCpMaster.setHeaderVisible(false);
+        mainCpMaster.setBodyBorder(false);
+
+        lblIndex.setStyleName("font20-Negrito");
+
+        dataAverbacao.setValue(new Date());
+        menSocial.setFormat(formatReal);
+        valorParcelaAFIN.setFormat(formatReal);
+        //valorParcelaAFIN.setReadOnly(true);
+        valorParcelaAFIN.setStyleName("background-readOnly");
+
+        valorAfin.setFormat(formatReal);
+        valorParcelaMenSocial.setFormat(formatReal);
+        valorParcelaMenSocial.setReadOnly(true);
+        valorParcelaMenSocial.setStyleName("background-readOnly");
+
+        valorAFIN_Bruto.setReadOnly(true);
+        valorAFIN_Bruto.setStyleName("background-readOnly");
+
+        valorAFIN_Liquido.setReadOnly(true);
+        valorAFIN_Liquido.setStyleName("background-readOnly");
+
+        menSocial.addListener(Events.OnChange, new Listener<FieldEvent>() {
+
+            public void handleEvent(FieldEvent be) {
+                calcularMenSocial();
+            }
+        });
+
+        numParcMenSocial.addListener(Events.OnChange, new Listener<FieldEvent>() {
+
+            public void handleEvent(FieldEvent be) {
+                calcularMenSocial();
+            }
+        });
+
+        valorAfin.addListener(Events.OnChange, new Listener<FieldEvent>() {
+
+            public void handleEvent(FieldEvent be) {
+                calcularValorAFIN();
+            }
+        });
+
+        numParcValorAfin.addListener(Events.OnChange, new Listener<FieldEvent>() {
+
+            public void handleEvent(FieldEvent be) {
+                calcularValorAFIN();
+            }
+        });
+
+        valorParcelaAFIN_Anterior.addListener(Events.OnChange, new Listener<FieldEvent>() {
+
+            public void handleEvent(FieldEvent be) {
+                calcularValorAFIN();
+            }
+        });
+
+        valorDescParcelaAFIN_Anterior.addListener(Events.OnChange, new Listener<FieldEvent>() {
+
+            public void handleEvent(FieldEvent be) {
+                calcularValorAFIN();
+            }
+        });
+
+        valorParcelaAFIN.addListener(Events.OnChange, new Listener<FieldEvent>() {
+
+            public void handleEvent(FieldEvent be) {
+                calcularValorAFIN();
+            }
+        });
+
+        dataAverbacao.getPropertyEditor().setFormat(dtfDate);
+
+
+        tx_locate.addListener(Events.OnKeyPress, new Listener<FieldEvent>() {
+
+            public void handleEvent(FieldEvent be) {
+                if (be.getEvent().getKeyCode() == KeyCodes.KEY_ENTER) {
+                    locateCliente();
+                }
+            }
+        });
+
+        btnLoc.addSelectionListener(new SelectionListener<ButtonEvent>() {
+
+            @Override
+            public void componentSelected(ButtonEvent ce) {
+                locateCliente();
+            }
+        });
+
+        final DatePicker datePicker = dataAverbacao.getDatePicker();
+        datePicker.addListener(Events.Select, new Listener<ComponentEvent>() {
+
+            public void handleEvent(ComponentEvent be) {
+                calcularValorAFIN();
+            }
+        });
+
+        final MessageBox mb = new MessageBox();
+
+        tpProposta.addListener(Events.Select, new Listener<TabPanelEvent>() {
+
+            public void handleEvent(TabPanelEvent be) {
+                if (be.getItem().getText().equalsIgnoreCase("Parcelas Pendentes")) {
+                    if (storeParcelasAberto == null) {
+                        if (cli_nr_id.getValue() != null) {
+                            if (valorAfin.getValue() != null) {
+                                //consultarParcelasAberto();
+                            } else {
+                                //tpProposta.setSelection(tbiProposta);
+                                mb.alert("IMPORTANTE", "Informe primeiro o valor do emprestimo", null);
+                            }
+                        } else {
+                            //tpProposta.setTabIndex(0);
+                            mb.alert("IMPORTANTE", "Localize primeiro o cliente", null);
+                        }
+                    }
+                } else {
+                    setValorParcelasPendentes();
+                }
+            }
+        });
+
+//        createColumnParcelaAberto();
+        montarTela();
+        layout();
+    }
+
+    public void setValorParcelasPendentes() {
+        float valorDesc = 0;
+        float PercDesc = 0;
+        float valor = 0;
+
+        for (int i = 0; i < storeParcelasAberto.getCount(); i++) {
+            valorDesc += Float.parseFloat(storeParcelasAberto.getAt(i).get("ple_nr_valordesconto").toString());
+            valor += Float.parseFloat(storeParcelasAberto.getAt(i).get("ple_nr_valorparcela").toString());
+        }
+
+        valorParcelaAFIN_Anterior.setValue(valor);
+        valorDescParcelaAFIN_Anterior.setValue(valorDesc);
+        valorAFIN_Bruto.setValue(valorAfin.getValue().floatValue() - valor);
+        valorAFIN_Liquido.setValue((valorAfin.getValue().floatValue() - valor) + valorDesc);
+    }
+
+    public ColumnModel getColumnModel() {
+        List<ColumnConfig> list = new ArrayList<ColumnConfig>();
+        ColumnConfig column = new ColumnConfig("idc_nr_valor", "Indice", 50);
+        column.setRenderer(new GridCellRenderer<Idc_indiceTGWT>() {
+
+            public String render(Idc_indiceTGWT model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<Idc_indiceTGWT> store, Grid<Idc_indiceTGWT> grid) {
+                NumberFormat format = NumberFormat.getFormat("0.00");
+                return "<span style='color:green'>" + format.format(model.getIdc_nr_valor()) + "% </span>";
+            }
+        });
+
+        column.setStyle("background-color:#DFE8F6");
+        list.add(column);
+        column = new ColumnConfig("idc_nr_diainicial", "Início", 38);
+        list.add(column);
+        column = new ColumnConfig("idc_nr_diafinal", "Fim", 38);
+        list.add(column);
+        column = new ColumnConfig("idc_nr_qtdparcelas", "N. Parc", 57);
+        column.setAlignment(HorizontalAlignment.RIGHT);
+        list.add(column);
+        ColumnModel cm = new ColumnModel(list);
+        return cm;
+    }
+
+    public void createColumnParcelaAberto() {
+
+        ColumnConfig cfParcela = new ColumnConfig("ple_tx_parcela", "Parc.", 50);
+
+        ColumnConfig cfvenc = new ColumnConfig("ple_dt_vencimento", "Vencimento", 100);
+        cfvenc.setDateTimeFormat(dtfDate);
+        ColumnConfig cfvalor = new ColumnConfig("ple_nr_valorparcela", "Valor", 100);
+        cfvalor.setNumberFormat(formatReal);
+        cfvalor.setAlignment(HorizontalAlignment.RIGHT);
+
+        final ColumnConfig cfpercentual = new ColumnConfig("ple_nr_Percdesconto", "% Desconto", 100);
+        cfpercentual.setNumberFormat(formatReal);
+
+        final ColumnConfig cfvalorDesc = new ColumnConfig("ple_nr_valordesconto", "Valor Desc. (R$)", 100);
+        cfvalorDesc.setNumberFormat(formatReal);
+
+        cfpercentual.setRenderer(new GridCellRenderer<Ple_parcelaemprestimoTGWT>() {
+
+            public Object render(Ple_parcelaemprestimoTGWT model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<Ple_parcelaemprestimoTGWT> store, Grid<Ple_parcelaemprestimoTGWT> grid) {
+                final Ple_parcelaemprestimoTGWT temp = (Ple_parcelaemprestimoTGWT) model;
+                NumberField nf = new NumberField();
+                nf.setFormat(formatReal);
+                CellEditor ce = new CellEditor(nf);
+                cfpercentual.setEditor(ce);
+                nf.addListener(Events.Change, new Listener<FieldEvent>() {
+
+                    public void handleEvent(FieldEvent be) {
+                        changeList("%");
+                    }
+                });
+                return model.get("ple_nr_Percdesconto") != null ? formatReal.format(Double.parseDouble(model.get("ple_nr_Percdesconto").toString())) + "%" : model.get(property);
+            }
+        });
+
+
+        cfvalorDesc.setRenderer(new GridCellRenderer<Ple_parcelaemprestimoTGWT>() {
+
+            public Object render(Ple_parcelaemprestimoTGWT model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<Ple_parcelaemprestimoTGWT> store, Grid<Ple_parcelaemprestimoTGWT> grid) {
+                final Ple_parcelaemprestimoTGWT temp = (Ple_parcelaemprestimoTGWT) model;
+                NumberField nf = new NumberField();
+                nf.setFormat(formatReal);
+                CellEditor ce = new CellEditor(nf);
+                cfvalorDesc.setEditor(ce);
+                nf.addListener(Events.Change, new Listener<FieldEvent>() {
+
+                    public void handleEvent(FieldEvent be) {
+                        changeList("$");
+                    }
+                });
+                return model.get("ple_nr_valordesconto") != null ? formatReal.format(Double.parseDouble(model.get("ple_nr_valordesconto").toString())) : model.get(property);
+            }
+        });
+
+        configsParcelaAberto.add(cfParcela);
+        configsParcelaAberto.add(cfvenc);
+        configsParcelaAberto.add(cfvalor);
+        configsParcelaAberto.add(cfpercentual);
+        configsParcelaAberto.add(cfvalorDesc);
+
+        cmParcelaAberto = new ColumnModel(configsParcelaAberto);
+        AggregationRowConfig<Ple_parcelaemprestimoTGWT> rowConfig = new AggregationRowConfig<Ple_parcelaemprestimoTGWT>();
+        rowConfig.setSummaryFormat("ple_nr_valorparcela", formatReal);
+        rowConfig.setSummaryType("ple_nr_valorparcela", SummaryType.SUM);
+        cmParcelaAberto.addAggregationRow(rowConfig);
+    }
+
+    public void changeList(String tipo) {
+        try {
+            List<Record> list = storeParcelasAberto.getModifiedRecords();
+            double valor = 0;
+            for (Record record : list) {
+                if (tipo.equalsIgnoreCase("%")) {
+                    if (record.get("ple_nr_Percdesconto") != null) {
+                        valor = Double.parseDouble(record.get("ple_nr_Percdesconto").toString()) * Double.parseDouble(record.get("ple_nr_valorparcela").toString()) / 100;
+                        record.beginEdit();
+                        record.set("ple_nr_valordesconto", valor);
+                        record.endEdit();
+                        record.commit(true);
+                    }
+                } else {
+                    if (record.get("ple_nr_valordesconto") != null) {
+                        double dif = Double.parseDouble(record.get("ple_nr_valorparcela").toString()) - Double.parseDouble(record.get("ple_nr_valordesconto").toString());
+                        valor = 100 - (dif * 100 / Float.parseFloat(record.get("ple_nr_valorparcela").toString()));
+                        record.beginEdit();
+                        record.set("ple_nr_Percdesconto", valor);
+                        record.endEdit();
+                        record.commit(true);
+
+                    }
+                }
+            }
+
+            storeParcelasAberto.commitChanges();
+
+
+            String q = "1";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createGridParcela(ListStore<Ple_parcelaemprestimoTGWT> store) {
+
+        List<ColumnConfig> configs = new ArrayList<ColumnConfig>();
+
+        ColumnConfig cfParcela = new ColumnConfig("ple_tx_parcela", "Parc.", 50);
+        ColumnConfig cfvenc = new ColumnConfig("ple_dt_vencimento", "Vencimento", 88);
+        cfvenc.setDateTimeFormat(dtfDate);
+
+        ColumnConfig cfvalor = new ColumnConfig("ple_nr_valorparcela", "Valor", 80);
+        cfvalor.setNumberFormat(formatReal);
+        cfvalor.setAlignment(HorizontalAlignment.RIGHT);
+        configs.add(cfParcela);
+        configs.add(cfvenc);
+        configs.add(cfvalor);
+
+        ColumnModel cm = new ColumnModel(configs);
+        AggregationRowConfig<Ple_parcelaemprestimoTGWT> rowConfig = new AggregationRowConfig<Ple_parcelaemprestimoTGWT>();
+        rowConfig.setSummaryFormat("ple_nr_valorparcela", formatReal);
+        rowConfig.setSummaryType("ple_nr_valorparcela", SummaryType.SUM);
+        cm.addAggregationRow(rowConfig);
+        Grid grid = new Grid(store, cm);
+
+        grid.setLoadMask(true);
+        grid.setStyleAttribute("borderTop", "none");
+        grid.setBorders(true);
+        grid.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        cpParcela.removeAll();
+        cpParcela.add(grid);
+        cpParcela.layout();
+
+    }
+
+    public void gerarParcela() {
+
+        NumberFormat formatInt = NumberFormat.getFormat("00");
+        List<Ple_parcelaemprestimoTGWT> list = new ArrayList<Ple_parcelaemprestimoTGWT>();
+        CalendarUtil calendarUtil = new CalendarUtil();
+        int mes = Integer.parseInt(dtfMes.format(dataAverbacao.getValue()));
+        int ano = Integer.parseInt(dtfAno.format(dataAverbacao.getValue()));
+        int dia = Integer.parseInt(dtfDia.format(dataAverbacao.getValue()));
+
+        for (int i = 0; i < numParcValorAfin.getValue().intValue(); i++) {
+            Ple_parcelaemprestimoTGWT parcela = new Ple_parcelaemprestimoTGWT();
+            parcela.setPle_nr_valorparcela(valorParcelaAFIN.getValue().floatValue());
+            parcela.setPle_tx_parcela(formatInt.format(i + 1) + "/" + formatInt.format(numParcValorAfin.getValue().intValue()));
+            Date vencimento = new Date();
+            vencimento = dtfDate.parse(dia + "/" + mes + "/" + ano);
+            parcela.setPle_dt_vencimento(vencimento);
+            mes++;
+            if (mes == 13) {
+                ano++;
+                mes = 1;
+            }
+            list.add(parcela);
+        }
+        ListStore<Ple_parcelaemprestimoTGWT> store = new ListStore<Ple_parcelaemprestimoTGWT>();
+        store.add(list);
+        createGridParcela(store);
+        layout();
+    }
+
+    public void calcularMenSocial() {
+        if (menSocial.getValue() != null & numParcMenSocial.getValue() != null) {
+            float total = menSocial.getValue().floatValue() * numParcMenSocial.getValue().floatValue();
+            valorParcelaMenSocial.setValue(total);
+        }
+    }
+
+    public void calcularValorAFIN() {
+        if (valorAfin.getValue() != null & numParcValorAfin.getValue() != null & indice > 0) {
+            float valorJuros = valorAfin.getValue().floatValue() * indice / 100;
+            float valorAfin_juros = valorAfin.getValue().floatValue() + valorJuros;
+            float vlParcela = valorAfin_juros / numParcValorAfin.getValue().floatValue();
+
+            valorParcelaAFIN.setValue(vlParcela);
+            float valorParcelas = 0;
+            if (valorParcelaAFIN_Anterior.getValue() != null) {
+                valorAFIN_Bruto.setValue(valorAfin.getValue().floatValue() - valorParcelaAFIN_Anterior.getValue().floatValue());
+                valorParcelas = valorParcelaAFIN_Anterior.getValue().floatValue();
+            } else {
+                valorAFIN_Bruto.setValue(valorAfin.getValue().floatValue());
+            }
+            if (valorDescParcelaAFIN_Anterior.getValue() != null) {
+                valorAFIN_Liquido.setValue(valorAfin.getValue().floatValue() - valorParcelas + valorDescParcelaAFIN_Anterior.getValue().floatValue());
+            } else {
+                valorAFIN_Liquido.setValue(valorAfin.getValue().floatValue() - valorParcelas);
+            }
+            gerarParcela();
+        } else {
+            btnGeraParcela.setEnabled(false);
+            if (indice == 0) {
+                MessageBox.alert("ATENÇÃO", "Selecione um indice para continuar a operação!!", null);
+            }
+        }
+    }
+
+    public void calcularIndiceDia() {
+        int dia = Integer.parseInt(dtfDia.format(new Date()));
+        for (Idc_indiceTGWT idc_indiceTGWT : (List<Idc_indiceTGWT>) idc_indiceDAOGWT.getList().getModels()) {
+            if (dia >= idc_indiceTGWT.getIdc_nr_diainicial() & dia <= idc_indiceTGWT.getIdc_nr_diafinal()) {
+                lblIndex.setValue(NumberFormat.getFormat("#,##0.00").format(idc_indiceTGWT.getIdc_nr_valor()) + "%");
+                indice = idc_indiceTGWT.getIdc_nr_valor();
+                idc_nr_id = idc_indiceTGWT.getIdc_nr_id();
+                calcularValorAFIN();
+                break;
+            }
+        }
+    }
+
+    public void addComboCorretor() {
+//        comboCorretor.setStore(cor_corretoraDAOGWT.getList());
+//        comboCorretor.setAllowBlank(false);
+//        comboCorretor.setTriggerAction(ComboBox.TriggerAction.ALL);
+//        comboCorretor.setDisplayField("cor_tx_nomefantasia");
+//        comboCorretor.setWidth(300);
+    }
+
+    public void montarTela() {
+        try {
+
+//        createGridParcela(new ListStore<Ple_parcelaemprestimoTGWT>());
+            dataIndice.setValue(new Date());
+            //String dia = dtfDia.format(dataIndice.getValue());
+//                    calcularIndiceDia();
+
+            TabPanel tpLocalisa = new TabPanel();
+            tpLocalisa.setBodyBorder(true);
+            tpLocalisa.setHeight(200);
+            TabItem tabItem = new TabItem("Localização");
+            tabItem.setLayout(new RowLayout(Orientation.VERTICAL));
+            tpLocalisa.add(tabItem);
+
+            ToolBar barLoc = new ToolBar();
+            Radio rdMatricula = new Radio();
+            rdMatricula.setBoxLabel("Matrícula");
+            rdMatricula.setValue(true);
+
+            Radio rdCPF = new Radio();
+            rdCPF.setBoxLabel("CPF");
+
+            Radio rdNome = new Radio();
+            rdNome.setBoxLabel("Nome");
+            radioGroup.add(rdMatricula);
+            radioGroup.add(rdCPF);
+            radioGroup.add(rdNome);
+
+            ContentPanel cpMainDados = new ContentPanel(new RowLayout(Orientation.HORIZONTAL));
+            cpMainDados.setHeaderVisible(false);
+            cpMainDados.setBodyBorder(false);
+
+            barLoc.add(radioGroup);
+            barLoc.add(new SeparatorToolItem());
+            tx_locate.setWidth(180);
+            barLoc.add(tx_locate);
+            barLoc.add(btnLoc);
+            barLoc.add(new SeparatorToolItem());
+            barLoc.add(new SeparatorToolItem());
+            barLoc.add(btnNew);
+
+            ContentPanel cpDadosCli = new ContentPanel();
+            cpDadosCli.setHeaderVisible(false);
+            cpDadosCli.setBodyBorder(false);
+            TableLayout layoutDadosCli = new TableLayout(2);
+            layoutDadosCli.setCellPadding(2);
+            cpDadosCli.setLayout(layoutDadosCli);
+            cpDadosCli.setTopComponent(barLoc);
+
+            cpDadosCli.add(addLabelTopico("Matrícula:"));
+            cli_tx_matricula.setWidth(70);
+            cli_tx_matricula.setReadOnly(true);
+            ContentPanel cpMatricula = new ContentPanel();
+            cpMatricula.setHeaderVisible(false);
+            cpMatricula.setBodyBorder(false);
+            TableLayout layoutMat = new TableLayout(3);
+            layoutMat.setCellPadding(2);
+            cpMatricula.setLayout(layoutMat);
+            cpMatricula.add(cli_tx_matricula);
+            cpMatricula.add(addLabelTopico("N. Proposta:"));
+            numeroProposta.setAllowBlank(false);
+            cpMatricula.add(numeroProposta);
+            cpDadosCli.add(cpMatricula);
+
+            cpDadosCli.add(addLabelTopico("Nome:"));
+            cli_tx_nome.setWidth(400);
+            cli_tx_nome.setReadOnly(true);
+            cpDadosCli.add(cli_tx_nome);
+
+            cpDadosCli.add(addLabelTopico("CPF:"));
+            cli_tx_cpf.setReadOnly(true);
+            cpDadosCli.add(cli_tx_cpf);
+
+            cpDadosCli.add(addLabelTopico("Banco:"));
+            bco_tx_nome.setWidth(400);
+            bco_tx_nome.setReadOnly(true);
+            cpDadosCli.add(bco_tx_nome);
+
+            cpDadosCli.add(addLabelTopico("Orgão:"));
+            org_tx_nome.setWidth(400);
+            org_tx_nome.setReadOnly(true);
+            cpDadosCli.add(org_tx_nome);
+
+            TableLayout layoutIndex = new TableLayout(2);
+            layoutIndex.setCellPadding(4);
+            ContentPanel cpdata = new ContentPanel(layoutIndex);
+            cpdata.setHeaderVisible(false);
+            cpdata.setBodyBorder(true);
+
+            cpMainDados.add(cpDadosCli, new RowData(.70, 1, new Margins(2)));
+            cpMainDados.add(cpIndex, new RowData(.30, 1, new Margins(2)));
+
+            tabItem.add(cpMainDados, new RowData(1, 1, new Margins(2)));
+
+            tpProposta.setBodyBorder(true);
+            tpProposta.setHeight(240);
+
+            tabItemProposta.setLayout(new FillLayout());
+            tabItemProposta.add(cpParcelasAberto);
+
+            tbiParcelas.setLayout(new FillLayout());
+            tbiParcelas.add(cpProposta);
+
+            tpProposta.add(tbiParcelas);
+
+            mainCpMaster.add(tpLocalisa);
+            mainCpMaster.add(tpProposta);
+
+//            cpProposta.add(addLabelTopico("Men. Social:"));
+//            menSocial.setWidth(90);
+//            cpProposta.add(menSocial);
+//            cpProposta.add(addLabelTopico("Número Parcelas:"));
+//            numParcMenSocial.setWidth(90);
+//            cpProposta.add(numParcMenSocial);
+//            cpProposta.add(addLabelTopico("Total Geral:"));
+//            valorParcelaMenSocial.setWidth(90);
+//            cpProposta.add(valorParcelaMenSocial);
+//
+//            LabelField lb1 = new LabelField("..");
+//            lb1.setVisible(false);
+//
+//            LabelField lb2 = new LabelField("..");
+//            lb1.setVisible(false);
+//            lb2.setVisible(false);
+//            cpProposta.add(lb1);
+//            cpProposta.add(lb2);
+//
+//            cpProposta.add(addLabelTopico("Dt. Averbação:"));
+//            dataAverbacao.setWidth(90);
+//            cpProposta.add(dataAverbacao);
+//
+//            cpProposta.add(addLabelTopico("Valor AFIN Total:"));
+//            valorAfin.setWidth(90);
+//            valorAfin.setFormat(formatReal);
+//            cpProposta.add(valorAfin);
+//
+//            cpProposta.add(addLabelTopico("Número Parcelas:"));
+//            numParcValorAfin.setWidth(90);
+//            cpProposta.add(numParcValorAfin);
+//
+//            cpProposta.add(addLabelTopico("Valor da Parcela:"));
+//            valorParcelaAFIN.setWidth(90);
+//            valorParcelaAFIN.setFormat(formatReal);
+//            cpProposta.add(valorParcelaAFIN);
+//
+//            cpProposta.add(addLabelTopico("Vl. Parcelas Pendentes:"));
+//            valorParcelaAFIN_Anterior.setWidth(90);
+//            valorParcelaAFIN_Anterior.setFormat(formatReal);
+//            cpProposta.add(valorParcelaAFIN_Anterior);
+//
+//            cpProposta.add(addLabelTopico("Valor AFIN:"));
+//            valorAFIN_Bruto.setWidth(90);
+//            valorAFIN_Bruto.setFormat(formatReal);
+//            cpProposta.add(valorAFIN_Bruto);
+//
+//            cpProposta.add(addLabelTopico("Valor Desc. Parcelas:"));
+//            valorDescParcelaAFIN_Anterior.setWidth(90);
+//            valorDescParcelaAFIN_Anterior.setFormat(formatReal);
+//            cpProposta.add(valorDescParcelaAFIN_Anterior);
+//
+//            cpProposta.add(addLabelTopico("Valor Cheque Liberado:"));
+//            valorAFIN_Liquido.setWidth(90);
+//            valorAFIN_Liquido.setFormat(formatReal);
+//            cpProposta.add(valorAFIN_Liquido);
+//            tbiProposta.add(cpProposta);
+
+//
+//            ContentPanel cpFechamento = new ContentPanel(new FillLayout());
+//
+//            cpFechamento.setHeaderVisible(false);
+//            cpFechamento.setBodyBorder(false);
+//
+//            //addFieldsCpObs();
+//            cpFechamento.add(cpObs);
+//
+//            ContentPanel cpMainFechamento = new ContentPanel(new RowLayout(Orientation.HORIZONTAL));
+//            cpMainFechamento.setHeight(125);
+//            cpMainFechamento.setHeaderVisible(false);
+//            cpMainFechamento.setBodyBorder(false);
+//
+//            cpMainFechamento.add(cpFechamento, new RowData(.62, 1, new Margins(3)));
+//            cpParcela.setHeaderVisible(false);
+//            cpMainFechamento.add(cpParcela, new RowData(.38, 1, new Margins(3)));
+//
+//
+//            tbiProposta.add(cpMainFechamento);
+//
+            getCpMaster().add(mainCpMaster);
+            layout();
+//            preencherTabelaeCombo();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addFieldsCpObs() {
+        cpObs.setHeaderVisible(false);
+        cpObs.setBodyBorder(false);
+        TableLayout layoutObs = new TableLayout(2);
+        layoutObs.setCellPadding(4);
+        cpObs.setLayout(layoutObs);
+        cpObs.add(addLabelTopico("Corretor..........:"));
+        addComboCorretor();
+        cpObs.add(comboCorretor);
+
+        cpObs.add(addLabelTopico("Obs.................:"));
+        emp_tx_observacoes.setWidth(300);
+        emp_tx_observacoes.setPreventScrollbars(true);
+        emp_tx_observacoes.setHeight(70);
+        cpObs.add(emp_tx_observacoes);
+    }
+
+    public void addItemcpindex() throws Exception {
+        try {
+            cpIndex.setHeaderVisible(false);
+            cpIndex.setBodyBorder(true);
+            cpIndex.setFrame(false);
+            ToolBar barIndex = new ToolBar();
+
+            barIndex.setBorders(true);
+            barIndex.add(new LabelToolItem("Tabela de Indices"));
+            cpIndex.setTopComponent(barIndex);
+
+            gridIndx = new Grid<Idc_indiceTGWT>(idc_indiceDAOGWT.getList(), getColumnModel());
+            gridIndx.setStripeRows(true);
+            gridIndx.setStyleAttribute("borderTop", "none");
+            gridIndx.setBorders(true);
+            gridIndx.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+            gridIndx.getSelectionModel().addListener(Events.SelectionChange, new Listener<SelectionChangedEvent<Idc_indiceTGWT>>() {
+
+                public void handleEvent(SelectionChangedEvent<Idc_indiceTGWT> be) {
+                    indice = be.getSelection().get(0).getIdc_nr_valor();
+                    idc_nr_id = be.getSelection().get(0).getIdc_nr_id();
+                    calcularValorAFIN();
+                }
+            });
+
+            NumericFilter indx = new NumericFilter("idc_nr_valor");
+            NumericFilter inicio = new NumericFilter("idc_nr_diainicial");
+            NumericFilter fim = new NumericFilter("idc_nr_diafinal");
+            NumericFilter qtde = new NumericFilter("idc_nr_qtdparcelas");
+
+            ListStore<Idc_indiceTGWT> listStore = new ListStore<Idc_indiceTGWT>();
+            listStore.add((List<Idc_indiceTGWT>) idc_indiceDAOGWT.getList().getModels());
+            ListFilter listFilter = new ListFilter("idc_nr_valor", listStore);
+            listFilter.setDisplayProperty("idc_nr_valor");
+
+            GridFilters filters = new GridFilters();
+            filters.setLocal(true);
+            filters.addFilter(inicio);
+            filters.addFilter(fim);
+            filters.addFilter(qtde);
+            filters.addFilter(listFilter);
+            gridIndx.addPlugin(filters);
+            gridIndx.setColumnLines(true);
+            gridIndx.getView().setForceFit(true);
+            cpIndex.add(gridIndx);
+        } catch (Exception e) {
+            throw e;
+        }
+
+    }
+
+    public void preencherTabelaeCombo() throws Exception {
+        try {
+
+//        Timer timer = new Timer() {
+//
+//            @Override
+//            public void run() {
+//                if (cor_corretoraDAOGWT.getList() == null || idc_indiceDAOGWT.getList() == null) {
+//                    schedule(500);
+//                } else {
+//                    gridIndx.getView().refresh(true);
+//                    if (comboCorretor.getStore() != null) {
+//                        comboCorretor.getStore().removeAll();
+//                    }
+////                    comboCorretor.setStore(cor_corretoraDAOGWT.getList());
+////                    comboCorretor.getView().setStore(cor_corretoraDAOGWT.getList());
+////                    comboCorretor.getView().refresh();
+////                    gridIndx.getView().refresh(true);
+//                }
+//                layout();
+//            }
+//
+//        };timer.schedule(500);
+            layout();
+        } catch (Exception e) {
+            throw e;
+        }
+
+
+    }
+
+    public LabelField addLabelTopico(String text) {
+        LabelField field = new LabelField(text);
+        field.setStyleName("font09-Negrito");
+        return field;
+    }
+
+    public void locateCliente() {
+        String campoFiltro = "";
+        if (radioGroup.getValue().getBoxLabel().equalsIgnoreCase("Matrícula")) {
+            campoFiltro = "matricula";
+        } else if (radioGroup.getValue().getBoxLabel().equalsIgnoreCase("Nome")) {
+            campoFiltro = "Nome";
+        } else {
+            campoFiltro = "CPF";
+        }
+
+        Locate_ClienteGWT locate_ClienteGWT = new Locate_ClienteGWT(null, null, campoFiltro, tx_locate.getValue());
+        locate_ClienteGWT.setModal(true);
+        locate_ClienteGWT.show();
+    }
+
+    public void btnInsertAction(ButtonEvent ce) {
+        if (propostaValida()) {
+            Emp_emprestimoTGWT emp_emprestimoT = new Emp_emprestimoTGWT();
+            emp_emprestimoT.setCli_nr_id(Integer.parseInt(getCli_nr_id().getValue()));
+            emp_emprestimoT.setCor_nr_id(comboCorretor.getValue().getCor_nr_id());
+            emp_emprestimoT.setIdc_nr_id(idc_nr_id);
+            emp_emprestimoT.setOrg_nr_id(org_nr_id);
+            emp_emprestimoT.setEmp_dt_emprestimo(dataIndice.getValue());
+            emp_emprestimoT.setEmp_nr_valor(valorAfin.getValue().floatValue());
+            emp_emprestimoT.setEmp_tx_status("A");
+            if (emp_tx_observacoes.getValue() != null) {
+                emp_emprestimoT.setEmp_tx_observacoes(emp_tx_observacoes.getValue());
+            }
+            emp_emprestimoT.setEmp_dt_aprovacao(new Date());
+            emp_emprestimoT.setEmp_dt_liberacao(new Date());
+            emp_emprestimoT.setEmp_nr_valor_afin_bruto(valorAFIN_Bruto.getValue() != null ? valorAFIN_Bruto.getValue().floatValue() : 0);
+            emp_emprestimoT.setEmp_nr_valor_afin_liquido(valorAFIN_Liquido.getValue() != null ? valorAFIN_Liquido.getValue().floatValue() : 0);
+            emp_emprestimoT.setEmp_nr_valor_parcelas_anterior(valorParcelaAFIN_Anterior.getValue() != null ? valorParcelaAFIN_Anterior.getValue().floatValue() : 0);
+            emp_emprestimoT.setEmp_nr_valor_desc_parcela_anterior(valorDescParcelaAFIN_Anterior.getValue() != null ? valorDescParcelaAFIN_Anterior.getValue().floatValue() : 0);
+            emp_emprestimoT.setEmp_nr_proposta(numeroProposta.getValue() != null ? numeroProposta.getValue().intValue() : 1);
+
+            emp_emprestimoDao.inserir(emp_emprestimoT, numParcValorAfin.getValue().intValue(), valorParcelaAFIN.getValue().floatValue(), menSocial.getValue().floatValue(), numParcMenSocial.getValue().intValue(), getParamDesconto(), dtfDate.format(dataAverbacao.getValue()), id_emprestimoBaixa);
+            Timer timer = new Timer() {
+
+                public void run() {
+                    String msg = emp_emprestimoDao.getMsg();
+                    if (msg == null) {
+                        schedule(500);
+                    } else {
+                        if (msg.toUpperCase().indexOf("FALHA") >= 0) {
+                            MessageBox.alert("Problemas", msg, null);
+                        } else {
+                            Info.display("Resultado", msg);
+                            emp_emprestimoConsult.load();
+                            setVisible(false);
+                            btnLimpartAction(null);
+                        }
+                    }
+                }
+            };
+            timer.schedule(500);
+        }
+    }
+
+    public void btnLimpartAction(ButtonEvent ce) {
+        cli_tx_matricula.setValue("");
+        cli_tx_cpf.setValue("");
+        cli_tx_nome.setValue("");
+        bco_tx_nome.setValue("");
+        org_tx_nome.setValue("");
+        dataIndice.setValue(new Date());
+
+        menSocial.setValue(null);
+        numParcMenSocial.setValue(null);
+        valorParcelaMenSocial.setValue(null);
+        valorAfin.setValue(null);
+        numParcValorAfin.setValue(null);
+        valorParcelaAFIN.setValue(null);
+        dataAverbacao.setValue(null);
+        comboCorretor.setValue(null);
+
+        valorAFIN_Bruto.setValue(null);
+        valorAFIN_Liquido.setValue(null);
+        valorParcelaAFIN_Anterior.setValue(null);
+        valorDescParcelaAFIN_Anterior.setValue(null);
+        numeroProposta.setValue(null);
+        emp_tx_observacoes.setValue("");
+        cpParcela.removeAll();
+        //tx_locate.focus();
+
+    }
+
+    public void consultarParcelasAberto() {
+        try {
+            final Ple_parcelaemprestimoDAOGWT pdaogwt = new Ple_parcelaemprestimoDAOGWT();
+            pdaogwt.consultarTodosCliente(Integer.parseInt(cli_nr_id.getValue()), "P");
+            Timer timer = new Timer() {
+
+                @Override
+                public void run() {
+                    if (pdaogwt.getList() == null) {
+                        schedule(500);
+                    } else {
+                        cpParcelasAberto.removeAll();
+                        storeParcelasAberto = new ListStore<Ple_parcelaemprestimoTGWT>();
+                        //storeParcelasAberto.setMonitorChanges(true);
+                        storeParcelasAberto.add((List<Ple_parcelaemprestimoTGWT>) pdaogwt.getList().getModels());
+                        EditorGrid<Ple_parcelaemprestimoTGWT> gridParAberto = new EditorGrid<Ple_parcelaemprestimoTGWT>(storeParcelasAberto, cmParcelaAberto);
+                        gridParAberto.setStripeRows(true);
+                        gridParAberto.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+                        gridParAberto.setBorders(true);
+                        gridParAberto.getView().setEmptyText("Não existe parcelas pendentes para este cliente!!!!");
+                        cpParcelasAberto.add(gridParAberto);
+                        layout();
+                    }
+                }
+            };
+            timer.schedule(500);
+            layout();
+
+        } catch (Exception e) {
+        }
+
+    }
+
+    /**
+     * @return the emp_emprestimoConsult
+     */
+    public Emp_emprestimoConsultGWT getEmp_emprestimoConsult() {
+        return emp_emprestimoConsult;
+    }
+
+    /**
+     * @param emp_emprestimoConsult the emp_emprestimoConsult to set
+     */
+    public void setEmp_emprestimoConsult(Emp_emprestimoConsultGWT emp_emprestimoConsult) {
+        this.emp_emprestimoConsult = emp_emprestimoConsult;
+    }
+
+    /**
+     * @return the cli_tx_nome
+     */
+    public TextField<String> getCli_tx_nome() {
+        return cli_tx_nome;
+    }
+
+    /**
+     * @param cli_tx_nome the cli_tx_nome to set
+     */
+    public void setCli_tx_nome(TextField<String> cli_tx_nome) {
+        this.cli_tx_nome = cli_tx_nome;
+    }
+
+    /**
+     * @return the cli_tx_cpf
+     */
+    public TextField<String> getCli_tx_cpf() {
+        return cli_tx_cpf;
+    }
+
+    /**
+     * @param cli_tx_cpf the cli_tx_cpf to set
+     */
+    public void setCli_tx_cpf(TextField<String> cli_tx_cpf) {
+        this.cli_tx_cpf = cli_tx_cpf;
+    }
+
+    /**
+     * @return the cli_tx_matricula
+     */
+    public TextField<String> getCli_tx_matricula() {
+        return cli_tx_matricula;
+    }
+
+    /**
+     * @param cli_tx_matricula the cli_tx_matricula to set
+     */
+    public void setCli_tx_matricula(TextField<String> cli_tx_matricula) {
+        this.cli_tx_matricula = cli_tx_matricula;
+    }
+
+    /**
+     * @return the bco_tx_nome
+     */
+    public TextField<String> getBco_tx_nome() {
+        return bco_tx_nome;
+    }
+
+    /**
+     * @param bco_tx_nome the bco_tx_nome to set
+     */
+    public void setBco_tx_nome(TextField<String> bco_tx_nome) {
+        this.bco_tx_nome = bco_tx_nome;
+    }
+
+    /**
+     * @return the org_tx_nome
+     */
+    public TextField<String> getOrg_tx_nome() {
+        return org_tx_nome;
+    }
+
+    /**
+     * @param org_tx_nome the org_tx_nome to set
+     */
+    public void setOrg_tx_nome(TextField<String> org_tx_nome) {
+        this.org_tx_nome = org_tx_nome;
+    }
+
+    /**
+     * @return the cli_nr_id
+     */
+    public TextField<String> getCli_nr_id() {
+        return cli_nr_id;
+    }
+
+    /**
+     * @param cli_nr_id the cli_nr_id to set
+     */
+    public void setCli_nr_id(TextField<String> cli_nr_id) {
+        this.cli_nr_id = cli_nr_id;
+    }
+
+    /**
+     * @return the age_nr_id
+     */
+    public TextField<String> getAge_nr_id() {
+        return age_nr_id;
+    }
+
+    /**
+     * @param age_nr_id the age_nr_id to set
+     */
+    public void setAge_nr_id(TextField<String> age_nr_id) {
+        this.age_nr_id = age_nr_id;
+    }
+
+    /**
+     * @return the cor_nr_id
+     */
+    public TextField<String> getCor_nr_id() {
+        return cor_nr_id;
+    }
+
+    /**
+     * @param cor_nr_id the cor_nr_id to set
+     */
+    public void setCor_nr_id(TextField<String> cor_nr_id) {
+        this.cor_nr_id = cor_nr_id;
+    }
+
+    /**
+     * @return the org_nr_id
+     */
+    public int getOrg_nr_id() {
+        return org_nr_id;
+    }
+
+    /**
+     * @param org_nr_id the org_nr_id to set
+     */
+    public void setOrg_nr_id(int org_nr_id) {
+        this.org_nr_id = org_nr_id;
+    }
+
+    public boolean propostaValida() {
+
+
+        MessageBox mb = new MessageBox();
+        boolean resposta = true;
+        if (numeroProposta.getValue() == null) {
+            resposta = false;
+            mb.alert("IMPORTANTE", "Os campos número da proposta tem preenchimento obrigatório!", null);
+        } else if (cli_nr_id.getValue() == null) {
+            resposta = false;
+            mb.alert("IMPORTANTE", "Os campos dados do cliente preenchimento obrigatório!", null);
+        } else if (menSocial.getValue() == null || menSocial.getValue().floatValue() == 0) {
+            resposta = false;
+            mb.alert("IMPORTANTE", "O campo valor da mensalidade tem preenchimento obrigatório!", null);
+            menSocial.focus();
+        } else if (numParcMenSocial.getValue() == null || numParcMenSocial.getValue().floatValue() == 0) {
+            resposta = false;
+            mb.alert("IMPMORTANTE", "O campo número de parcelas da mensalidade tem preenchimento obrigatório!", null);
+            numParcMenSocial.focus();
+        } else if (valorAfin.getValue() == null || valorAfin.getValue().floatValue() == 0) {
+            resposta = false;
+            mb.alert("IMPMORTANTE", "O campo valor AFIN tem preenchimento obrigatório!", null);
+            valorAfin.focus();
+        } else if (numParcValorAfin.getValue() == null || numParcValorAfin.getValue().floatValue() == 0) {
+            resposta = false;
+            mb.alert("IMPMORTANTE", "O campo numero parcelas AFIN tem preenchimento obrigatório!", null);
+            numParcValorAfin.focus();
+        } else if (!valorParcelasAnteriorValida()) {
+            resposta = false;
+            mb.alert("IMPMORTANTE", "A soma das parcelas pendentes está diferente do valor informado!", null);
+            valorParcelaAFIN_Anterior.focus();
+        } else if (!valorDescontoValido()) {
+            resposta = false;
+            mb.alert("IMPMORTANTE", "A soma dos descontos das parcelas está diferente do valor informado!", null);
+            valorDescParcelaAFIN_Anterior.focus();
+        } else if (comboCorretor.getValue() == null) {
+            resposta = false;
+            mb.alert("IMPMORTANTE", "O campo corretor tem preenchimento obrigatório!", null);
+        }
+        return resposta;
+    }
+
+    public boolean valorParcelasAnteriorValida() {
+        boolean resultado = true;
+        float valorParcela = valorParcelasPendente();
+        if (valorParcela > 0) {
+            if (valorParcelaAFIN_Anterior.getValue() == null) {
+                resultado = false;
+            } else if (valorParcelaAFIN_Anterior.getValue().floatValue() != valorParcela) {
+                resultado = false;
+            }
+        }
+        return resultado;
+    }
+
+    public boolean valorDescontoValido() {
+        float valorDesconto = valorDesconto();
+        boolean resultado = true;
+        float valorParcela = valorParcelasPendente();
+        if (valorParcela > 0) {
+            if (valorDescParcelaAFIN_Anterior.getValue() == null) {
+                resultado = false;
+            } else if (valorDescParcelaAFIN_Anterior.getValue().floatValue() != valorDesconto) {
+                resultado = false;
+            }
+        }
+        return resultado;
+    }
+
+    public float valorParcelasPendente() {
+        float valor = 0;
+        try {
+            for (int i = 0; i < storeParcelasAberto.getModels().size(); i++) {
+                valor += Float.parseFloat(storeParcelasAberto.getModels().get(i).get("ple_nr_valorparcela").toString());
+            }
+        } catch (Exception e) {
+            return 0;
+        }
+
+        return valor;
+    }
+
+    public float valorDesconto() {
+        float valor = 0;
+        try {
+            id_emprestimoBaixa = 0;
+            for (int i = 0; i < storeParcelasAberto.getModels().size(); i++) {
+                valor += Float.parseFloat(storeParcelasAberto.getModels().get(i).get("ple_nr_valordesconto").toString());
+                id_emprestimoBaixa = Integer.parseInt(storeParcelasAberto.getModels().get(i).get("emp_nr_id").toString());
+            }
+        } catch (Exception e) {
+            return 0;
+        }
+        return valor;
+    }
+
+    public String getParamDesconto() {
+        String valor = "";
+        for (int i = 0; i < storeParcelasAberto.getModels().size(); i++) {
+            valor += "&vetIdParcelas=" + storeParcelasAberto.getModels().get(i).get("ple_nr_id").toString() + "&vetDesconto=" + storeParcelasAberto.getModels().get(i).get("ple_nr_valordesconto").toString();
+        }
+        return valor;
+    }
+}

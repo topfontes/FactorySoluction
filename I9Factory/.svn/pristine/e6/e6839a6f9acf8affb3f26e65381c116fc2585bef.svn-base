@@ -1,0 +1,494 @@
+package br.com.easynet.gwt.i9factory.transfer;
+
+import br.com.easynet.annotation.Conversion;
+//br.com.easynet.gwt.i9factory.transfer.Vw_parcelasT
+///Users/topfontes/projetos/branches/I9Factory/build/web/
+
+public class Vw_parcelasT {
+
+    private int ple_nr_id;
+    private int emp_nr_id;//99321972 - jackson
+    @Conversion(classe = "br.com.easynet.convesion.ConvertDate", format = "dd/MM/yyyy")
+    private java.util.Date ple_dt_vencimento;
+    @Conversion(classe = "br.com.easynet.convesion.ConvertDate", format = "dd/MM/yyyy")
+    private java.util.Date ple_dt_pagamento;
+    private double ple_nr_valorparcela;
+    private double ple_nr_valordesconto;
+    private int ple_nr_cdformapagto;
+    private String ple_tx_parcela;
+    private String ple_tx_tipo;
+    @Conversion(classe = "br.com.easynet.convesion.ConvertDate", format = "dd/MM/yyyy")
+    private java.util.Date emp_dt_emprestimo;
+    private int emp_nr_proposta;
+    private double emp_nr_valor;
+    private double emp_nr_valor_pago;
+    private double emp_nr_valor_afin_liquido;
+    private int cli_nr_id;
+    private int org_nr_id;
+    private String cli_tx_cpf;
+    private String cli_tx_nome;
+    private String cco_tx_nragencia;
+    private String cco_tx_nrcontacorrente;
+    private int bco_nr_id;
+    private String bco_tx_nome;
+    private String bco_tx_codigo;
+    private String org_tx_nome;
+    private String cor_tx_nome;
+    private String cli_tx_matricula;
+    @Conversion(classe = "br.com.easynet.convesion.ConvertDate", format = "dd/MM/yyyy")
+    private java.util.Date cli_dt_nascimento;
+    private String cco_tx_cadbanco;
+    private String ple_tx_historico;
+    private int ple_nr_id_vinculo;
+    private boolean ple_bl_vinculo;
+    private String cli_tx_telefone1;
+    private String cli_tx_telefone2;
+    private String cli_tx_estadocivil;
+    private String cli_tx_rg;
+    private String cli_tx_logradouro;
+    private String cli_tx_bairro;
+    private String cli_tx_numero;
+    private String cli_tx_municipio;
+    private String cli_tx_uf;
+    private String cli_tx_celular;
+
+    public void setPle_nr_id(int ple_nr_id) {
+        this.ple_nr_id = ple_nr_id;
+    }
+
+    public int getPle_nr_id() {
+        return ple_nr_id;
+    }
+
+    public void setEmp_nr_id(int emp_nr_id) {
+        this.emp_nr_id = emp_nr_id;
+    }
+
+    public int getEmp_nr_id() {
+        return emp_nr_id;
+    }
+
+    public void setPle_dt_vencimento(java.util.Date ple_dt_vencimento) {
+        this.ple_dt_vencimento = ple_dt_vencimento;
+    }
+
+    public java.util.Date getPle_dt_vencimento() {
+        return ple_dt_vencimento;
+    }
+
+    public void setPle_dt_pagamento(java.util.Date ple_dt_pagamento) {
+        this.ple_dt_pagamento = ple_dt_pagamento;
+    }
+
+    public java.util.Date getPle_dt_pagamento() {
+        return ple_dt_pagamento;
+    }
+
+    public void setPle_nr_valorparcela(double ple_nr_valorparcela) {
+        this.ple_nr_valorparcela = ple_nr_valorparcela;
+    }
+
+    public double getPle_nr_valorparcela() {
+        return ple_nr_valorparcela;
+    }
+
+    public void setPle_nr_valordesconto(double ple_nr_valordesconto) {
+        this.ple_nr_valordesconto = ple_nr_valordesconto;
+    }
+
+    public double getPle_nr_valordesconto() {
+        return ple_nr_valordesconto;
+    }
+
+    public void setPle_nr_cdformapagto(int ple_nr_cdformapagto) {
+        this.ple_nr_cdformapagto = ple_nr_cdformapagto;
+    }
+
+    public int getPle_nr_cdformapagto() {
+        return ple_nr_cdformapagto;
+    }
+
+    public void setPle_tx_parcela(String ple_tx_parcela) {
+        this.ple_tx_parcela = ple_tx_parcela;
+    }
+
+    public String getPle_tx_parcela() {
+        return ple_tx_parcela;
+    }
+
+    public void setPle_tx_tipo(String ple_tx_tipo) {
+        this.ple_tx_tipo = ple_tx_tipo;
+    }
+
+    public String getPle_tx_tipo() {
+        return ple_tx_tipo;
+    }
+
+    public void setEmp_dt_emprestimo(java.util.Date emp_dt_emprestimo) {
+        this.emp_dt_emprestimo = emp_dt_emprestimo;
+    }
+
+    public java.util.Date getEmp_dt_emprestimo() {
+        return emp_dt_emprestimo;
+    }
+
+    public void setEmp_nr_proposta(int emp_nr_proposta) {
+        this.emp_nr_proposta = emp_nr_proposta;
+    }
+
+    public int getEmp_nr_proposta() {
+        return emp_nr_proposta;
+    }
+
+    public void setEmp_nr_valor(float emp_nr_valor) {
+        this.emp_nr_valor = emp_nr_valor;
+    }
+
+    public double getEmp_nr_valor() {
+        return emp_nr_valor;
+    }
+
+    public void setEmp_nr_valor_afin_liquido(double emp_nr_valor_afin_liquido) {
+        this.emp_nr_valor_afin_liquido = emp_nr_valor_afin_liquido;
+    }
+
+    public double getEmp_nr_valor_afin_liquido() {
+        return emp_nr_valor_afin_liquido;
+    }
+
+    public void setCli_nr_id(int cli_nr_id) {
+        this.cli_nr_id = cli_nr_id;
+    }
+
+    public int getCli_nr_id() {
+        return cli_nr_id;
+    }
+
+    public void setOrg_nr_id(int org_nr_id) {
+        this.org_nr_id = org_nr_id;
+    }
+
+    public int getOrg_nr_id() {
+        return org_nr_id;
+    }
+
+    public void setCli_tx_cpf(String cli_tx_cpf) {
+        this.cli_tx_cpf = cli_tx_cpf;
+    }
+
+    public String getCli_tx_cpf() {
+        return cli_tx_cpf;
+    }
+
+    public void setCli_tx_nome(String cli_tx_nome) {
+        this.cli_tx_nome = cli_tx_nome;
+    }
+
+    public String getCli_tx_nome() {
+        return cli_tx_nome;
+    }
+
+    public void setCco_tx_nragencia(String cco_tx_nragencia) {
+        this.cco_tx_nragencia = cco_tx_nragencia;
+    }
+
+    public String getCco_tx_nragencia() {
+        return cco_tx_nragencia;
+    }
+
+    public void setCco_tx_nrcontacorrente(String cco_tx_nrcontacorrente) {
+        this.cco_tx_nrcontacorrente = cco_tx_nrcontacorrente;
+    }
+
+    public String getCco_tx_nrcontacorrente() {
+        return cco_tx_nrcontacorrente;
+    }
+
+    public void setBco_nr_id(int bco_nr_id) {
+        this.bco_nr_id = bco_nr_id;
+    }
+
+    public int getBco_nr_id() {
+        return bco_nr_id;
+    }
+
+    public void setBco_tx_nome(String bco_tx_nome) {
+        this.bco_tx_nome = bco_tx_nome;
+    }
+
+    public String getBco_tx_nome() {
+        return bco_tx_nome;
+    }
+
+    public void setBco_tx_codigo(String bco_tx_codigo) {
+        this.bco_tx_codigo = bco_tx_codigo;
+    }
+
+    public String getBco_tx_codigo() {
+        return bco_tx_codigo;
+    }
+
+    /**
+     * @return the org_tx_nome
+     */
+    public String getOrg_tx_nome() {
+        return org_tx_nome;
+    }
+
+    /**
+     * @param org_tx_nome the org_tx_nome to set
+     */
+    public void setOrg_tx_nome(String org_tx_nome) {
+        this.org_tx_nome = org_tx_nome;
+    }
+
+    /**
+     * @return the cor_tx_nome
+     */
+    public String getCor_tx_nome() {
+        return cor_tx_nome;
+    }
+
+    /**
+     * @param cor_tx_nome the cor_tx_nome to set
+     */
+    public void setCor_tx_nome(String cor_tx_nome) {
+        this.cor_tx_nome = cor_tx_nome;
+    }
+
+    /**
+     * @return the cli_dt_nascimento
+     */
+    public java.util.Date getCli_dt_nascimento() {
+        return cli_dt_nascimento;
+    }
+
+    /**
+     * @param cli_dt_nascimento the cli_dt_nascimento to set
+     */
+    public void setCli_dt_nascimento(java.util.Date cli_dt_nascimento) {
+        this.cli_dt_nascimento = cli_dt_nascimento;
+    }
+
+    /**
+     * @return the cco_tx_cadbanco
+     */
+    public String getCco_tx_cadbanco() {
+        return cco_tx_cadbanco;
+    }
+
+    /**
+     * @param cco_tx_cadbanco the cco_tx_cadbanco to set
+     */
+    public void setCco_tx_cadbanco(String cco_tx_cadbanco) {
+        this.cco_tx_cadbanco = cco_tx_cadbanco;
+    }
+
+    /**
+     * @return the cli_tx_matricula
+     */
+    public String getCli_tx_matricula() {
+        return cli_tx_matricula;
+    }
+
+    /**
+     * @param cli_tx_matricula the cli_tx_matricula to set
+     */
+    public void setCli_tx_matricula(String cli_tx_matricula) {
+        this.cli_tx_matricula = cli_tx_matricula;
+    }
+
+    public String getPle_tx_historico() {
+        return ple_tx_historico;
+    }
+
+    /**
+     * @param ple_tx_historico the ple_tx_historico to set
+     */
+    public void setPle_tx_historico(String ple_tx_historico) {
+        this.ple_tx_historico = ple_tx_historico;
+    }
+
+    /**
+     * @return the emp_nr_valor_pago
+     */
+    public double getEmp_nr_valor_pago() {
+        return emp_nr_valor_pago;
+    }
+
+    /**
+     * @param emp_nr_valor_pago the emp_nr_valor_pago to set
+     */
+    public void setEmp_nr_valor_pago(double emp_nr_valor_pago) {
+        this.emp_nr_valor_pago = emp_nr_valor_pago;
+    }
+
+    /**
+     * @return the ple_nr_id_vinculo
+     */
+    public int getPle_nr_id_vinculo() {
+        return ple_nr_id_vinculo;
+    }
+
+    /**
+     * @param ple_nr_id_vinculo the ple_nr_id_vinculo to set
+     */
+    public void setPle_nr_id_vinculo(int ple_nr_id_vinculo) {
+        this.ple_nr_id_vinculo = ple_nr_id_vinculo;
+    }
+
+    /**
+     * @return the ple_bl_vinculo
+     */
+    public boolean isPle_bl_vinculo() {
+        return ple_bl_vinculo;
+    }
+
+    /**
+     * @param ple_bl_vinculo the ple_bl_vinculo to set
+     */
+    public void setPle_bl_vinculo(boolean ple_bl_vinculo) {
+        this.ple_bl_vinculo = ple_bl_vinculo;
+    }
+
+    /**
+     * @return the cli_tx_telefone1
+     */
+    public String getCli_tx_telefone1() {
+        return cli_tx_telefone1;
+    }
+
+    /**
+     * @param cli_tx_telefone1 the cli_tx_telefone1 to set
+     */
+    public void setCli_tx_telefone1(String cli_tx_telefone1) {
+        this.cli_tx_telefone1 = cli_tx_telefone1;
+    }
+
+    /**
+     * @return the cli_tx_telefone2
+     */
+    public String getCli_tx_telefone2() {
+        return cli_tx_telefone2;
+    }
+
+    /**
+     * @param cli_tx_telefone2 the cli_tx_telefone2 to set
+     */
+    public void setCli_tx_telefone2(String cli_tx_telefone2) {
+        this.cli_tx_telefone2 = cli_tx_telefone2;
+    }
+
+    /**
+     * @return the cli_tx_estadocivil
+     */
+    public String getCli_tx_estadocivil() {
+        return cli_tx_estadocivil;
+    }
+
+    /**
+     * @param cli_tx_estadocivil the cli_tx_estadocivil to set
+     */
+    public void setCli_tx_estadocivil(String cli_tx_estadocivil) {
+        this.cli_tx_estadocivil = cli_tx_estadocivil;
+    }
+
+    /**
+     * @return the cli_tx_rg
+     */
+    public String getCli_tx_rg() {
+        return cli_tx_rg;
+    }
+
+    /**
+     * @param cli_tx_rg the cli_tx_rg to set
+     */
+    public void setCli_tx_rg(String cli_tx_rg) {
+        this.cli_tx_rg = cli_tx_rg;
+    }
+
+    /**
+     * @return the cli_tx_logradouro
+     */
+    public String getCli_tx_logradouro() {
+        return cli_tx_logradouro;
+    }
+
+    /**
+     * @param cli_tx_logradouro the cli_tx_logradouro to set
+     */
+    public void setCli_tx_logradouro(String cli_tx_logradouro) {
+        this.cli_tx_logradouro = cli_tx_logradouro;
+    }
+
+    /**
+     * @return the cli_tx_bairro
+     */
+    public String getCli_tx_bairro() {
+        return cli_tx_bairro;
+    }
+
+    /**
+     * @param cli_tx_bairro the cli_tx_bairro to set
+     */
+    public void setCli_tx_bairro(String cli_tx_bairro) {
+        this.cli_tx_bairro = cli_tx_bairro;
+    }
+
+    /**
+     * @return the cli_tx_numero
+     */
+    public String getCli_tx_numero() {
+        return cli_tx_numero;
+    }
+
+    /**
+     * @param cli_tx_numero the cli_tx_numero to set
+     */
+    public void setCli_tx_numero(String cli_tx_numero) {
+        this.cli_tx_numero = cli_tx_numero;
+    }
+
+    /**
+     * @return the cli_tx_municipio
+     */
+    public String getCli_tx_municipio() {
+        return cli_tx_municipio;
+    }
+
+    /**
+     * @param cli_tx_municipio the cli_tx_municipio to set
+     */
+    public void setCli_tx_municipio(String cli_tx_municipio) {
+        this.cli_tx_municipio = cli_tx_municipio;
+    }
+
+    /**
+     * @return the cli_tx_uf
+     */
+    public String getCli_tx_uf() {
+        return cli_tx_uf;
+    }
+
+    /**
+     * @param cli_tx_uf the cli_tx_uf to set
+     */
+    public void setCli_tx_uf(String cli_tx_uf) {
+        this.cli_tx_uf = cli_tx_uf;
+    }
+
+    /**
+     * @return the cli_tx_celular
+     */
+    public String getCli_tx_celular() {
+        return cli_tx_celular;
+    }
+
+    /**
+     * @param cli_tx_celular the cli_tx_celular to set
+     */
+    public void setCli_tx_celular(String cli_tx_celular) {
+        this.cli_tx_celular = cli_tx_celular;
+    }
+
+}

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="pathmarcadagua" class="java.lang.String"/>
+	<parameter name="testo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cli_tx_logradouro" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_logradouro]]></fieldDescription>
+	</field>
+	<field name="cli_tx_municipio" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_municipio]]></fieldDescription>
+	</field>
+	<field name="cli_tx_nome" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_nome]]></fieldDescription>
+	</field>
+	<field name="cli_tx_numero" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_numero]]></fieldDescription>
+	</field>
+	<field name="cli_tx_tipologradouro" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_tipologradouro]]></fieldDescription>
+	</field>
+	<field name="cli_tx_uf" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_uf]]></fieldDescription>
+	</field>
+	<field name="cli_tx_bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_bairro]]></fieldDescription>
+	</field>
+	<field name="cli_tx_cep" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_cep]]></fieldDescription>
+	</field>
+	<field name="cli_tx_complemento" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_complemento]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="800" splitType="Stretch">
+			<textField>
+				<reportElement x="43" y="143" width="495" height="20"/>
+				<textElement>
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cli_tx_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="110" width="495" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cli_tx_bairro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="50" width="495" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["CEP: "+$F{cli_tx_cep}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="90" width="495" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cli_tx_complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="70" width="495" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cli_tx_tipologradouro}+" "+$F{cli_tx_logradouro}+", "+$F{cli_tx_numero}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="80" y="252" width="390" height="307"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{pathmarcadagua}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="13" y="207" width="525" height="46"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="30"/>
+				</textElement>
+				<text><![CDATA[COMUNICADO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="61" y="327" width="448" height="232"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{testo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

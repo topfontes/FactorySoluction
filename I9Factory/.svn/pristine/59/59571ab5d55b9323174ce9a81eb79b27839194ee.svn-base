@@ -1,0 +1,140 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.easynet.gwt.i9factory.relatorio.maladireta;
+
+import br.com.easynet.gwt.i9factory.dao.Cli_clienteDAO;
+import br.com.easynet.gwt.i9factory.jb.Funcoes;
+import br.com.easynet.gwt.i9factory.relatorio.RelatorioBase;
+import br.com.easynet.gwt.i9factory.transfer.Cli_clienteT;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
+/**
+ *
+ * @author marcos
+ */
+public class Maladireta extends RelatorioBase {
+
+    private String testo;
+    private String parcelas;
+
+    public void imprimir() {
+        try {
+            Cli_clienteDAO cdao = getCli_clienteDAO();
+         List<Cli_clienteT> list = null;   
+       
+            if(parcelas.equalsIgnoreCase("true")){
+                list = cdao.getAllMalaDiretaParcelas();
+            }else{
+               list = cdao.getAllMalaDireta(); 
+            }
+            
+            jRDataSource = new JRBeanCollectionDataSource(list);
+            if (!getTipo().equalsIgnoreCase("XLS")) {
+                is = Maladireta.class.getResourceAsStream("maladireta.jasper");
+            } else {
+                url = Maladireta.class.getResource("maladireta.jasper");
+            }
+            
+            testo = "Desenvolvemos uma nova parceria, onde o BANESE está negociando a dívida que o Sr. tem com a CASSERP. E nesta parceria além de negociar o prazo lhe sobrará uma parte em dinheiro, para isto precisamos que o senhor venha aqui na CASSERP para lhe ofertamos a melhor proposta, e podermos assim regularizar a vossa situação.\n" ;
+            getParameters().put("testo", testo);
+            getParameters().put("pathlogo", application.getRealPath("images/Casserp.png"));
+            
+                        SimpleDateFormat formatdia = new SimpleDateFormat("dd");
+            SimpleDateFormat formatmes = new SimpleDateFormat("MM");
+            SimpleDateFormat formatano = new SimpleDateFormat("yyyy");
+
+                        String dia = formatdia.format(new Date());
+            String mes = formatmes.format(new Date());
+            String ano = formatano.format(new Date());
+            String data = "Aracaju,SE " + Funcoes.formatarFloat("00", Integer.parseInt(dia));
+            data += " de " + getMesExtenso(Integer.parseInt(mes));
+            data += " de " + ano;
+            
+            getParameters().put("data", data);
+            
+            print("MalaDireta", "maladireta");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+    }
+public String getMesExtenso(int mes) {
+        String strmes = "";
+        switch (mes) {
+            case 1:
+                strmes = "Janeiro";
+                break;
+            case 2:
+                strmes = "Fevereiro";
+                break;
+            case 3:
+                strmes = "Março";
+                break;
+            case 4:
+                strmes = "Abril";
+                break;
+            case 5:
+                strmes = "Maio";
+                break;
+            case 6:
+                strmes = "Junho";
+                break;
+            case 7:
+                strmes = "Julho";
+                break;
+            case 8:
+                strmes = "Agosto";
+                break;
+            case 9:
+                strmes = "Setembro";
+                break;
+            case 10:
+                strmes = "Outubro";
+                break;
+            case 11:
+                strmes = "Novembro";
+                break;
+            case 12:
+                strmes = "Dezembro";
+                break;
+            default:
+                return "null";
+        }
+        return strmes;
+    }
+    /**
+     * @return the testo
+     */
+    public String getTesto() {
+        return testo;
+    }
+
+    /**
+     * @param testo the testo to set
+     */
+    public void setTesto(String testo) {
+        this.testo = testo;
+    }
+
+    /**
+     * @return the parcelas
+     */
+    public String getParcelas() {
+        return parcelas;
+    }
+
+    /**
+     * @param parcelas the parcelas to set
+     */
+    public void setParcelas(String parcelas) {
+        this.parcelas = parcelas;
+    }
+}

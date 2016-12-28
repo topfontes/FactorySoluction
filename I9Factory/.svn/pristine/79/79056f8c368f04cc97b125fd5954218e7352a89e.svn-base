@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d70d87dc-12d0-4762-832b-c878b65166db">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="289"/>
+	<property name="ireport.y" value="41"/>
+	<parameter name="pathlogoSistema" class="java.lang.String"/>
+	<parameter name="titulo" class="java.lang.String"/>
+	<parameter name="orgao" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cli_tx_nome" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_nome]]></fieldDescription>
+	</field>
+	<field name="cli_tx_cpf" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_cpf]]></fieldDescription>
+	</field>
+	<field name="ple_nr_valorparcela" class="java.lang.Double">
+		<fieldDescription><![CDATA[ple_nr_valorparcela]]></fieldDescription>
+	</field>
+	<field name="ple_dt_vencimento" class="java.util.Date">
+		<fieldDescription><![CDATA[ple_dt_vencimento]]></fieldDescription>
+	</field>
+	<field name="ple_tx_parcela" class="java.lang.String">
+		<fieldDescription><![CDATA[ple_tx_parcela]]></fieldDescription>
+	</field>
+	<field name="cli_tx_telefone1" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_telefone1]]></fieldDescription>
+	</field>
+	<field name="cli_tx_telefone2" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_telefone2]]></fieldDescription>
+	</field>
+	<field name="cli_tx_matricula" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_matricula]]></fieldDescription>
+	</field>
+	<variable name="contador" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA["1"]]></variableExpression>
+	</variable>
+	<variable name="totalG" class="java.lang.Double" resetType="Group" resetGroup="cliente" calculation="Sum">
+		<variableExpression><![CDATA[$F{ple_nr_valorparcela}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
+	</variable> 
+	<variable name="total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ple_nr_valorparcela}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
+	</variable>
+	<group name="cliente">
+		<groupExpression><![CDATA[$F{cli_tx_nome}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<textField isBlankWhenNull="true">
+					<reportElement x="380" y="0" width="53" height="11" uuid="97af40be-3078-4c90-8c73-c2dd40ff926e"/>
+					<textElement>
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cli_tx_matricula}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="2" y="0" width="38" height="11" uuid="d19cbcf9-70f7-484c-9fd4-fcfba6f59d9b"/>
+					<textElement>
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<text><![CDATA[Cliente:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="360" y="0" width="19" height="11" uuid="f2dee1fb-34ce-457e-919c-5acaf19e7438"/>
+					<textElement>
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<text><![CDATA[Mat.]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="40" y="0" width="177" height="11" uuid="a13dbca9-2834-4b32-8c17-7ff5ce35624f"/>
+					<textElement>
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cli_tx_nome}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="459" y="0" width="55" height="11" uuid="ead0bca0-1e2d-4b43-86e7-dcd341ea135d"/>
+					<textElement>
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<text><![CDATA[Vencimento]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="434" y="0" width="26" height="11" uuid="71d43946-9f13-49e2-8e19-3b3a96baf160"/>
+					<textElement>
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<text><![CDATA[Parc.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="223" y="0" width="27" height="11" uuid="a47f60bd-cb6d-46a3-89d4-1b4f06f7d506"/>
+					<textElement>
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<text><![CDATA[Fones:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="254" y="0" width="102" height="11" uuid="21031ddb-a2bf-476d-ab6c-f297bdc178dc"/>
+					<textElement>
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cli_tx_telefone1}+" - "+$F{cli_tx_telefone2}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="529" y="0" width="24" height="11" uuid="28a2be10-c3c4-40bd-a732-4ca47e0e36ac"/>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="8"/>
+					</textElement>
+					<text><![CDATA[Valor]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="17">
+				<textField pattern="#,##0.00">
+					<reportElement x="407" y="2" width="146" height="11" uuid="6f52d945-ac2f-4fbf-aa88-d7e0ee480c3e"/>
+					<textElement textAlignment="Right">
+						<font fontName="SansSerif" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalG}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="126" splitType="Stretch">
+			<image>
+				<reportElement x="11" y="13" width="59" height="59" uuid="3abac10f-d2da-4dce-8c67-5ee107503aa6"/>
+				<imageExpression><![CDATA[$P{pathlogoSistema}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="77" y="46" width="330" height="13" uuid="0fe7c3ce-fe28-4be8-ac20-11441f0b20ac"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{titulo}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="10" y="74" width="534" height="1" uuid="3a90a234-6664-4509-b7f3-3ccd6f613bf0"/>
+			</line>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="444" y="48" width="100" height="11" uuid="1cd1465a-5c85-482f-8a66-e2ead93e4c86"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="77" y="13" width="419" height="16" uuid="4f22e769-8160-4f28-a450-7d276552c693"/>
+				<textElement>
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<text><![CDATA[CASSERP-CAIXA DE ASSISTÊNCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="77" y="30" width="302" height="13" uuid="c57d15af-3909-462b-ab90-6cc16f59b062"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[CNPJ: 04.683.415/0001-83  INSC.ESTADUAL: 04269-3]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="77" y="61" width="330" height="13" uuid="8f5f38c5-3ee7-4b30-998e-9ceabe2c5d2c"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{orgao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="11" splitType="Stretch">
+			<textField>
+				<reportElement x="432" y="0" width="26" height="11" uuid="cbbfdf49-f999-4be5-9537-3bdbc000ae01"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ple_tx_parcela}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="457" y="0" width="55" height="11" uuid="df6616cb-7ace-46ab-b416-cc3b020d1254"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ple_dt_vencimento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="513" y="0" width="40" height="11" uuid="3bc46a34-a97f-484d-94d4-bc5192bab831"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ple_nr_valorparcela}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="38" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="4" width="555" height="1" uuid="603c90cf-6d40-49cf-aa69-7f328a8e7b62"/>
+			</line>
+			<staticText>
+				<reportElement x="453" y="11" width="100" height="11" uuid="27bf0454-0f89-4877-8b66-c428977784bf"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="5"/>
+				</textElement>
+				<text><![CDATA[I9TI]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="4" y="8" width="100" height="20" uuid="54ee2714-5b55-4a56-8b45-ce433b8ac385"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="28" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="3" width="555" height="1" uuid="7135d714-f435-47e0-94e4-c18d62aa497f"/>
+			</line>
+			<staticText>
+				<reportElement x="195" y="4" width="100" height="11" uuid="40748ec3-b044-45ce-b7b2-481e33fed19f"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[Total Geral]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="453" y="4" width="100" height="11" uuid="b79bacfe-5e8b-4e19-b042-ddf6edfa1021"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

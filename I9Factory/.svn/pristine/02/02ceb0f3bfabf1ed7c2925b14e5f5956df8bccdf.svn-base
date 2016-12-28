@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ff98c4a6-1e87-4797-8fba-522c162765b2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pathlogoSistema" class="java.lang.String"/>
+	<parameter name="titulo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cli_dt_nascimento" class="java.util.Date">
+		<fieldDescription><![CDATA[cli_dt_nascimento]]></fieldDescription>
+	</field>
+	<field name="cli_tx_cpf" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_cpf]]></fieldDescription>
+	</field>
+	<field name="cli_tx_nome" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_nome]]></fieldDescription>
+	</field>
+	<field name="ple_nr_valorparcela" class="java.lang.Double">
+		<fieldDescription><![CDATA[ple_nr_valorparcela]]></fieldDescription>
+	</field>
+	<field name="emp_nr_proposta" class="java.lang.Integer">
+		<fieldDescription><![CDATA[emp_nr_proposta]]></fieldDescription>
+	</field>
+	<field name="emp_nr_valor_pago" class="java.lang.Double">
+		<fieldDescription><![CDATA[emp_nr_valor_pago]]></fieldDescription>
+	</field>
+	<field name="ple_nr_valordesconto" class="java.lang.Double">
+		<fieldDescription><![CDATA[ple_nr_valordesconto]]></fieldDescription>
+	</field>
+	<field name="ple_dt_pagamento" class="java.util.Date">
+		<fieldDescription><![CDATA[ple_dt_pagamento]]></fieldDescription>
+	</field>
+	<field name="ple_dt_vencimento" class="java.util.Date">
+		<fieldDescription><![CDATA[ple_dt_vencimento]]></fieldDescription>
+	</field>
+	<variable name="contador" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA["1"]]></variableExpression>
+	</variable>
+	<variable name="total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ple_nr_valorparcela}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
+	</variable>
+	<variable name="totalDesc" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ple_nr_valordesconto}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
+	</variable>
+	<variable name="totalPago" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{emp_nr_valor_pago}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Double(0)]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<image>
+				<reportElement x="11" y="13" width="59" height="46" uuid="ec4d991b-5eac-4f4b-9a7d-43635fcb4fc1"/>
+				<imageExpression><![CDATA[$P{pathlogoSistema}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="77" y="46" width="352" height="13" uuid="3c5d9788-04aa-4555-9cbe-629fac702212"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{titulo}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="10" y="62" width="534" height="1" uuid="32c9a907-36ef-44ec-b6bf-7c707a8336e6"/>
+			</line>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="444" y="48" width="100" height="11" uuid="c8401772-8700-4bcf-903b-d8c4c0013b9b"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="77" y="15" width="419" height="16" uuid="cd91fabb-309e-435f-815c-e075ac7e1f87"/>
+				<textElement>
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<text><![CDATA[CASSERP-CAIXA DE ASSISTÊNCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="77" y="30" width="302" height="13" uuid="a607438c-3d6f-46ca-8fb7-a67268a8b1cd"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[CNPJ: 04.683.415/0001-83  INSC.ESTADUAL: 04269-3]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="40" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="22" width="555" height="1" uuid="91d58439-ce67-409a-b13d-0b408e634155"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="1" y="37" width="555" height="1" uuid="8ed4d754-caa3-481d-8284-b947f8fb50a8"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="5" y="25" width="196" height="11" uuid="6e737a34-bd13-4c2e-a2eb-e4d45c994ce7"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="205" y="25" width="58" height="11" uuid="3a095afc-178d-4827-95e6-ab53f23157d0"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[CPF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="25" width="55" height="11" uuid="ae2b43be-bff4-4c49-9c91-0196132c39fc"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[Dt. Vencto.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="338" y="25" width="49" height="11" uuid="46cf93bb-3920-4868-95bd-906028a384d5"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="511" y="25" width="40" height="11" uuid="75a2bd6b-4aa5-4221-870f-d6359f8a3d1e"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[Vl. Desc.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="25" width="55" height="11" uuid="b2e3a176-c91b-4af0-a92e-50e8c2b97b27"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[Dt. Pgto.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="11" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="11" forecolor="#CCCCFF" backcolor="#CCCCFF" uuid="b48c0272-739f-46d1-9587-ec2a35eef9c3">
+					<printWhenExpression><![CDATA[new Boolean(new Integer(($V{contador}.intValue())%2).equals(new Integer("0")))]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<textField>
+				<reportElement x="205" y="0" width="74" height="11" uuid="253c6eb0-0823-4c40-b258-35bb6abcd32f"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_cpf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="0" width="196" height="11" uuid="3fb3b781-c190-4a56-bf10-94f13982a7e3"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_nome}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="338" y="0" width="49" height="11" uuid="b27f1eff-e5b3-41fd-a44f-e6b82af5ca98"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ple_nr_valorparcela}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="510" y="0" width="40" height="11" uuid="422ef294-5b3d-40d4-b514-18b0f8f94c6b"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ple_nr_valordesconto} > 0 ?$F{ple_nr_valordesconto}:null]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="279" y="0" width="55" height="11" uuid="ccb5d39d-18e4-4e93-b578-0df032e2ff5f"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ple_dt_vencimento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="421" y="0" width="53" height="11" uuid="49c9e16e-f968-4ec3-accc-8b1d0efd81e3"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ple_dt_pagamento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="29" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="4" width="555" height="1" uuid="de1b7d3b-3a38-4e31-b997-bde1253cf09c"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="4" y="9" width="100" height="11" uuid="4005320d-cc9e-48b9-8578-11376a25593c"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="450" y="9" width="100" height="11" uuid="f52386e4-1e5e-4e7d-9058-275785b0222d"/>
+				<textElement textAlignment="Right">
+					<font size="5"/>
+				</textElement>
+				<text><![CDATA[I9TI]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="33" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="3" width="555" height="1" uuid="2223cc36-b3e8-422b-b68b-b1f6b38b41e1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField pattern="#,##0.00">
+				<reportElement x="333" y="6" width="54" height="11" uuid="accb0d6a-f3ee-403c-9742-1ec2dcbe1e16"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="285" y="6" width="50" height="11" uuid="337d9e55-47de-4026-81db-125fbec1e9fb"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="484" y="6" width="67" height="10" uuid="9a97f113-01f1-4182-8708-ff940a740ac5"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalDesc}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

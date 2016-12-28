@@ -1,0 +1,62 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.easynet.gwt.i9factory.relatorio.maladireta;
+
+import br.com.easynet.gwt.i9factory.dao.Cli_clienteDAO;
+import br.com.easynet.gwt.i9factory.dao.Vw_parcelasDAO;
+import br.com.easynet.gwt.i9factory.relatorio.RelatorioBase;
+import br.com.easynet.gwt.i9factory.relatorio.carteira.Carteira;
+import br.com.easynet.gwt.i9factory.transfer.Cli_clienteT;
+import java.util.List;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
+/**
+ *
+ * @author marcos
+ */
+public class Maladireta extends RelatorioBase {
+
+    private String testo;
+
+    public void imprimir() {
+        try {
+            Cli_clienteDAO cdao = getCli_clienteDAO();
+            List<Cli_clienteT> list = cdao.getAll();
+            jRDataSource = new JRBeanCollectionDataSource(list);
+            if (!getTipo().equalsIgnoreCase("XLS")) {
+                is = Maladireta.class.getResourceAsStream("maladireta.jasper");
+            } else {
+                url = Maladireta.class.getResource("maladireta.jasper");
+            }
+            
+            getParameters().put("testo", testo);
+            getParameters().put("pathmarcadagua", application.getRealPath("images/Casserp.png"));
+
+            print("MalaDireta", " ." );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+
+
+
+    }
+
+    /**
+     * @return the testo
+     */
+    public String getTesto() {
+        return testo;
+    }
+
+    /**
+     * @param testo the testo to set
+     */
+    public void setTesto(String testo) {
+        this.testo = testo;
+    }
+}

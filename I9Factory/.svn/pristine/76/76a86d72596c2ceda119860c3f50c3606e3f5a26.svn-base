@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="abf2f008-5354-419f-a246-b0a93d05383e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pathmarcadagua" class="java.lang.String"/>
+	<parameter name="testo" class="java.lang.String"/>
+	<parameter name="pathlogo" class="java.lang.String"/>
+	<parameter name="data" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cli_tx_logradouro" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_logradouro]]></fieldDescription>
+	</field>
+	<field name="cli_tx_municipio" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_municipio]]></fieldDescription>
+	</field>
+	<field name="cli_tx_nome" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_nome]]></fieldDescription>
+	</field>
+	<field name="cli_tx_numero" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_numero]]></fieldDescription>
+	</field>
+	<field name="cli_tx_tipologradouro" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_tipologradouro]]></fieldDescription>
+	</field>
+	<field name="cli_tx_uf" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_uf]]></fieldDescription>
+	</field>
+	<field name="cli_tx_bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_bairro]]></fieldDescription>
+	</field>
+	<field name="cli_tx_cep" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_cep]]></fieldDescription>
+	</field>
+	<field name="cli_tx_complemento" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_complemento]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="800" splitType="Stretch">
+			<textField>
+				<reportElement x="43" y="143" width="495" height="20" uuid="b66e8a4c-b112-4795-9d73-5a197bb62c5f"/>
+				<textElement>
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="88" width="495" height="20" uuid="6b5188b6-f97d-4f9d-811b-8bce816aa606"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_bairro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="28" width="495" height="20" uuid="446accbe-3a8b-491a-b3d6-5d5a987ab6eb"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CEP: "+$F{cli_tx_cep}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="68" width="495" height="20" uuid="fb0b3bbb-3a8f-4d03-8315-2d2ba467ee77"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_complemento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="48" width="495" height="20" uuid="9ea78580-aa71-48f4-8958-d8a22b5de0cc"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_tipologradouro}+" "+$F{cli_tx_logradouro}+", "+$F{cli_tx_numero}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="207" width="525" height="46" uuid="47dc9338-b85c-4e69-a8f6-d4552d246b84"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="24"/>
+				</textElement>
+				<text><![CDATA[COMUNICADO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="57" y="313" width="448" height="82" uuid="57ab8744-475e-468b-b1db-9addb364069b"/>
+				<textFieldExpression><![CDATA[$P{testo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="140" y="404" width="306" height="20" uuid="8f5d276f-642d-40ab-94db-029580b06bec"/>
+				<text><![CDATA[Estamos a disposição para maiores esclarecimentos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="302" y="491" width="203" height="20" uuid="23029c5e-531a-48a9-ae08-b0c67de8d2b2"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Atenciosamente, CASSERP]]></text>
+			</staticText>
+			<image>
+				<reportElement x="57" y="403" width="77" height="67" uuid="0c7f980a-9ea1-4de2-9a42-76e133369818"/>
+				<imageExpression><![CDATA[$P{pathlogo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="140" y="421" width="306" height="20" uuid="d0d523c9-e8c1-4d76-b371-b40058fd0a4f"/>
+				<text><![CDATA[Ligue: 3214-6644, 3211-9441]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="438" width="306" height="20" uuid="b29b92d1-1ed7-44e5-87f5-050c8d17705b"/>
+				<text><![CDATA[E-mail: casserp@hotmail.com]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="182" y="520" width="323" height="20" uuid="9d63b71f-cbea-4a17-b95d-f0c5e7b8c1e2"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="45" y="108" width="495" height="20" uuid="797a8aa3-10c6-4372-b614-f3ffb5a9f065"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_municipio}+"-"+$F{cli_tx_uf}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

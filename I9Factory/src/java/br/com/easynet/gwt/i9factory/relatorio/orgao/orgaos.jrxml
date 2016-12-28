@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="pathlogoSistema" class="java.lang.String"/>
+	<parameter name="titulo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="org_nr_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[org_nr_id]]></fieldDescription>
+	</field>
+	<field name="org_tx_bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[org_tx_bairro]]></fieldDescription>
+	</field>
+	<field name="org_tx_cep" class="java.lang.String">
+		<fieldDescription><![CDATA[org_tx_cep]]></fieldDescription>
+	</field>
+	<field name="org_tx_cnpj" class="java.lang.String">
+		<fieldDescription><![CDATA[org_tx_cnpj]]></fieldDescription>
+	</field>
+	<field name="org_tx_complemento" class="java.lang.String">
+		<fieldDescription><![CDATA[org_tx_complemento]]></fieldDescription>
+	</field>
+	<field name="org_tx_inscestadual" class="java.lang.String">
+		<fieldDescription><![CDATA[org_tx_inscestadual]]></fieldDescription>
+	</field>
+	<field name="org_tx_logradouro" class="java.lang.String">
+		<fieldDescription><![CDATA[org_tx_logradouro]]></fieldDescription>
+	</field>
+	<field name="org_tx_municipio" class="java.lang.String">
+		<fieldDescription><![CDATA[org_tx_municipio]]></fieldDescription>
+	</field>
+	<field name="org_tx_nomefantasia" class="java.lang.String">
+		<fieldDescription><![CDATA[org_tx_nomefantasia]]></fieldDescription>
+	</field>
+	<field name="org_tx_numero" class="java.lang.String">
+		<fieldDescription><![CDATA[org_tx_numero]]></fieldDescription>
+	</field>
+	<field name="org_tx_razaosocial" class="java.lang.String">
+		<fieldDescription><![CDATA[org_tx_razaosocial]]></fieldDescription>
+	</field>
+	<field name="org_tx_telefone1" class="java.lang.String">
+		<fieldDescription><![CDATA[org_tx_telefone1]]></fieldDescription>
+	</field>
+	<field name="org_tx_telefone2" class="java.lang.String">
+		<fieldDescription><![CDATA[org_tx_telefone2]]></fieldDescription>
+	</field>
+	<field name="org_tx_tipologradouro" class="java.lang.String">
+		<fieldDescription><![CDATA[org_tx_tipologradouro]]></fieldDescription>
+	</field>
+	<field name="org_tx_uf" class="java.lang.String">
+		<fieldDescription><![CDATA[org_tx_uf]]></fieldDescription>
+	</field>
+	<variable name="contador" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA["1"]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="103" splitType="Stretch">
+			<image>
+				<reportElement x="11" y="13" width="59" height="46"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{pathlogoSistema}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="77" y="46" width="330" height="13"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{titulo}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="10" y="62" width="534" height="1"/>
+			</line>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="444" y="48" width="100" height="11"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="77" y="15" width="419" height="15"/>
+				<textElement>
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<text><![CDATA[CASSERP-CAIXA DE ASSISTÊNCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="77" y="30" width="302" height="13"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[CNPJ: 04.683.415/0001-83  INSC.ESTADUAL: 04269-3]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="254" y="12" width="34" height="10"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[CNPJ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="427" y="12" width="32" height="10"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[Telefone(1)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="496" y="12" width="32" height="10"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[Telefone(2)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="15" y="10" width="527" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="15" y="20" width="527" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="16" y="12" width="32" height="10"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<rectangle>
+				<reportElement x="14" y="0" width="528" height="9" forecolor="#CCCCCC" backcolor="#CCCCCC">
+					<printWhenExpression><![CDATA[new Boolean(new Integer(($V{contador}.intValue())%2).equals(new Integer("0")))]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="254" y="0" width="78" height="10"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{org_tx_cnpj}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="16" y="0" width="224" height="10"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{org_tx_nomefantasia}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="427" y="0" width="55" height="10"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{org_tx_telefone1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="496" y="0" width="43" height="10"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{org_tx_telefone2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="28" splitType="Stretch">
+			<line>
+				<reportElement x="15" y="4" width="528" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="16" y="7" width="100" height="10"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,35 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 24/out/2016, 12:20:11
+    Author     : topfontes
+*/
+
+.row-acordo.x-grid3-row {
+    background-color:#C1FFC1 !important;/* procurando*/
+}
+.row-acordo.x-grid3-row-selected {
+    background-color:#B9FFA0 !important;
+}
+
+.row-acordo.x-grid3-row-over{
+    background-color:#B9FFA0 !important;
+    background-image:none !important;
+}
+
+
+.row-normal.x-grid3-row {
+    background-color:white !important;/* procurando*/
+}
+
+.row-normal.x-grid3-row-selected {
+    background-color:scrollbar !important;
+}
+
+.row-normal.x-grid3-row-over{
+    background-color:scrollbar !important;
+    background-image:none !important;
+}
