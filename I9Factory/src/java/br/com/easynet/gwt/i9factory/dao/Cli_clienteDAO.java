@@ -443,15 +443,30 @@ public class Cli_clienteDAO extends ObjectDAO {
         }
     }
 
-    public List<Cli_clienteT> getSituacaoFinanceira(java.sql.Date data_ini, java.sql.Date data_fim, boolean inadimplentes, String tipo) throws Exception {
+    public List<Cli_clienteT> getSituacaoFinanceira(java.sql.Date data_ini, java.sql.Date data_fim, boolean inadimplentes, String tipo, int orgao) throws Exception {
         PreparedStatement pStmt = null;
         ResultSet rs = null;
         try {
+            String org_emp = "";
+            if (orgao > 0) {
+                org_emp = " and emp.org_nr_id=" + orgao;
+            }
             StringBuffer sb = new StringBuffer();
-            sb.append(" select cli_nr_id, cli_tx_nome, cli_tx_cpf,  cli_tx_matricula, cli_tx_telefone1, cli_tx_telefone2, cli_tx_celular from factory.cli_cliente");
-            sb.append(inadimplentes ? " where cli_nr_id in( " : " where cli_nr_id not in( ");
+            sb.append(" select cli.cli_nr_id, cli.cli_tx_nome, cli.cli_tx_cpf,  cli.cli_tx_matricula, cli.cli_tx_telefone1, cli.cli_tx_telefone2, cli.cli_tx_celular from factory.cli_cliente cli");
+            if (orgao > 0) {
+                sb.append(" inner join factory.orcl_orgao_cliente org on org.cli_nr_id = cli.cli_nr_id ");
+            }
+            sb.append(inadimplentes ? " where cli.cli_nr_id in( " : " where cli.cli_nr_id not in( ");
             sb.append(" select emp.cli_nr_id from factory.ple_parcelaemprestimo  ple inner join factory.emp_emprestimo emp  on ple.emp_nr_id = emp.emp_nr_id");
-            sb.append(" where ple.ple_tx_tipo = ? and ple_dt_vencimento between ? and ? and ple_dt_pagamento is null group by 1) order by cli_tx_nome");
+            sb.append(" where ple.ple_tx_tipo = ? and ple_dt_vencimento between ? and ? and ple_dt_pagamento is null ");
+            sb.append(org_emp);
+            sb.append(" group by 1)");
+            if(orgao > 0){
+                sb.append(" and org.org_nr_id = ");
+                sb.append(orgao);
+            }
+            sb.append(" order by cli_tx_nome");
+            System.out.println(sb.toString());
 
             pStmt = con.prepareStatement(sb.toString());
             pStmt.setObject(1, tipo);

@@ -23,6 +23,7 @@ public class StatusCliente extends RelatorioBase implements INotSecurity {
 
     private String tipo_parcela;
     private String quitado;
+    private int orgao;
 
     //http://localhost:8080/i9factory/i9factory/factory/relatorios/statuscliente.jsp?op=imprimir&dtinicio=01/01/2016&dtfim=01/10/2016&tipo=P&quitado=N
     @Override
@@ -38,7 +39,7 @@ public class StatusCliente extends RelatorioBase implements INotSecurity {
             Date dtFim = format.parse(getDtFim());
 
             Cli_clienteDAO cli_clienteDAO = getCli_clienteDAO();
-            List<Cli_clienteT> list = cli_clienteDAO.getSituacaoFinanceira(new java.sql.Date(dtIni.getTime()), new java.sql.Date(dtFim.getTime()), inadimplentes, getTipo_parcela());
+            List<Cli_clienteT> list = cli_clienteDAO.getSituacaoFinanceira(new java.sql.Date(dtIni.getTime()), new java.sql.Date(dtFim.getTime()), inadimplentes, getTipo_parcela(),orgao);
             jRDataSource = new JRBeanCollectionDataSource(list);
             if (!getTipo().equalsIgnoreCase("XLS")) {
                 is = StatusCliente.class.getResourceAsStream("statusclientes.jasper");
@@ -82,6 +83,20 @@ public class StatusCliente extends RelatorioBase implements INotSecurity {
      */
     public void setQuitado(String quitado) {
         this.quitado = quitado;
+    }
+
+    /**
+     * @return the orgao
+     */
+    public int getOrgao() {
+        return orgao;
+    }
+
+    /**
+     * @param orgao the orgao to set
+     */
+    public void setOrgao(int orgao) {
+        this.orgao = orgao;
     }
 
 }

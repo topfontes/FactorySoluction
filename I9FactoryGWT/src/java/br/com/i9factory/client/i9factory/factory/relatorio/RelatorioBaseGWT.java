@@ -64,6 +64,7 @@ public class RelatorioBaseGWT extends ContentPanel {
     public final String JSP_DOWNLOAD = "download.jsp?link=.";
     private MessageBox mb = new MessageBox();
     private ContentPanel cpREL = new ContentPanel(new FillLayout());
+    protected boolean carregouOrgao = false;
 
     public RelatorioBaseGWT() {
 
@@ -169,6 +170,7 @@ public class RelatorioBaseGWT extends ContentPanel {
 
     public void addCbOrgao() {
 
+        carregouOrgao = false;
         org_orgaoDAOGWT.consultarTodos();
         Timer timer = new Timer() {
             @Override
@@ -188,6 +190,7 @@ public class RelatorioBaseGWT extends ContentPanel {
                     toolBarMaster.add(new SeparatorToolItem());
                     getCbOrgao().setWidth(200);
                     layout();
+                    carregouOrgao = true;
                 }
             }
         };
