@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<parameter name="pathlogoSistema" class="java.lang.String"/>
+	<parameter name="titulo" class="java.lang.String"/><background>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cli_nr_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[cli_nr_id]]></fieldDescription>
+	</field>
+	<field name="cli_tx_cpf" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_cpf]]></fieldDescription>
+	</field>
+	<field name="cli_tx_nome" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_nome]]></fieldDescription>
+	</field>
+	<field name="orgao" class="java.lang.String">
+		<fieldDescription><![CDATA[orgao]]></fieldDescription>
+	</field>
+	<field name="cli_tx_matricula" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_matricula]]></fieldDescription>
+	</field>
+	<variable name="contador" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA["1"]]></variableExpression>
+	</variable>
+	<group name="Cliente">
+		<groupExpression><![CDATA[$F{cli_nr_id}]]></groupExpression>
+		<groupHeader>
+			<band height="29">
+				<textField>
+					<reportElement x="6" y="14" width="40" height="10" uuid="c94d2f6c-38ba-43b5-8e9d-44e21be9c387"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cli_tx_matricula}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="49" y="14" width="164" height="10" uuid="62f8f68a-74cd-40e3-90ec-bc0d8f6d6a25"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cli_tx_nome}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="213" y="14" width="58" height="10" uuid="1fb8435e-8c10-4105-ab18-31ff6c81be93"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cli_tx_cpf}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="4"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="95" splitType="Stretch">
+			<image>
+				<reportElement x="2" y="13" width="75" height="46" uuid="25b1179b-3360-4d6d-b44c-8810073921e3"/>
+				<imageExpression><![CDATA[$P{pathlogoSistema}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="77" y="46" width="330" height="12" uuid="c34c0dd1-ce48-4633-8dbb-086517864eb5"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{titulo}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="62" width="555" height="1" uuid="f1776236-6804-4b6e-ba9c-2062898ba3e2"/>
+			</line>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="453" y="46" width="100" height="10" uuid="c59ed5f1-c926-4f13-a762-7a5148919afd"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="77" y="15" width="419" height="14" uuid="84487b61-7cb5-4b21-912e-f2a60888bad7"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[CASSERP-CAIXA DE ASSISTÊNCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="77" y="30" width="302" height="12" uuid="8447c142-fe6d-4db4-a271-28f7ae92b25a"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[CNPJ: 04.683.415/0001-83  INSC.ESTADUAL: 04269-3]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="10" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="501a6297-6a89-44dc-92d6-5a7b58f35383">
+					<printWhenExpression><![CDATA[new Boolean(new Integer(($V{contador}.intValue())%2).equals(new Integer("0")))]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<textField>
+				<reportElement x="213" y="0" width="58" height="10" uuid="c1364ed3-3103-455e-81a7-533574c4f7ec"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{orgao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement x="6" y="4" width="538" height="1" uuid="c6032865-0a05-4d20-9fdb-6bbb3390da11"/>
+			</line>
+			<textField>
+				<reportElement x="7" y="10" width="112" height="12" uuid="f173963b-81b0-4eed-9a85-1b99e64c271c"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="70" y="10" width="107" height="12" uuid="e9b64a96-2f09-4a21-8d7d-8bede40b1206"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

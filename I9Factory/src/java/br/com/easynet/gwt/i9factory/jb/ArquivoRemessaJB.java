@@ -82,6 +82,7 @@ public class ArquivoRemessaJB extends SystemBase implements INotSecurity {
     private int contRegistroCaixa = 1;
     private int numeroSequencialRegCF = 0;
     private String masknumeroSeqRegCF = "";
+    private int bco_nr_id;
 
     public void pageLoad() throws Exception {
         //Aumenentando o tamanhodo buffer
@@ -127,20 +128,26 @@ public class ArquivoRemessaJB extends SystemBase implements INotSecurity {
 
     public void gerarRemessaIdsParcela() {
         try {
-            idsParcelas = idsParcelas.replace("-", ",");
-            List<Vw_parcelasT> listP = getVw_parcelasDAO().getByRemessaIdsParcelas(idsParcelas);
-            Bco_bancoT bcoT = new Bco_bancoT();
-            bcoT.setBco_nr_id(listP.get(0).getBco_nr_id());
-            List<Bco_bancoT> list = getBco_bancoDAO().getByPK(bcoT);
 
-            if (list.size() > 0) {
-                if (list.get(0).getBco_tx_nome().toUpperCase().indexOf("BRASIL") > -1) {
-                    gerarRemessaIdsParcelaBB();
-                } else {
-                    gerarRemessaIdsParcelaCF();
-                }
-            } 
- 
+            if (getBco_nr_id() == 1) {
+                gerarRemessaIdsParcelaBB();
+            } else if (getBco_nr_id() ==104){
+                gerarRemessaIdsParcelaCF();
+            }
+
+//            idsParcelas = idsParcelas.replace("-", ",");
+//            List<Vw_parcelasT> listP = getVw_parcelasDAO().getByRemessaIdsParcelas(idsParcelas);
+//            Bco_bancoT bcoT = new Bco_bancoT();
+//            bcoT.setBco_nr_id(listP.get(0).getBco_nr_id());
+//            List<Bco_bancoT> list = getBco_bancoDAO().getByPK(bcoT);
+//
+//            if (list.size() > 0) {
+//                if (list.get(0).getBco_tx_nome().toUpperCase().indexOf("BRASIL") > -1) {
+//                    gerarRemessaIdsParcelaBB();
+//                } else {
+//                    gerarRemessaIdsParcelaCF();
+//                }
+//            } 
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -151,7 +158,7 @@ public class ArquivoRemessaJB extends SystemBase implements INotSecurity {
             idsParcelas = idsParcelas.replace("-", ",");
             StringBuffer sbArquivosBancos = new StringBuffer();
             System.out.println("tipo " + vw_parcelasT.getPle_tx_tipo());
-            List<Vw_parcelasT> list = getVw_parcelasDAO().getByRemessaIdsParcelas(idsParcelas);
+            List<Vw_parcelasT> list = getVw_parcelasDAO().getByRemessaIdsParcelas(idsParcelas,bco_nr_id);
 
             int qntRegistros = 2;
             double somatorioValor = 0;
@@ -290,7 +297,7 @@ public class ArquivoRemessaJB extends SystemBase implements INotSecurity {
             idsParcelas = idsParcelas.replace("-", ",");
             StringBuffer sbArquivosBancos = new StringBuffer();
             System.out.println("tipo " + vw_parcelasT.getPle_tx_tipo());
-            List<Vw_parcelasT> list = getVw_parcelasDAO().getByRemessaIdsParcelas(idsParcelas);
+            List<Vw_parcelasT> list = getVw_parcelasDAO().getByRemessaIdsParcelas(idsParcelas, bco_nr_id);
 
             int qntRegistros = 2;
             double somatorioValor = 0;
@@ -447,16 +454,16 @@ public class ArquivoRemessaJB extends SystemBase implements INotSecurity {
             codigoBanco = Text.padLeft(bcoT.getBco_tx_codigo(), '0', 3);
             nomeBanco = Text.padRight(bcoT.getBco_tx_nome(), ' ', 20);
             System.out.println("Log nomeparametor: " + nomeParametro + " / " + codigoBanco + " / " + nomeBanco);
-            
+
             Par_parametroT parT = getPar_parametroDAOLocal().getByPar_tx_nome(nomeParametro);
             codigoConvenio = parT.getPar_tx_valor();
-            
+
             parT = getPar_parametroDAOLocal().getByPar_tx_nome("tipo_compromisso104");
-            codigoConvenio+= parT.getPar_tx_valor();
-            
+            codigoConvenio += parT.getPar_tx_valor();
+
             parT = getPar_parametroDAOLocal().getByPar_tx_nome("numero_compromisso104");
-            codigoConvenio+= parT.getPar_tx_valor();
-            
+            codigoConvenio += parT.getPar_tx_valor();
+
             codigoConvenio = Text.padRight(codigoConvenio, ' ', 20);
             //A200104               CASSERP BENEFICIOS  047BANCO DE SERGIPE    2010062900082904DEBITO AUTOMATICO                                                   0
             sb.append("A").append("1").append(codigoConvenio).append(nomeEmpresa).append(codigoBanco).append(nomeBanco).append(dataGeracao).append(sequencial).append(versaoLayout);
@@ -477,7 +484,7 @@ public class ArquivoRemessaJB extends SystemBase implements INotSecurity {
                 String idAmbienteCliente = parT.getPar_tx_valor();
                 parT = getPar_parametroDAOLocal().getByPar_tx_nome("idAmbienteCaixa");
                 String idAmbienteCaixa = parT.getPar_tx_valor();
-                
+
                 //27 posicoes
                 String brancos14 = "                           ";
                 String nrSeqRegistro = "000000";
@@ -641,5 +648,19 @@ public class ArquivoRemessaJB extends SystemBase implements INotSecurity {
      */
     public void setOrgaos(String orgaos) {
         this.orgaos = orgaos;
+    }
+
+    /**
+     * @return the bco_nr_id
+     */
+    public int getBco_nr_id() {
+        return bco_nr_id;
+    }
+
+    /**
+     * @param bco_nr_id the bco_nr_id to set
+     */
+    public void setBco_nr_id(int bco_nr_id) {
+        this.bco_nr_id = bco_nr_id;
     }
 }

@@ -599,6 +599,7 @@ public class RemessaConsultGWT extends CPConsultarBaseGWT {
             String urlAction = Constantes.URL + vw_parcelasDAOGWT.PAGE_CONSULTAR_REMESSA + "?controlidentity=" + System.currentTimeMillis() + "&";
             String url = Constantes.URL + vw_parcelasDAOGWT.PAGE_CONSULTAR_REMESSA;
             url += "?op=gerarRemessaIdsParcela&vw_parcelasT.ple_tx_tipo=" + getTipo() + "&idsParcelas=" + param;
+            url +="&bco_nr_id="+cbBanco.getValue().getBco_nr_id();
             url += "&dtEnvio=" + dtfDate.format(dfEnvio.getValue()) + "&nrSeq=" + etfSequencial.getValue();
             url += "&orgaos=" + orgaosIds;
             final Window winDownload = new Window();
@@ -607,6 +608,7 @@ public class RemessaConsultGWT extends CPConsultarBaseGWT {
             String form = "<form target=\"novo\" method=\"post\" action=\"" + urlAction + "\">";
             form += "<input type=\"hidden\" name=\"op\" value=\"gerarRemessaIdsParcela\" />";
             form += "<input type=\"hidden\" name=\"idsParcelas\" value=\"" + param + "\" />";
+            form += "<input type=\"hidden\" name=\"bco_nr_id\" value=\"" + cbBanco.getValue().getBco_nr_id() + "\" />";
             form += "<input type=\"hidden\" name=\"vw_parcelasT.ple_tx_tipo\" value=\"" + getTipo() + "\" />";
             form += "<input type=\"hidden\" name=\"dtEnvio\" value=\"" + dtfDate.format(dfEnvio.getValue()) + "\" />";
             form += "<input type=\"hidden\" name=\"nrSeq\" value=\"" + etfSequencial.getValue() + "\" />";

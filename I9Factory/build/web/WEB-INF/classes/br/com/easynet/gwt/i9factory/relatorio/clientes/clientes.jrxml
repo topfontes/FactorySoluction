@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cfa6cac4-a69e-49d0-89f8-ef6c58618ed5">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pathlogoSistema" class="java.lang.String"/>
+	<parameter name="titulo" class="java.lang.String"/>
+	<parameter name="totalItens" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cli_bt_foto" class="java.lang.Object">
+		<fieldDescription><![CDATA[cli_bt_foto]]></fieldDescription>
+	</field>
+	<field name="cli_dt_cadastro" class="java.util.Date">
+		<fieldDescription><![CDATA[cli_dt_cadastro]]></fieldDescription>
+	</field>
+	<field name="cli_dt_nascimento" class="java.util.Date">
+		<fieldDescription><![CDATA[cli_dt_nascimento]]></fieldDescription>
+	</field>
+	<field name="cli_nr_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[cli_nr_id]]></fieldDescription>
+	</field>
+	<field name="cli_tx_bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_bairro]]></fieldDescription>
+	</field>
+	<field name="cli_tx_celular" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_celular]]></fieldDescription>
+	</field>
+	<field name="cli_tx_cep" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_cep]]></fieldDescription>
+	</field>
+	<field name="cli_tx_complemento" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_complemento]]></fieldDescription>
+	</field>
+	<field name="cli_tx_cpf" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_cpf]]></fieldDescription>
+	</field>
+	<field name="cli_tx_email" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_email]]></fieldDescription>
+	</field>
+	<field name="cli_tx_estadocivil" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_estadocivil]]></fieldDescription>
+	</field>
+	<field name="cli_tx_logradouro" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_logradouro]]></fieldDescription>
+	</field>
+	<field name="cli_tx_matricula" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_matricula]]></fieldDescription>
+	</field>
+	<field name="cli_tx_municipio" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_municipio]]></fieldDescription>
+	</field>
+	<field name="cli_tx_nome" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_nome]]></fieldDescription>
+	</field>
+	<field name="cli_tx_numero" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_numero]]></fieldDescription>
+	</field>
+	<field name="cli_tx_ramal" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_ramal]]></fieldDescription>
+	</field>
+	<field name="cli_tx_rg" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_rg]]></fieldDescription>
+	</field>
+	<field name="cli_tx_sexo" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_sexo]]></fieldDescription>
+	</field>
+	<field name="cli_tx_socio" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_socio]]></fieldDescription>
+	</field>
+	<field name="cli_tx_telefone1" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_telefone1]]></fieldDescription>
+	</field>
+	<field name="cli_tx_telefone2" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_telefone2]]></fieldDescription>
+	</field>
+	<field name="cli_tx_tipologradouro" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_tipologradouro]]></fieldDescription>
+	</field>
+	<field name="cli_tx_uf" class="java.lang.String">
+		<fieldDescription><![CDATA[cli_tx_uf]]></fieldDescription>
+	</field>
+	<field name="org_nr_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[org_nr_id]]></fieldDescription>
+	</field>
+	<field name="tmp_nr_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[tmp_nr_id]]></fieldDescription>
+	</field>
+	<variable name="contador" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA["1"]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="103" splitType="Stretch">
+			<image>
+				<reportElement x="11" y="13" width="59" height="46" uuid="24d95534-ae64-44d2-863c-9c7ba18924fd"/>
+				<imageExpression><![CDATA[$P{pathlogoSistema}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="77" y="46" width="330" height="13" uuid="9fe4bde1-1f6e-45d0-99ab-90663176caed"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{titulo}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="10" y="62" width="528" height="1" uuid="70bf1720-92fc-46a1-b444-a39bdaf51509"/>
+			</line>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="437" y="48" width="100" height="11" uuid="a02e54f3-fd65-4a71-8d35-c8a6a54cf335"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="77" y="15" width="419" height="16" uuid="14d3a6b5-b1b5-4272-a18b-1ff7dbe84884"/>
+				<textElement>
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<text><![CDATA[CASSERP-CAIXA DE ASSISTÊNCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="77" y="30" width="302" height="13" uuid="e16d6018-c69d-4a49-a40b-afa7b571314c"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[CNPJ: 04.683.415/0001-83  INSC.ESTADUAL: 04269-3]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="11" y="13" width="36" height="11" uuid="5b1db698-72ec-4ed0-acf4-56da28402cd4"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[Matrícula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="13" width="32" height="11" uuid="ed24bf71-69a7-4f06-873f-1fddc119ebc6"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="288" y="13" width="32" height="11" uuid="a3a49aae-68d7-46fb-83c0-29fd94040935"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[CPF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="13" width="32" height="11" uuid="b2e94393-6530-412d-98bb-3dcf621299cd"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[Celular]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="13" width="32" height="11" uuid="956cebd9-1770-4245-83ff-e917e773f22f"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[Telefone(1)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="493" y="13" width="32" height="11" uuid="9fe7d61f-9c4b-4c2c-8a32-252e38489773"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[Telefone(2)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="11" y="12" width="527" height="1" uuid="0f50ed29-6618-4090-9d1f-51dc4e719252"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="11" y="22" width="527" height="1" uuid="bbef8786-fa94-4674-b67a-f290e7aeb075"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="13" y="0" width="524" height="10" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="937f6b5b-3aab-4b82-844c-81fe7fd4666b">
+					<printWhenExpression><![CDATA[new Boolean(new Integer(($V{contador}.intValue())%2).equals(new Integer("0")))]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="47" y="0" width="225" height="10" uuid="4606506c-3e81-4323-897e-ff7c1ba9ed3c"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_nome}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="0" width="77" height="10" uuid="17c7648f-d17f-4f63-ace8-1e360821bf0d"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_cpf}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="379" y="0" width="50" height="10" uuid="8625654a-d525-46a7-a991-848b3a7b74a6"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_celular}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="493" y="0" width="45" height="10" uuid="738fcdfb-3412-4acb-8ea1-2ba8996f9303"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_telefone1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="440" y="0" width="45" height="10" uuid="acbd3ada-0433-4b01-85a9-9a74b7e1af60"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_telefone2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="11" y="0" width="30" height="10" uuid="71b72cda-38af-414c-88b5-5e1ed76e7000"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_tx_matricula}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<line>
+				<reportElement x="12" y="4" width="526" height="1" uuid="e65806bc-7818-4566-9248-18978764e363"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="10" y="8" width="100" height="11" uuid="947438a9-7a84-4b91-8f0b-d4bdee67c6b0"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="425" y="3" width="100" height="20" uuid="d202b2e2-0d5f-43ff-bcb7-740fabbf8a53"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{totalItens}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="12" y="2" width="526" height="1" uuid="8ef55c4f-50e9-44e9-9cc3-6911eaa395f4"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="289" y="3" width="100" height="20" uuid="818a12b2-0dd0-4580-9367-d528ac77e097"/>
+				<text><![CDATA[Total de Itens]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

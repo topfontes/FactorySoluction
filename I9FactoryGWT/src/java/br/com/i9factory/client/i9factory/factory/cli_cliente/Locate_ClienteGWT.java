@@ -189,7 +189,6 @@ public class Locate_ClienteGWT extends Window {
     public void confirma() {
         if (emp_emprestimoInsertGWT != null) {
             maxPropostaTGWT = cli_clienteDAOGWT.getTreeProposta().get(cli_clienteTGWT.getCli_nr_id());
-
             emp_emprestimoInsertGWT.getNumeroProposta().setValue(maxPropostaTGWT.getUltimaProposta() + 1);
             emp_emprestimoInsertGWT.getCli_tx_matricula().setValue(cli_clienteTGWT.getCli_tx_matricula());
             emp_emprestimoInsertGWT.getCli_tx_cpf().setValue(cli_clienteTGWT.getCli_tx_cpf());

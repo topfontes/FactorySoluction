@@ -263,7 +263,7 @@ public class Vw_parcelasDAO extends ObjectDAO {
         }
     }
 
-    public List<Vw_parcelasT> getByRemessaIdsParcelas(String idsParcelas) throws Exception {
+    public List<Vw_parcelasT> getByRemessaIdsParcelas(String idsParcelas, int bco_nr_id) throws Exception {
         System.out.println("parametros parcelas = " + idsParcelas);
         PreparedStatement pStmt = null;
         ResultSet rs = null;
@@ -280,7 +280,7 @@ public class Vw_parcelasDAO extends ObjectDAO {
                 String id = listIds[i];
                 sqlWhere.append(" or vw.ple_nr_id=").append(id);
             }
-            sqlWhere.append(")");
+            sqlWhere.append(") and bco_nr_id = "+bco_nr_id);
 //            StringBuffer sql = new StringBuffer("select * from factory.vw_parcelas vw where vw.ple_dt_pagamento is null and vw.ple_nr_id in (");
 //            sql.append(idsParcelas).append(") order by ple_dt_vencimento");
             pStmt = con.prepareStatement(sql.append(sqlWhere).toString());

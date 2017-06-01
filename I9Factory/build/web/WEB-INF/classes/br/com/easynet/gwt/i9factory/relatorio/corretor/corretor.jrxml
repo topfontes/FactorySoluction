@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e4b3098f-b88e-4ab2-bcbb-68050aaedbdf">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pathlogoSistema" class="java.lang.String"/>
+	<parameter name="titulo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cor_nr_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[cor_nr_id]]></fieldDescription>
+	</field>
+	<field name="cor_tx_bairro" class="java.lang.String">
+		<fieldDescription><![CDATA[cor_tx_bairro]]></fieldDescription>
+	</field>
+	<field name="cor_tx_cep" class="java.lang.String">
+		<fieldDescription><![CDATA[cor_tx_cep]]></fieldDescription>
+	</field>
+	<field name="cor_tx_cnpj" class="java.lang.String">
+		<fieldDescription><![CDATA[cor_tx_cnpj]]></fieldDescription>
+	</field>
+	<field name="cor_tx_complemento" class="java.lang.String">
+		<fieldDescription><![CDATA[cor_tx_complemento]]></fieldDescription>
+	</field>
+	<field name="cor_tx_inscestadual" class="java.lang.String">
+		<fieldDescription><![CDATA[cor_tx_inscestadual]]></fieldDescription>
+	</field>
+	<field name="cor_tx_logradouro" class="java.lang.String">
+		<fieldDescription><![CDATA[cor_tx_logradouro]]></fieldDescription>
+	</field>
+	<field name="cor_tx_municipio" class="java.lang.String">
+		<fieldDescription><![CDATA[cor_tx_municipio]]></fieldDescription>
+	</field>
+	<field name="cor_tx_nomefantasia" class="java.lang.String">
+		<fieldDescription><![CDATA[cor_tx_nomefantasia]]></fieldDescription>
+	</field>
+	<field name="cor_tx_numero" class="java.lang.String">
+		<fieldDescription><![CDATA[cor_tx_numero]]></fieldDescription>
+	</field>
+	<field name="cor_tx_razaosocial" class="java.lang.String">
+		<fieldDescription><![CDATA[cor_tx_razaosocial]]></fieldDescription>
+	</field>
+	<field name="cor_tx_responsavel" class="java.lang.String">
+		<fieldDescription><![CDATA[cor_tx_responsavel]]></fieldDescription>
+	</field>
+	<field name="cor_tx_telefone1" class="java.lang.String">
+		<fieldDescription><![CDATA[cor_tx_telefone1]]></fieldDescription>
+	</field>
+	<field name="cor_tx_telefone2" class="java.lang.String">
+		<fieldDescription><![CDATA[cor_tx_telefone2]]></fieldDescription>
+	</field>
+	<field name="cor_tx_tipologradouro" class="java.lang.String">
+		<fieldDescription><![CDATA[cor_tx_tipologradouro]]></fieldDescription>
+	</field>
+	<field name="cor_tx_uf" class="java.lang.String">
+		<fieldDescription><![CDATA[cor_tx_uf]]></fieldDescription>
+	</field>
+	<variable name="contador" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA["1"]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="85" splitType="Stretch">
+			<image>
+				<reportElement x="11" y="13" width="59" height="46" uuid="0050ae88-abd0-41a6-b46f-2e0c7d7a1272"/>
+				<imageExpression><![CDATA[$P{pathlogoSistema}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="77" y="46" width="330" height="13" uuid="63948c93-e303-4a92-a67e-f3fadc24d74d"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{titulo}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="10" y="62" width="534" height="1" uuid="3c495bd0-191f-462a-9c20-fe4241fb52f7"/>
+			</line>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="444" y="48" width="100" height="11" uuid="0841e5e1-1303-4ee0-922b-2a079141affd"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="77" y="15" width="419" height="16" uuid="4c77b346-7e38-4c9d-9695-ba0a06a97894"/>
+				<textElement>
+					<font fontName="SansSerif" size="12"/>
+				</textElement>
+				<text><![CDATA[CASSERP-CAIXA DE ASSISTÊNCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="77" y="30" width="302" height="13" uuid="ca28809f-c852-463a-b214-5abae2f1f2f6"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[CNPJ: 04.683.415/0001-83  INSC.ESTADUAL: 04269-3]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<line>
+				<reportElement x="10" y="20" width="527" height="1" uuid="ecf78b2f-7805-439c-95d8-9a6709b87589"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="492" y="11" width="32" height="10" uuid="f689502b-1478-4508-a01d-e4ee688a0254"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[Telefone(2)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="319" y="11" width="32" height="10" uuid="fbe49576-673c-4e84-bf37-d26f12ebc1cd"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[Responsável]]></text>
+			</staticText>
+			<line>
+				<reportElement x="10" y="10" width="527" height="1" uuid="0c654881-0d07-4e9a-acd4-408f34aa76f3"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="242" y="11" width="32" height="10" uuid="72ae5014-7520-432d-8001-e9ea39b6e6b8"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[CNPJ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="439" y="11" width="32" height="10" uuid="e386a12c-eeb0-40d9-9a7f-8a570e85a169"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[Telefone(1)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="11" width="32" height="10" uuid="483b76fd-7381-43a5-b6e5-cc99c4fa925f"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<rectangle>
+				<reportElement x="12" y="0" width="524" height="9" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="5c86531c-34db-4874-9fb5-ab64e5403f3b">
+					<printWhenExpression><![CDATA[new Boolean(new Integer(($V{contador}.intValue())%2).equals(new Integer("0")))]]></printWhenExpression>
+				</reportElement>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement x="12" y="0" width="220" height="10" uuid="d3b2087c-d6ab-4aac-a2e5-1650d31bf289"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cor_tx_nomefantasia}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="242" y="0" width="70" height="10" uuid="7f0cf080-30b0-413c-93e2-4bc66560c810"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cor_tx_cnpj}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="319" y="0" width="100" height="10" uuid="6d9c9da7-4d63-4546-899a-cf32e1ecef5b"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cor_tx_responsavel}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="439" y="0" width="47" height="10" uuid="d0cd5f49-c18a-4854-bb71-a048f177ffc4"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cor_tx_telefone1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="492" y="0" width="37" height="10" uuid="ca1512db-fb9f-4dcc-912e-5ca96009d6e3"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cor_tx_telefone2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="27" splitType="Stretch">
+			<line>
+				<reportElement x="13" y="4" width="524" height="3" uuid="acd25602-6633-4afb-a483-0a13301e4547"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="8" y="7" width="100" height="11" uuid="43cc6689-9f0a-4ebc-baa2-765df81caea3"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

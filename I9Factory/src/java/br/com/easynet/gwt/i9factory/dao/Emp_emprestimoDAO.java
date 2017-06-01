@@ -327,6 +327,7 @@ public class Emp_emprestimoDAO extends ObjectDAO {
 
             sql.append(" order by ");
             sql.append(ordem);
+            System.out.println(sql.toString());
             ds = executeQuery(sql.toString(), list.toArray());
             return ds;
         } catch (Exception e) {
