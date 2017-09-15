@@ -949,7 +949,7 @@ public class Emp_emprestimoConsultGWT extends ConsultaGWTHeight {
         }
         if (dfFim.getValue() != null) {
             dtFinal = dfFim.getValue();
-        }
+        } 
 
         emp_emprestimoDao.consultarTodos(status, dtInicio, dtFinal, id_Cli, id_Corretor, id_Orgao, id_usuario, tipo_Agrupamento);
         Timer timer = new Timer() {

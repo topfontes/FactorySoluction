@@ -132,6 +132,16 @@ public class SystemBusinessBase extends BusinessBase {
         return new Tid_tipo_despesaDAO(dao);
     }
 
+    
+     public Car_cartaoDAO getCar_cartaoDAO() throws Exception {
+        dao = getDAO();
+        return new Car_cartaoDAO(dao);
+    }
+      public Tac_taxa_cartaoDAO getTac_taxa_cartaoDAO() throws Exception {
+        dao = getDAO();
+        return new Tac_taxa_cartaoDAO(dao);
+    }
+    
     public Tmp_tipomensalidadeDAO getTmp_tipomensalidadeDAO() throws Exception {
         dao = getDAO();
         return new Tmp_tipomensalidadeDAO(dao);

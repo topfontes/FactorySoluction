@@ -100,7 +100,7 @@ public class Emp_emprestimoDAOGWT implements IListenetResponse {
         msg = null;
     }
 
-    public void inserir(Emp_emprestimoTGWT emp_emprestimoT, int numeroParAFIN, float valorParcAfin, float valorMensalidade, int numeroParcMensalidade, String paramDesconto, String dataAverbacao, int id_emprestimoBaixa) {
+    public void inserir(Emp_emprestimoTGWT emp_emprestimoT, int numeroParAFIN, float valorParcAfin, float valorMensalidade, int numeroParcMensalidade, String paramDesconto, String dataAverbacao, int id_emprestimoBaixa, float tac_nr_taxa) {
         msg = null;
         list = null;
         IListenetResponse listener = new IListenetResponse() {
@@ -155,6 +155,8 @@ public class Emp_emprestimoDAOGWT implements IListenetResponse {
         param.put("paramDesconto", "ok" + paramDesconto);
         param.put("dataAverbacao", dataAverbacao);
         param.put("id_emprestimoBaixa", id_emprestimoBaixa + "");
+        param.put("tac_nr_taxa", tac_nr_taxa + "");
+        param.put("emp_emprestimoT.tac_nr_id", emp_emprestimoT.getTac_nr_id() + "");
 
         EasyAccessURL eaurl = new EasyAccessURL(listener);
         eaurl.accessJSonMap(url, param);
@@ -230,7 +232,7 @@ public class Emp_emprestimoDAOGWT implements IListenetResponse {
         eaurl.accessJSonMap(url, param);
     }
 
-    public void alterar(Emp_emprestimoTGWT emp_emprestimoT, int numeroParAFIN, float valorParcAfin, float valorMensalidade, int numeroParcMensalidade, String paramDesconto, String dataAverbacao, int id_emprestimoBaixa) {
+    public void alterar(Emp_emprestimoTGWT emp_emprestimoT, int numeroParAFIN, float valorParcAfin, float valorMensalidade, int numeroParcMensalidade, String paramDesconto, String dataAverbacao, int id_emprestimoBaixa, float tac_nr_taxa) {
         msg = null;
         list = null;
         IListenetResponse listener = new IListenetResponse() {
@@ -275,10 +277,12 @@ public class Emp_emprestimoDAOGWT implements IListenetResponse {
         param.put("emp_emprestimoT.tic_nr_id", emp_emprestimoT.getTic_nr_id() + "");
         param.put("emp_emprestimoT.emp_tx_numerocheque", emp_emprestimoT.getEmp_tx_numerocheque() + "");
         param.put("emp_emprestimoT.emp_tx_compensado", emp_emprestimoT.getEmp_tx_compensado() + "");
+        param.put("emp_emprestimoT.tac_nr_id", emp_emprestimoT.getTac_nr_id() + "");
 //        param.put("emp_emprestimoT.emp_nr_proposta", emp_emprestimoT.getEmp_nr_proposta()+"");
         param.put("paramDesconto", "ok" + paramDesconto);
         param.put("dataAverbacao", dataAverbacao);
         param.put("id_emprestimoBaixa", id_emprestimoBaixa + "");
+        param.put("tac_nr_taxa", tac_nr_taxa + "");
         EasyAccessURL eaurl = new EasyAccessURL(listener);
         eaurl.accessJSonMap(url, param);
     }
@@ -429,6 +433,10 @@ public class Emp_emprestimoDAOGWT implements IListenetResponse {
         if (!EasyContainer.clearAspas(registro.get("tic_nr_id").toString()).isEmpty()) {
             Integer tic_nr_id = Integer.parseInt(EasyContainer.clearAspas(registro.get("tic_nr_id").toString()));
             emp_emprestimoTGWT.setTic_nr_id(tic_nr_id);
+        }
+        if (!EasyContainer.clearAspas(registro.get("tac_nr_id").toString()).isEmpty()) {
+            Integer tac_nr_id = Integer.parseInt(EasyContainer.clearAspas(registro.get("tac_nr_id").toString()));
+            emp_emprestimoTGWT.setTac_nr_id(tac_nr_id);
         }
 
 

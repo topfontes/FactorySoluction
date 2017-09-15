@@ -888,7 +888,7 @@ public class Emp_emprestimoInsertGWTCopia extends CadastrarBaseGWT {
             emp_emprestimoT.setEmp_nr_valor_desc_parcela_anterior(valorDescParcelaAFIN_Anterior.getValue() != null ? valorDescParcelaAFIN_Anterior.getValue().floatValue() : 0);
             emp_emprestimoT.setEmp_nr_proposta(numeroProposta.getValue() != null ? numeroProposta.getValue().intValue() : 1);
 
-            emp_emprestimoDao.inserir(emp_emprestimoT, numParcValorAfin.getValue().intValue(), valorParcelaAFIN.getValue().floatValue(), menSocial.getValue().floatValue(), numParcMenSocial.getValue().intValue(), getParamDesconto(), dtfDate.format(dataAverbacao.getValue()), id_emprestimoBaixa);
+            emp_emprestimoDao.inserir(emp_emprestimoT, numParcValorAfin.getValue().intValue(), valorParcelaAFIN.getValue().floatValue(), menSocial.getValue().floatValue(), numParcMenSocial.getValue().intValue(), getParamDesconto(), dtfDate.format(dataAverbacao.getValue()), id_emprestimoBaixa,0);
             Timer timer = new Timer() {
 
                 public void run() {

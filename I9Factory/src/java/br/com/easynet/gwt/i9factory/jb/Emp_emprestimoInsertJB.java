@@ -25,6 +25,7 @@ public class Emp_emprestimoInsertJB extends SystemBase {
     private float[] vetDesconto;
     private String dataAverbacao;
     private int id_emprestimoBaixa;
+    private float tac_nr_taxa;
 
     public void setEmp_emprestimoT(Emp_emprestimoT emp_emprestimoT) {
         this.emp_emprestimoT = emp_emprestimoT;
@@ -65,6 +66,12 @@ public class Emp_emprestimoInsertJB extends SystemBase {
                     ple_parcelaemprestimoT.setPle_nr_seq_boleto(seq);
                     seq ++;
                 }
+                if(tac_nr_taxa > 0){
+                    float vl_liquido = valorParcAfin - (valorParcAfin*tac_nr_taxa);
+                    ple_parcelaemprestimoT.setPle_nr_valorparcela(vl_liquido);
+                }
+                
+                
                 pdao.insert(ple_parcelaemprestimoT);
             }
 
@@ -343,5 +350,19 @@ public class Emp_emprestimoInsertJB extends SystemBase {
      */
     public void setDataAverbacao(String dataAverbacao) {
         this.dataAverbacao = dataAverbacao;
+    }
+
+    /**
+     * @return the tac_nr_taxa
+     */
+    public float getTac_nr_taxa() {
+        return tac_nr_taxa;
+    }
+
+    /**
+     * @param tac_nr_taxa the tac_nr_taxa to set
+     */
+    public void setTac_nr_taxa(float tac_nr_taxa) {
+        this.tac_nr_taxa = tac_nr_taxa;
     }
 }

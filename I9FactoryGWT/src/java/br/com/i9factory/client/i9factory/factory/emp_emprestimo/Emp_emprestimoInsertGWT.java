@@ -36,6 +36,7 @@ import com.extjs.gxt.ui.client.event.TabPanelEvent;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.store.Record;
 import com.extjs.gxt.ui.client.util.Margins;
+import com.extjs.gxt.ui.client.util.SwallowEvent;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
 import com.extjs.gxt.ui.client.widget.DatePicker;
 import com.extjs.gxt.ui.client.widget.Info;
@@ -170,6 +171,12 @@ public class Emp_emprestimoInsertGWT extends CadastrarBaseGWT {
     private final NumberField emp_seq_nr_boletobb = new EasyNumberField();
     private final Label lblseqboleto = new Label("Sequencia boleto");
 
+    private ComboBox<Car_cartaoTGWT> cbCartao = new ComboBox<Car_cartaoTGWT>();
+    private ComboBox<Tac_taxa_cartaoTGWT> cbTaxaCartao = new ComboBox<Tac_taxa_cartaoTGWT>();
+    private ListStore<Ple_parcelaemprestimoTGWT> store = new ListStore<Ple_parcelaemprestimoTGWT>();
+
+    private CheckBox chkCartao = new CheckBox();
+
     public Emp_emprestimoInsertGWT() {
 
         listaPer = PortalAccordionGWT.getListPer();
@@ -211,7 +218,7 @@ public class Emp_emprestimoInsertGWT extends CadastrarBaseGWT {
         });
 
         this.setHeading("AFIN");
-        this.setSize(700, 543);
+        this.setSize(800, 680);
 
         mainCpMaster.setHeaderVisible(false);
         mainCpMaster.setBodyBorder(false);
@@ -356,6 +363,7 @@ public class Emp_emprestimoInsertGWT extends CadastrarBaseGWT {
         createColumnParcelaAberto();
         montarTela();
 
+        povoaCartao();
         getTipoCredito();
         layout();
         layout();
@@ -615,6 +623,13 @@ public class Emp_emprestimoInsertGWT extends CadastrarBaseGWT {
         cfvenc.setDateTimeFormat(dtfDate);
 
         ColumnConfig cfvalor = new ColumnConfig("ple_nr_valorparcela", "Valor", 72);
+        ColumnConfig cfvalorLiqcartao = new ColumnConfig("ple_nr_valorLiqCartao", "Vl. liq. Cartão", 72);
+        cfvalorLiqcartao.setNumberFormat(formatReal);
+        cfvalorLiqcartao.setAlignment(HorizontalAlignment.RIGHT);
+
+        ColumnConfig cftaxa = new ColumnConfig("tac_nr_taxa", "Taxa", 33);
+        cftaxa.setNumberFormat(formatReal);
+        cftaxa.setAlignment(HorizontalAlignment.RIGHT);
 
         ColumnConfig cfSeq = new ColumnConfig("ple_nr_seq_boleto", "Seq", 40);
         cfvalor.setNumberFormat(formatReal);
@@ -623,6 +638,8 @@ public class Emp_emprestimoInsertGWT extends CadastrarBaseGWT {
         configs.add(cfvenc);
         configs.add(cfvalor);
         configs.add(cfSeq);
+        configs.add(cftaxa);
+        configs.add(cfvalorLiqcartao);
 
         ColumnModel cm = new ColumnModel(configs);
         AggregationRowConfig<Ple_parcelaemprestimoTGWT> rowConfig = new AggregationRowConfig<Ple_parcelaemprestimoTGWT>();
@@ -662,6 +679,7 @@ public class Emp_emprestimoInsertGWT extends CadastrarBaseGWT {
     }
 
     public void gerarParcela() {
+        store.removeAll();
 
         if (parametrosValido()) {
 
@@ -695,13 +713,32 @@ public class Emp_emprestimoInsertGWT extends CadastrarBaseGWT {
                 list.add(parcela);
             }
 
-            ListStore<Ple_parcelaemprestimoTGWT> store = new ListStore<Ple_parcelaemprestimoTGWT>();
             store.add(list);
             createGridParcela(store);
+            calcularVlLiqCartao(cbTaxaCartao.getValue());
             layout();
         } else {
             MessageBox.alert("ATENÇÃO", "Favor preencher a o campo sequencia do boleto", null);
         }
+    }
+
+    public void calcularVlLiqCartao(Tac_taxa_cartaoTGWT tac_taxa_cartaoTGWT) {
+        float vl_liquido = 0;
+        if (tac_taxa_cartaoTGWT != null) {
+            vl_liquido = valorParcelaAFIN.getValue().floatValue() - (tac_taxa_cartaoTGWT.getTac_nr_taxa() * valorParcelaAFIN.getValue().floatValue());
+        }
+        for (Ple_parcelaemprestimoTGWT parcelaT : store.getModels()) {
+            if (vl_liquido > 0) {
+                parcelaT.setPle_nr_valorLiqCartao(vl_liquido);
+                parcelaT.setTac_nr_taxa(tac_taxa_cartaoTGWT.getTac_nr_taxa());
+                store.update(parcelaT);
+            } else {
+                parcelaT.setPle_nr_valorLiqCartao(valorParcelaAFIN.getValue().floatValue());
+                parcelaT.setTac_nr_taxa(0);
+                store.update(parcelaT);
+            }
+        }
+
     }
 
     public void calcularMenSocial() {
@@ -750,6 +787,86 @@ public class Emp_emprestimoInsertGWT extends CadastrarBaseGWT {
                 MessageBox.alert("ATENÇÃO", "Selecione um indice para continuar a operação!!", null);
             }
         }
+    }
+
+    public void povoaCartao() {
+        cbCartao.setDisplayField("car_tx_nome");
+        cbCartao.setTriggerAction(ComboBox.TriggerAction.ALL);
+        cbCartao.setEmptyText("Cartão");
+        cbCartao.setWidth(120);
+        cbCartao.setVisible(false);
+        final Car_cartaoDAOGWT car_cartaoDAOGWT = new Car_cartaoDAOGWT();
+        car_cartaoDAOGWT.consult();
+        Timer timer = new Timer() {
+
+            @Override
+            public void run() {
+                ListStore<Car_cartaoTGWT> list = car_cartaoDAOGWT.getList();
+                if (list == null) {
+                    schedule(500);
+                } else {
+                    cbCartao.setStore(list);
+                    cbCartao.getListView().refresh();
+                }
+
+            }
+        };
+        timer.schedule(100);
+        cbCartao.addSelectionChangedListener(new SelectionChangedListener<Car_cartaoTGWT>() {
+
+            @Override
+            public void selectionChanged(SelectionChangedEvent<Car_cartaoTGWT> se) {
+                if (se.getSelectedItem() != null) {
+                    povoarTaxaCartao(se.getSelectedItem());
+                }
+            }
+        });
+
+        cbTaxaCartao.setDisplayField("tac_tx_nome");
+        cbTaxaCartao.setEmptyText("Taxa");
+        cbTaxaCartao.setWidth(120);
+        cbTaxaCartao.setVisible(false);
+
+        cbTaxaCartao.setTriggerAction(ComboBox.TriggerAction.ALL);
+        ListStore<Tac_taxa_cartaoTGWT> listStore = new ListStore<Tac_taxa_cartaoTGWT>();
+
+        cbTaxaCartao.setStore(listStore);
+        cbTaxaCartao.getListView().refresh();
+        cbTaxaCartao.addSelectionChangedListener(new SelectionChangedListener<Tac_taxa_cartaoTGWT>() {
+
+            @Override
+            public void selectionChanged(SelectionChangedEvent<Tac_taxa_cartaoTGWT> se) {
+                if (se.getSelectedItem() != null) {
+                    calcularVlLiqCartao(se.getSelectedItem());
+                }
+            }
+        });
+
+    }
+
+    public void povoarTaxaCartao(Car_cartaoTGWT car_cartaoTGWT) {
+
+        final Tac_taxa_cartaoDAOGWT tac_taxa_cartaoDAOGWT = new Tac_taxa_cartaoDAOGWT();
+        tac_taxa_cartaoDAOGWT.consult(car_cartaoTGWT);
+
+        Timer timer = new Timer() {
+
+            @Override
+            public void run() {
+                ListStore<Tac_taxa_cartaoTGWT> list = tac_taxa_cartaoDAOGWT.getList();
+                if (list == null) {
+                    schedule(500);
+                } else {
+
+                    cbTaxaCartao.setStore(list);
+                    //cbTaxaCartao.getStore().add(list.getModels());
+                    //cbTaxaCartao.getListView().getStore().add(list.getModels());
+                    cbTaxaCartao.getListView().refresh();
+                    //layout();
+                }
+            }
+        };
+        timer.schedule(200);
     }
 
     public void calcularIndiceDia() {
@@ -927,7 +1044,7 @@ public class Emp_emprestimoInsertGWT extends CadastrarBaseGWT {
                     tabItem.add(cpMainDados, new RowData(1, 1, new Margins(2)));
 
                     tpProposta.setBodyBorder(true);
-                    tpProposta.setHeight(260);
+                    tpProposta.setHeight(350);
                     tpProposta.add(tbiProposta);
                     tpProposta.add(tbiParcelas);
                     tpProposta.add(tbiMensalidades);
@@ -1058,14 +1175,27 @@ public class Emp_emprestimoInsertGWT extends CadastrarBaseGWT {
                     cpObs.add(emp_tx_observacoes);
                     cpFechamento.add(cpObs);
 
+                    ContentPanel cpCartao = new ContentPanel();
+                    TableLayout layoutcartao = new TableLayout(3);
+                    layoutcartao.setCellPadding(4);
+                    cpCartao.setHeight(60);
+                    cpCartao.setHeaderVisible(false);
+                    cpCartao.setBodyBorder(false);
+                    cpCartao.setLayout(layoutcartao);
+                    cpFechamento.setBottomComponent(cpCartao);
+                    chkCartao.setBoxLabel("Cartão");
+                    cpCartao.add(chkCartao);
+                    cpCartao.add(cbCartao);
+                    cpCartao.add(cbTaxaCartao);
+
                     ContentPanel cpMainFechamento = new ContentPanel(new RowLayout(Orientation.HORIZONTAL));
-                    cpMainFechamento.setHeight(125);
+                    cpMainFechamento.setHeight(185);
                     cpMainFechamento.setHeaderVisible(false);
                     cpMainFechamento.setBodyBorder(false);
 
-                    cpMainFechamento.add(cpFechamento, new RowData(.62, 1, new Margins(3)));
+                    cpMainFechamento.add(cpFechamento, new RowData(.50, 1, new Margins(3)));
                     cpParcela.setHeaderVisible(false);
-                    cpMainFechamento.add(cpParcela, new RowData(.38, 1, new Margins(3)));
+                    cpMainFechamento.add(cpParcela, new RowData(.50, 1, new Margins(3)));
 
                     getCpMaster().add(mainCpMaster);
 
@@ -1091,6 +1221,20 @@ public class Emp_emprestimoInsertGWT extends CadastrarBaseGWT {
                             if (!chkAcordo.getValue().booleanValue()) {
                                 emp_seq_nr_boletobb.setValue(0);
                             }
+                        }
+                    });
+
+                    chkCartao.addListener(Events.OnChange, new Listener<FieldEvent>() {
+
+                        public void handleEvent(FieldEvent be) {
+                            cbCartao.setVisible(chkCartao.getValue().booleanValue());
+                            cbTaxaCartao.setVisible(chkCartao.getValue().booleanValue());
+                            if (chkCartao.getValue().booleanValue() == false) {
+                                cbCartao.setValue(null);
+                                cbTaxaCartao.setValue(null);
+                                calcularVlLiqCartao(null);
+                            }
+
                         }
                     });
 
@@ -1187,7 +1331,15 @@ public class Emp_emprestimoInsertGWT extends CadastrarBaseGWT {
             if (chkRenovacao.getValue()) {
                 id_emprestimoBaixa = 0;
             }
-            emp_emprestimoDao.inserir(emp_emprestimoT, numParcValorAfin.getValue() == null ? 0 : numParcValorAfin.getValue().intValue(), valorParcelaAFIN.getValue() == null ? 0 : valorParcelaAFIN.getValue().floatValue(), cbTipoMen.getValue() == null ? 0 : cbTipoMen.getValue().getTmp_nr_valor(), cbTipoMen.getValue() == null ? 0 : numParcMenSocial.getValue().intValue(), getParamDesconto(), dtfDate.format(dataAverbacao.getValue()), id_emprestimoBaixa);
+            
+            int tac_nr_id=0;
+            float tac_nr_taxa=0;
+            if(cbTaxaCartao.getValue()!= null){
+                tac_nr_id = cbTaxaCartao.getValue().getTac_nr_id();
+                tac_nr_taxa = cbTaxaCartao.getValue().getTac_nr_taxa();
+            }
+            emp_emprestimoT.setTac_nr_id(tac_nr_id);
+            emp_emprestimoDao.inserir(emp_emprestimoT, numParcValorAfin.getValue() == null ? 0 : numParcValorAfin.getValue().intValue(), valorParcelaAFIN.getValue() == null ? 0 : valorParcelaAFIN.getValue().floatValue(), cbTipoMen.getValue() == null ? 0 : cbTipoMen.getValue().getTmp_nr_valor(), cbTipoMen.getValue() == null ? 0 : numParcMenSocial.getValue().intValue(), getParamDesconto(), dtfDate.format(dataAverbacao.getValue()), id_emprestimoBaixa, tac_nr_taxa);
             Timer timer = new Timer() {
                 public void run() {
                     String msg = emp_emprestimoDao.getMsg();

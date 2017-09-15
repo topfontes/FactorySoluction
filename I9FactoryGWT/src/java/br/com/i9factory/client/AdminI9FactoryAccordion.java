@@ -9,6 +9,7 @@ import br.com.i9factory.client.i9factory.factory.age_agenciador.Age_agenciadorCo
 import br.com.i9factory.client.i9factory.factory.arb_arquivobanco.Arb_arquivobancoConsultGWT;
  
 import br.com.i9factory.client.i9factory.factory.bco_banco.Bco_bancoConsultGWT;
+import br.com.i9factory.client.i9factory.factory.car_cartao.Car_cartaoConsultGWT;
 import br.com.i9factory.client.i9factory.factory.cli_cliente.Cli_clienteConsultGWT;
 import br.com.i9factory.client.i9factory.factory.cor_corretora.Cor_corretoraConsultGWT;
 import br.com.i9factory.client.i9factory.factory.ctp_conta_pagar.Ctp_conta_pagarConsultGWT;
@@ -203,6 +204,9 @@ public class AdminI9FactoryAccordion extends AMenuHandlerAccordion {
             }else if ("I9FACTORY.situacaoFin".equalsIgnoreCase(acao)) {
                 tabItem.setText("Situação Financeira");
                 cp.add(new SituacaofinanceiraGWT());
+            }else if ("I9FACTORY.cartao".equalsIgnoreCase(acao)) {
+                tabItem.setText("Consulta Cartão");
+                cp.add(new Car_cartaoConsultGWT());
             }else {
                 MessageBox.alert("Opcao ainda nao implementada", "Em breve esta opcao estara disponivel!", null);
             }

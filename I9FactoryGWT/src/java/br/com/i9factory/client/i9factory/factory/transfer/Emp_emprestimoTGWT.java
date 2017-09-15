@@ -319,5 +319,13 @@ public class Emp_emprestimoTGWT extends BaseModel {
     public void setEmp_seq_nr_boletobb(int emp_seq_nr_boletobb) {
         set("emp_seq_nr_boletobb", emp_seq_nr_boletobb);
     }
+    public int getTac_nr_id() {
+        return ((Integer) get("tac_nr_id")).intValue();
+//    return get("emp_nr_id");
+    }
+
+    public void setTac_nr_id(int tac_nr_id) {
+        set("tac_nr_id", tac_nr_id);
+    }
 
 }

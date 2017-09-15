@@ -41,6 +41,7 @@ ${emp_emprestimoJB.execute}
 ,"emp_tx_compensado":"${item.row[31].value}"
 ,"emp_tx_acordo":"${item.row[32].value}"
 ,"emp_seq_nr_boletobb":"${item.row[33].value}"
+,"tac_nr_id":"${item.row[34].value}"
 }
 </c:forEach>
 ]}

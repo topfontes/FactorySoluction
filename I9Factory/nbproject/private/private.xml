@@ -2,6 +2,11 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/Users/topfontes/projetos/FactorySoluction/I9Factory/src/java/br/com/easynet/gwt/i9factory/dao/Emp_emprestimoDAO.java</file>
+            <file>file:/Users/topfontes/projetos/FactorySoluction/I9Factory/src/java/br/com/easynet/gwt/i9factory/jb/Tac_taxa_cartaoJB.java</file>
+            <file>file:/Users/topfontes/projetos/FactorySoluction/I9Factory/src/java/br/com/easynet/gwt/i9factory/bl/Tac_taxa_cartaoBL.java</file>
+            <file>file:/Users/topfontes/projetos/FactorySoluction/I9Factory/src/java/br/com/easynet/gwt/i9factory/dao/Tac_taxa_cartaoDAO.java</file>
+        </group>
     </open-files>
 </project-private>

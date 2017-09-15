@@ -1,7 +1,6 @@
 package br.com.easynet.gwt.i9factory.bl	;
 
 import java.util.List;
-import br.com.jdragon.dao.DAOFactory;
 import br.com.easynet.gwt.i9factory.dao.*;
 import br.com.easynet.gwt.i9factory.transfer.*;
 import br.com.easynet.bl.BusinessException;

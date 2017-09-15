@@ -43,7 +43,7 @@ public class Emp_emprestimoDAO extends ObjectDAO {
         PreparedStatement pStmt = null;
         synchronized (inserir) {
             try {
-                String sql = "insert into factory.emp_emprestimo  ( cli_nr_id, Cor_nr_id, idc_nr_id, emp_dt_emprestimo, emp_nr_valor, emp_tx_status, emp_tx_observacoes, emp_dt_aprovacao, emp_dt_liberacao, emp_dt_quitacao, emp_dt_enviobanco, emp_dt_retornobanco, emp_tx_cdlancamentobanco, emp_tx_cdlancamentopendente, emp_tx_numerocheque, org_nr_id, emp_nr_valor_parcelas_anterior,emp_nr_valor_desc_parcela_anterior,emp_nr_valor_afin_bruto,emp_nr_valor_afin_liquido,emp_nr_proposta, usu_nr_id, tic_nr_id, emp_tx_compensado, emp_tx_acordo,emp_seq_nr_boletobb) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ,?)";
+                String sql = "insert into factory.emp_emprestimo  ( cli_nr_id, Cor_nr_id, idc_nr_id, emp_dt_emprestimo, emp_nr_valor, emp_tx_status, emp_tx_observacoes, emp_dt_aprovacao, emp_dt_liberacao, emp_dt_quitacao, emp_dt_enviobanco, emp_dt_retornobanco, emp_tx_cdlancamentobanco, emp_tx_cdlancamentopendente, emp_tx_numerocheque, org_nr_id, emp_nr_valor_parcelas_anterior,emp_nr_valor_desc_parcela_anterior,emp_nr_valor_afin_bruto,emp_nr_valor_afin_liquido,emp_nr_proposta, usu_nr_id, tic_nr_id, emp_tx_compensado, emp_tx_acordo,emp_seq_nr_boletobb, tac_nr_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ,?,?)";
                 pStmt = con.prepareStatement(sql);
                 pStmt.setObject(1, emp_emprestimoT.getCli_nr_id());
                 pStmt.setObject(2, emp_emprestimoT.getCor_nr_id());
@@ -80,6 +80,7 @@ public class Emp_emprestimoDAO extends ObjectDAO {
                 pStmt.setObject(24, "N");
                 pStmt.setObject(25, emp_emprestimoT.getEmp_tx_acordo());
                 pStmt.setObject(26, emp_emprestimoT.getEmp_seq_nr_boletobb());
+                pStmt.setObject(27, emp_emprestimoT.getTac_nr_id());
                 pStmt.execute();
                 emp_emprestimoT.setEmp_nr_id(maxId());
             } catch (Exception e) {
@@ -96,7 +97,7 @@ public class Emp_emprestimoDAO extends ObjectDAO {
     public void update(Emp_emprestimoT emp_emprestimoT) throws Exception {
         PreparedStatement pStmt = null;
         try {
-            String sql = "update factory.emp_emprestimo set  cli_nr_id=?, cor_nr_id=?, idc_nr_id=?, emp_dt_emprestimo=?, emp_nr_valor=?, emp_tx_status=?, emp_tx_observacoes=?, emp_dt_aprovacao=?, emp_dt_liberacao=?, emp_dt_quitacao=?, emp_dt_enviobanco=?, emp_dt_retornobanco=?, emp_tx_cdlancamentobanco=?, emp_tx_cdlancamentopendente=?, emp_tx_numerocheque=?, org_nr_id=?, emp_nr_valor_parcelas_anterior=?, emp_nr_valor_desc_parcela_anterior=?, emp_nr_valor_afin_bruto=?, emp_nr_valor_afin_liquido=?, emp_nr_proposta=?, usu_nr_id=?, tic_nr_id =?, emp_tx_compensado=? , emp_tx_acordo=?, emp_seq_nr_boletobb=? where  emp_nr_id=?";
+            String sql = "update factory.emp_emprestimo set  cli_nr_id=?, cor_nr_id=?, idc_nr_id=?, emp_dt_emprestimo=?, emp_nr_valor=?, emp_tx_status=?, emp_tx_observacoes=?, emp_dt_aprovacao=?, emp_dt_liberacao=?, emp_dt_quitacao=?, emp_dt_enviobanco=?, emp_dt_retornobanco=?, emp_tx_cdlancamentobanco=?, emp_tx_cdlancamentopendente=?, emp_tx_numerocheque=?, org_nr_id=?, emp_nr_valor_parcelas_anterior=?, emp_nr_valor_desc_parcela_anterior=?, emp_nr_valor_afin_bruto=?, emp_nr_valor_afin_liquido=?, emp_nr_proposta=?, usu_nr_id=?, tic_nr_id =?, emp_tx_compensado=? , emp_tx_acordo=?, emp_seq_nr_boletobb=?, tac_nr_id=? where  emp_nr_id=?";
             pStmt = con.prepareStatement(sql);
             pStmt.setObject(1, emp_emprestimoT.getCli_nr_id());
             pStmt.setObject(2, emp_emprestimoT.getCor_nr_id());
@@ -137,7 +138,8 @@ public class Emp_emprestimoDAO extends ObjectDAO {
             pStmt.setObject(24, emp_emprestimoT.getEmp_tx_compensado());
             pStmt.setObject(25, emp_emprestimoT.getEmp_tx_acordo());
             pStmt.setObject(26, emp_emprestimoT.getEmp_seq_nr_boletobb());
-            pStmt.setObject(27, emp_emprestimoT.getEmp_nr_id());
+            pStmt.setObject(27, emp_emprestimoT.getTac_nr_id());
+            pStmt.setObject(28, emp_emprestimoT.getEmp_nr_id());
 
             pStmt.execute();
         } catch (Exception e) {
@@ -256,6 +258,10 @@ public class Emp_emprestimoDAO extends ObjectDAO {
             
             emp_emprestimoT.setEmp_tx_acordo(rs.getString("emp_tx_acordo"));
             emp_emprestimoT.setEmp_seq_nr_boletobb(rs.getInt("emp_seq_nr_boletobb"));
+            try {
+                emp_emprestimoT.setTac_nr_id(rs.getInt("tac_nr_id"));
+            } catch (Exception e) {
+            }
             objs.add(emp_emprestimoT);
         }
         return objs;
@@ -283,7 +289,7 @@ public class Emp_emprestimoDAO extends ObjectDAO {
                 dtStatus = " emp_dt_quitacao ";
             }
 
-            sql.append("select distinct emp.emp_nr_id, emp.cli_nr_id, emp.age_nr_id, emp.idc_nr_id, emp.emp_dt_emprestimo, emp.emp_nr_valor, emp.emp_tx_status, replace(replace(emp.emp_tx_observacoes,chr(10),'' ), chr(13),'') as emp_tx_observacoes, emp.emp_dt_aprovacao, emp.emp_dt_liberacao, emp.emp_dt_quitacao, emp.emp_dt_enviobanco, emp.emp_dt_retornobanco, emp.emp_tx_cdlancamentobanco, emp.emp_tx_cdlancamentopendente, emp.emp_tx_numerocheque, emp.org_nr_id, emp.cor_nr_id, cli.cli_tx_nome, org.org_tx_nomefantasia as org_tx_nome,cor.cor_tx_nomefantasia as cor_tx_nome, cli.cli_tx_cpf, cli.cli_tx_matricula,banco.bco_tx_nome, emp_nr_valor_parcelas_anterior, emp_nr_valor_desc_parcela_anterior, emp_nr_valor_afin_bruto, emp_nr_valor_afin_liquido, emp_nr_proposta, usu.usu_tx_nome, tic_nr_id, emp_tx_compensado, emp_tx_acordo, emp_seq_nr_boletobb from factory.emp_emprestimo as emp");
+            sql.append("select distinct emp.emp_nr_id, emp.cli_nr_id, emp.age_nr_id, emp.idc_nr_id, emp.emp_dt_emprestimo, emp.emp_nr_valor, emp.emp_tx_status, replace(replace(emp.emp_tx_observacoes,chr(10),'' ), chr(13),'') as emp_tx_observacoes, emp.emp_dt_aprovacao, emp.emp_dt_liberacao, emp.emp_dt_quitacao, emp.emp_dt_enviobanco, emp.emp_dt_retornobanco, emp.emp_tx_cdlancamentobanco, emp.emp_tx_cdlancamentopendente, emp.emp_tx_numerocheque, emp.org_nr_id, emp.cor_nr_id, cli.cli_tx_nome, org.org_tx_nomefantasia as org_tx_nome,cor.cor_tx_nomefantasia as cor_tx_nome, cli.cli_tx_cpf, cli.cli_tx_matricula,banco.bco_tx_nome, emp_nr_valor_parcelas_anterior, emp_nr_valor_desc_parcela_anterior, emp_nr_valor_afin_bruto, emp_nr_valor_afin_liquido, emp_nr_proposta, usu.usu_tx_nome, tic_nr_id, emp_tx_compensado, emp_tx_acordo, emp_seq_nr_boletobb, tac_nr_id from factory.emp_emprestimo as emp");
             sql.append(" inner join factory.cor_corretora as cor on(emp.cor_nr_id = cor.cor_nr_id) ");
             sql.append(" inner join factory.org_orgao as org on(org.org_nr_id = emp.org_nr_id) ");
             sql.append(" inner join factory.cli_cliente as cli on(cli.cli_nr_id = emp.cli_nr_id) ");

@@ -1,6 +1,5 @@
 package br.com.i9factory.client.i9factory.factory.emp_emprestimo;
 
-
 import br.com.i9factory.client.i9factory.factory.transfer.*;
 import br.com.i9factory.client.i9factory.factory.dao.*;
 import br.com.easynet.gwt.client.AlterarExcluirBaseGWT;
@@ -22,6 +21,7 @@ import com.extjs.gxt.ui.client.event.Events;
 import com.extjs.gxt.ui.client.event.FieldEvent;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.event.SelectionChangedEvent;
+import com.extjs.gxt.ui.client.event.SelectionChangedListener;
 import com.extjs.gxt.ui.client.event.SelectionListener;
 import com.extjs.gxt.ui.client.event.TabPanelEvent;
 import com.extjs.gxt.ui.client.store.ListStore;
@@ -151,7 +151,16 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
     private ComboBox<Tic_tipo_creditoTGWT> cbTipocred = new ComboBox<Tic_tipo_creditoTGWT>();
     private ContentPanel cpCredito = new ContentPanel();
     private CheckBox chkCompensado = new CheckBox();
-    private Button btnCompensado = new Button("Atualizar",Icones.ICONS.upload());
+    private Button btnCompensado = new Button("Atualizar", Icones.ICONS.upload());
+
+    private ComboBox<Car_cartaoTGWT> cbCartao = new ComboBox<Car_cartaoTGWT>();
+    private ComboBox<Tac_taxa_cartaoTGWT> cbTaxaCartao = new ComboBox<Tac_taxa_cartaoTGWT>();
+    private ListStore<Ple_parcelaemprestimoTGWT> store = new ListStore<Ple_parcelaemprestimoTGWT>();
+    private boolean loadUpdate = false;
+
+    private CheckBox chkCartao = new CheckBox();
+    private Tac_taxa_cartaoTGWT tac_taxa_cartaoTGWT;
+    private Grid grid = null;
 
     public Emp_emprestimoUpdateDeleteGWT() {
 
@@ -165,7 +174,7 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
         btnLoc.setIcon(ICONS.find());
         btnNew.setIcon(ICONS.novo());
         this.setHeading("Alteração AFIN.");
-        this.setSize(700, 518);
+        this.setSize(800, 640);
 
         mainCpMaster.setHeaderVisible(false);
         mainCpMaster.setBodyBorder(false);
@@ -202,7 +211,6 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
                 calcularMenSocial();
             }
         });
-
 
         valorAfin.addListener(Events.OnChange, new Listener<FieldEvent>() {
 
@@ -242,7 +250,6 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
         });
 
         dataAverbacao.getPropertyEditor().setFormat(dtfDate);
-
 
         tx_locate.addListener(Events.OnKeyPress, new Listener<FieldEvent>() {
 
@@ -302,34 +309,47 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
                 }
             }
         });
-        
+
         btnCompensado.addSelectionListener(new SelectionListener<ButtonEvent>() {
 
             @Override
             public void componentSelected(ButtonEvent ce) {
-                emp_emprestimoTGWT.setEmp_tx_compensado(chkCompensado.getValue().booleanValue()?"S":"N");
+                emp_emprestimoTGWT.setEmp_tx_compensado(chkCompensado.getValue().booleanValue() ? "S" : "N");
                 emp_emprestimoDao.updateCompensado(emp_emprestimoTGWT);
                 Timer timer = new Timer() {
 
                     @Override
                     public void run() {
-                        if(emp_emprestimoDao.getMsg() == null){
+                        if (emp_emprestimoDao.getMsg() == null) {
                             schedule(300);
-                        }else{
-                            if(emp_emprestimoDao.getMsg().indexOf("sucesso")> -1){
+                        } else {
+                            if (emp_emprestimoDao.getMsg().indexOf("sucesso") > -1) {
                                 Info.display("ATENÇÃO", "Operação realizada com sucesso");
                             }
                         }
                     }
-                };timer.schedule(200);
+                };
+                timer.schedule(200);
             }
         });
 
         createColumnParcelaAberto();
+        povoaCartao();
+        chkCartao.addListener(Events.OnChange, new Listener<FieldEvent>() {
+            public void handleEvent(FieldEvent be) {
+                cbCartao.setVisible(chkCartao.getValue().booleanValue());
+                cbTaxaCartao.setVisible(chkCartao.getValue().booleanValue());
+                if (chkCartao.getValue().booleanValue() == false) {
+                    cbCartao.setValue(null);
+                    cbTaxaCartao.setValue(null);
+                    calcularVlLiqCartao(null);
+                }
+
+            }
+        });
 //        montarTela();
         layout();
     }
-
 
     public void getTipoCredito() {
         final Tic_tipo_creditoDAOGWT dAOGWT = new Tic_tipo_creditoDAOGWT();
@@ -347,7 +367,7 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
                     cbTipocred.setDisplayField("tic_tx_nome");
                     cbTipocred.setTriggerAction(ComboBox.TriggerAction.ALL);
                     cbTipocred.getView().refresh();
-                    if(emp_emprestimoTGWT.getTic_nr_id() > 0){
+                    if (emp_emprestimoTGWT.getTic_nr_id() > 0) {
                         cbTipocred.setValue(cbTipocred.getStore().findModel("tic_nr_id", emp_emprestimoTGWT.getTic_nr_id()));
                     }
                 }
@@ -374,8 +394,7 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
 
         return cpCredito;
     }
-    
-    
+
     public void setValorParcelasPendentes() {
         float valorDesc = 0;
         float PercDesc = 0;
@@ -450,7 +469,6 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
             }
         });
 
-
         cfvalorDesc.setRenderer(new GridCellRenderer<Ple_parcelaemprestimoTGWT>() {
 
             public Object render(Ple_parcelaemprestimoTGWT model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<Ple_parcelaemprestimoTGWT> store, Grid<Ple_parcelaemprestimoTGWT> grid) {
@@ -510,7 +528,6 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
 
             storeParcelasAberto.commitChanges();
 
-
             String q = "1";
         } catch (Exception e) {
             e.printStackTrace();
@@ -528,16 +545,27 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
         ColumnConfig cfvalor = new ColumnConfig("ple_nr_valorparcela", "Valor", 80);
         cfvalor.setNumberFormat(formatReal);
         cfvalor.setAlignment(HorizontalAlignment.RIGHT);
+
+        ColumnConfig cftaxa = new ColumnConfig("tac_nr_taxa", "Taxa", 33);
+        cftaxa.setNumberFormat(formatReal);
+        cftaxa.setAlignment(HorizontalAlignment.RIGHT);
+
+        ColumnConfig cfvalorLiqcartao = new ColumnConfig("ple_nr_valorLiqCartao", "Vl. liq. Cartão", 72);
+        cfvalorLiqcartao.setNumberFormat(formatReal);
+        cfvalorLiqcartao.setAlignment(HorizontalAlignment.RIGHT);
+
         configs.add(cfParcela);
         configs.add(cfvenc);
         configs.add(cfvalor);
+        configs.add(cftaxa);
+        configs.add(cfvalorLiqcartao);
 
         ColumnModel cm = new ColumnModel(configs);
         AggregationRowConfig<Ple_parcelaemprestimoTGWT> rowConfig = new AggregationRowConfig<Ple_parcelaemprestimoTGWT>();
         rowConfig.setSummaryFormat("ple_nr_valorparcela", formatReal);
         rowConfig.setSummaryType("ple_nr_valorparcela", SummaryType.SUM);
         cm.addAggregationRow(rowConfig);
-        Grid grid = new Grid(store, cm);
+        grid = new Grid(store, cm);
 
         grid.setLoadMask(true);
         grid.setStyleAttribute("borderTop", "none");
@@ -576,6 +604,7 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
         ListStore<Ple_parcelaemprestimoTGWT> store = new ListStore<Ple_parcelaemprestimoTGWT>();
         store.add(list);
         createGridParcela(store);
+        calcularVlLiqCartao(cbTaxaCartao.getValue());
         layout();
     }
 
@@ -630,42 +659,6 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
         }
     }
 
-//    public void calcularValorAFIN() {
-//        boolean administrador = locatePerfil(USUARIO_ADM);
-//        if (valorAfin.getValue() != null & numParcValorAfin.getValue() != null & indice > 0) {
-////            float valorJuros = valorAfin.getValue().floatValue() * indice / 100;
-////            float valorAfin_juros = valorAfin.getValue().floatValue() + valorJuros;
-////            float vlParcela = valorAfin_juros / numParcValorAfin.getValue().floatValue();
-//            float vlParcela = valorAfin.getValue().floatValue() * indice;
-//
-//            if (indice > 0) {
-//                valorParcelaAFIN.setValue(vlParcela);
-//            }
-//            float valorParcelas = 0;
-//            if (valorParcelaAFIN_Anterior.getValue() != null) {
-//                valorAFIN_Bruto.setValue(valorAfin.getValue().floatValue() - valorParcelaAFIN_Anterior.getValue().floatValue());
-//                valorParcelas = valorParcelaAFIN_Anterior.getValue().floatValue();
-//            } else {
-//                valorAFIN_Bruto.setValue(valorAfin.getValue().floatValue());
-//            }
-//            if (valorDescParcelaAFIN_Anterior.getValue() != null) {
-//                valorAFIN_Liquido.setValue(valorAfin.getValue().floatValue() - valorParcelas + valorDescParcelaAFIN_Anterior.getValue().floatValue());
-//            } else {
-//                valorAFIN_Liquido.setValue(valorAfin.getValue().floatValue() - valorParcelas);
-//            }
-//            numParcValorAfin.setEditable(administrador);
-//            valorParcelaAFIN.setEditable(administrador);
-//
-//            gerarParcela();
-//
-//        } else {
-//            btnGeraParcela.setEnabled(false);
-//            if (indice == 0) {
-//                MessageBox.alert("ATENÇÃO", "Selecione um indice para realiza continuar a operação!!", null);
-//            }
-//        }
-//    }
-
     public void addComboCorretor() {
         comboCorretor.setStore(cor_corretoraDAOGWT.getList());
         comboCorretor.setAllowBlank(false);
@@ -674,11 +667,11 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
         comboCorretor.setDisplayField("cor_tx_razaosocial");
         comboCorretor.getView().refresh();
         comboCorretor.setValue(cor_corretoraDAOGWT.getMap().get(emp_emprestimoTGWT.getCor_nr_id()));
-        cp.add(comboCorretor);
+        //cp.add(comboCorretor);
         layout();
-        
+
     }
-    
+
     public void calcularIndiceDia() {
         int dia = Integer.parseInt(dtfDia.format(new Date()));
         for (Idc_indiceTGWT idc_indiceTGWT : (List<Idc_indiceTGWT>) idc_indiceDAOGWT.getList().getModels()) {
@@ -798,9 +791,11 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
         gridIndx.getSelectionModel().addListener(Events.SelectionChange, new Listener<SelectionChangedEvent<Idc_indiceTGWT>>() {
 
             public void handleEvent(SelectionChangedEvent<Idc_indiceTGWT> be) {
+
                 indice = be.getSelection().get(0).getIdc_nr_valor();
                 idc_nr_id = be.getSelection().get(0).getIdc_nr_id();
                 calcularValorAFIN();
+                
             }
         });
 
@@ -832,12 +827,12 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
         tabItem.add(cpMainDados, new RowData(1, 1, new Margins(2)));
 
         tpProposta.setBodyBorder(true);
-        tpProposta.setHeight(240);
+        tpProposta.setHeight(350);
         tpProposta.add(tbiProposta);
         tpProposta.add(tbiParcelas);
         tbiParcelas.setLayout(new FillLayout());
         tbiParcelas.add(cpParcelasAberto);
-        
+
         tpProposta.add(tbiCredito);
         tbiCredito.add(getFieldsCredito());
         getTipoCredito();
@@ -925,7 +920,7 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
         comboCorretor.setWidth(300);
         cp.setHeaderVisible(false);
         cp.setBodyBorder(false);
-        cpObs.add(cp);
+        cpObs.add(comboCorretor);
 
         cpObs.add(addLabelTopico("Obs.................:"));
         emp_tx_observacoes.setWidth(300);
@@ -934,14 +929,28 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
         cpObs.add(emp_tx_observacoes);
         cpFechamento.add(cpObs);
 
+        ContentPanel cpCartao = new ContentPanel();
+        TableLayout layoutcartao = new TableLayout(3);
+        layoutcartao.setCellPadding(4);
+        cpCartao.setHeight(60);
+        cpCartao.setHeaderVisible(false);
+        cpCartao.setBodyBorder(false);
+        cpCartao.setLayout(layoutcartao);
+        cpFechamento.setBottomComponent(cpCartao);
+        chkCartao.setBoxLabel("Cartão");
+        cpCartao.add(chkCartao);
+        cpCartao.add(cbCartao);
+        cpCartao.add(cbTaxaCartao);
+//
+
         ContentPanel cpMainFechamento = new ContentPanel(new RowLayout(Orientation.HORIZONTAL));
-        cpMainFechamento.setHeight(125);
+        cpMainFechamento.setHeight(185);
         cpMainFechamento.setHeaderVisible(false);
         cpMainFechamento.setBodyBorder(false);
 
-        cpMainFechamento.add(cpFechamento, new RowData(.62, 1, new Margins(3)));
+        cpMainFechamento.add(cpFechamento, new RowData(.50, 1, new Margins(3)));
         cpParcela.setHeaderVisible(false);
-        cpMainFechamento.add(cpParcela, new RowData(.38, 1, new Margins(3)));
+        cpMainFechamento.add(cpParcela, new RowData(.50, 1, new Margins(3)));
 
         tbiProposta.add(cpProposta);
         tbiProposta.add(cpMainFechamento);
@@ -951,6 +960,133 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
         preencherDadosPropsta();
         layout();
 
+    }
+
+    public void povoaCartao() {
+        cbCartao.setDisplayField("car_tx_nome");
+        cbCartao.setTriggerAction(ComboBox.TriggerAction.ALL);
+        cbCartao.setEmptyText("Cartão");
+        cbCartao.setWidth(120);
+        cbCartao.setVisible(false);
+        final Car_cartaoDAOGWT car_cartaoDAOGWT = new Car_cartaoDAOGWT();
+        car_cartaoDAOGWT.consult();
+        Timer timer = new Timer() {
+
+            @Override
+            public void run() {
+                ListStore<Car_cartaoTGWT> list = car_cartaoDAOGWT.getList();
+                if (list == null) {
+                    schedule(500);
+                } else {
+                    cbCartao.setStore(list);
+                    cbCartao.getListView().refresh();
+                }
+
+            }
+        };
+        timer.schedule(100);
+        cbCartao.addSelectionChangedListener(new SelectionChangedListener<Car_cartaoTGWT>() {
+
+            @Override
+            public void selectionChanged(SelectionChangedEvent<Car_cartaoTGWT> se) {
+                if (se.getSelectedItem() != null) {
+                    povoarTaxaCartao(se.getSelectedItem());
+                }
+            }
+        });
+
+        cbTaxaCartao.setDisplayField("tac_tx_nome");
+        cbTaxaCartao.setEmptyText("Taxa");
+        cbTaxaCartao.setWidth(120);
+        cbTaxaCartao.setVisible(false);
+
+        cbTaxaCartao.setTriggerAction(ComboBox.TriggerAction.ALL);
+        ListStore<Tac_taxa_cartaoTGWT> listStore = new ListStore<Tac_taxa_cartaoTGWT>();
+
+        cbTaxaCartao.setStore(listStore);
+        cbTaxaCartao.getListView().refresh();
+        cbTaxaCartao.addSelectionChangedListener(new SelectionChangedListener<Tac_taxa_cartaoTGWT>() {
+
+            @Override
+            public void selectionChanged(SelectionChangedEvent<Tac_taxa_cartaoTGWT> se) {
+                if (se.getSelectedItem() != null) {
+                    calcularVlLiqCartao(se.getSelectedItem());
+                }
+            }
+        });
+    }
+
+    public void calcularVlLiqCartao(Tac_taxa_cartaoTGWT tac_taxa_cartaoTGWT) {
+        float vl_liquido = 0;
+        if (tac_taxa_cartaoTGWT != null) {
+            vl_liquido = valorParcelaAFIN.getValue().floatValue() - (tac_taxa_cartaoTGWT.getTac_nr_taxa() * valorParcelaAFIN.getValue().floatValue());
+        }
+        store = grid.getStore();
+        for (Ple_parcelaemprestimoTGWT parcelaT : store.getModels()) {
+            if (vl_liquido > 0) {
+                parcelaT.setPle_nr_valorLiqCartao(vl_liquido);
+                parcelaT.setTac_nr_taxa(tac_taxa_cartaoTGWT.getTac_nr_taxa());
+                store.update(parcelaT);
+            } else {
+                parcelaT.setPle_nr_valorLiqCartao(valorParcelaAFIN.getValue().floatValue());
+                parcelaT.setTac_nr_taxa(0);
+                store.update(parcelaT);
+            }
+        }
+    }
+
+    public void calcularVlLiqCartaoReverso() {
+        float vl_liquido = 0;
+
+        store = (ListStore<Ple_parcelaemprestimoTGWT>) grid.getStore();
+        tac_taxa_cartaoTGWT = cbTaxaCartao.getValue();
+        for (Ple_parcelaemprestimoTGWT parcelaT : store.getModels()) {
+            //if (parcelaT.getPle_tx_tipo().equalsIgnoreCase("P")) {
+                parcelaT.setPle_nr_valorLiqCartao(valorParcelaAFIN.getValue().floatValue() - (tac_taxa_cartaoTGWT.getTac_nr_taxa() * valorParcelaAFIN.getValue().floatValue()));
+                //parcelaT.setPle_nr_valorparcela(valorParcelaAFIN.getValue().floatValue());
+                parcelaT.setTac_nr_taxa(tac_taxa_cartaoTGWT.getTac_nr_taxa());
+                store.update(parcelaT);
+            //}
+
+        }
+    }
+
+    public void povoarTaxaCartao(Car_cartaoTGWT car_cartaoTGWT) {
+
+        final Tac_taxa_cartaoDAOGWT tac_taxa_cartaoDAOGWT = new Tac_taxa_cartaoDAOGWT();
+        tac_taxa_cartaoDAOGWT.consult(car_cartaoTGWT);
+
+        Timer timer = new Timer() {
+
+            @Override
+            public void run() {
+                ListStore<Tac_taxa_cartaoTGWT> list = tac_taxa_cartaoDAOGWT.getList();
+                if (list == null) {
+                    schedule(500);
+                } else {
+
+                    cbTaxaCartao.setStore(list);
+                    //cbTaxaCartao.getStore().add(list.getModels()); 
+                    //cbTaxaCartao.getListView().getStore().add(list.getModels());
+                    cbTaxaCartao.getListView().refresh();
+                    if (!loadUpdate) {
+                        cbTaxaCartao.setValue(cbTaxaCartao.getStore().findModel("tac_nr_id", tac_taxa_cartaoTGWT.getTac_nr_id()));
+                        loadUpdate = true;
+                        if (tac_taxa_cartaoTGWT != null) {
+                            Idc_indiceTGWT idc_indiceTGWT = gridIndx.getStore().findModel("idc_nr_id", emp_emprestimoTGWT.getIdc_nr_id());
+                            indice = idc_indiceTGWT.getIdc_nr_valor();
+                            idc_nr_id = idc_indiceTGWT.getIdc_nr_id();
+                            calcularValorAFIN();
+
+                        }
+
+                        calcularVlLiqCartaoReverso();
+                    }
+                    //layout();
+                }
+            }
+        };
+        timer.schedule(200);
     }
 
     public LabelField addLabelTopico(String text) {
@@ -994,14 +1130,14 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
             emp_emprestimoT.setEmp_nr_valor_afin_liquido(valorAFIN_Liquido.getValue() != null ? valorAFIN_Liquido.getValue().floatValue() : 0);
             emp_emprestimoT.setEmp_nr_valor_parcelas_anterior(valorParcelaAFIN_Anterior.getValue() != null ? valorParcelaAFIN_Anterior.getValue().floatValue() : 0);
             emp_emprestimoT.setEmp_nr_valor_desc_parcela_anterior(valorDescParcelaAFIN_Anterior.getValue() != null ? valorDescParcelaAFIN_Anterior.getValue().floatValue() : 0);
-                     
+
             emp_emprestimoT.setEmp_nr_proposta(numeroProposta.getValue().intValue());
-            
+
             emp_emprestimoT.setTic_nr_id(cbTipocred.getValue().getTic_nr_id());
-            emp_emprestimoT.setEmp_tx_numerocheque(emp_tx_numerocheque.getValue() == null?"":emp_tx_numerocheque.getValue());
-            emp_emprestimoT.setEmp_tx_compensado(chkCompensado.getValue().booleanValue()?"S":"N");
+            emp_emprestimoT.setEmp_tx_numerocheque(emp_tx_numerocheque.getValue() == null ? "" : emp_tx_numerocheque.getValue());
+            emp_emprestimoT.setEmp_tx_compensado(chkCompensado.getValue().booleanValue() ? "S" : "N");
             //Window.alert(emp_tx_numerocheque.getValue());
-            
+
             int a = numParcValorAfin.getValue().intValue();
             float b = valorParcelaAFIN.getValue().floatValue();
             float c = menSocial.getValue().floatValue();
@@ -1010,10 +1146,18 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
             String f = getParamDesconto();
             String dt = dtfDate.format(dataAverbacao.getValue());
             int g = id_emprestimoBaixa;
+
+            float tac_nr_taxa =0;
+            emp_emprestimoT.setTac_nr_id(0);
             
-
-
-            emp_emprestimoDao.alterar(emp_emprestimoT, numParcValorAfin.getValue().intValue(), valorParcelaAFIN.getValue().floatValue(), menSocial.getValue().floatValue(), numParcMenSocial.getValue().intValue(), getParamDesconto(), dtfDate.format(dataAverbacao.getValue()), id_emprestimoBaixa);
+            if(cbTaxaCartao.getValue() != null){
+                
+                tac_nr_taxa = cbTaxaCartao.getValue().getTac_nr_taxa();
+                
+                emp_emprestimoT.setTac_nr_id(cbTaxaCartao.getValue().getTac_nr_id());
+                
+            }
+            emp_emprestimoDao.alterar(emp_emprestimoT, numParcValorAfin.getValue().intValue(), valorParcelaAFIN.getValue().floatValue(), menSocial.getValue().floatValue(), numParcMenSocial.getValue().intValue(), getParamDesconto(), dtfDate.format(dataAverbacao.getValue()), id_emprestimoBaixa, tac_nr_taxa);
             Timer timer = new Timer() {
 
                 public void run() {
@@ -1123,6 +1267,7 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
     }
 
     public void load(Emp_emprestimoTGWT emp_emprestimoTGWT) {
+
         this.emp_emprestimoTGWT = emp_emprestimoTGWT;
         ple_parcelaemprestimoDAOGWT.consultarTodos(emp_emprestimoTGWT.getEmp_nr_id());
         Timer timer = new Timer() {
@@ -1136,7 +1281,7 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
                 }
             }
         };
-        
+
         timer.schedule(500);
         layout();
 
@@ -1187,6 +1332,29 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
                 }
             };
             timer.schedule(500);
+            if (this.emp_emprestimoTGWT.getTac_nr_id() > 0) {
+                chkCartao.setValue(true);
+                cbCartao.setVisible(true);
+                cbTaxaCartao.setVisible(true);
+
+                final Tac_taxa_cartaoDAOGWT tdaogwt = new Tac_taxa_cartaoDAOGWT();
+                tdaogwt.findId(this.emp_emprestimoTGWT.getTac_nr_id());
+                Timer timer1 = new Timer() {
+
+                    @Override
+                    public void run() {
+                        if (tdaogwt.getMsg() == null) {
+                            schedule(500);
+                        } else {
+                            tac_taxa_cartaoTGWT = tdaogwt.getTac_taxa_cartaoT();
+                            cbCartao.setValue(cbCartao.getStore().findModel("car_nr_id", tac_taxa_cartaoTGWT.getCar_nr_id()));
+                            layout();
+                        }
+                    }
+                };
+                timer1.schedule(300);
+
+            }
 
             //doLayout();
         } catch (Exception e) {
@@ -1205,7 +1373,9 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
         for (Ple_parcelaemprestimoTGWT parcela : (List<Ple_parcelaemprestimoTGWT>) ple_parcelaemprestimoDAOGWT.getList().getModels()) {
             if (parcela.getPle_tx_tipo().equalsIgnoreCase("P")) {
                 qtdParcela++;
+
                 valorParcelaAfin = parcela.getPle_nr_valorparcela();
+
             } else {
                 qtdMen++;
                 totalMen += parcela.getPle_nr_valorparcela();
@@ -1397,7 +1567,7 @@ public class Emp_emprestimoUpdateDeleteGWT extends AlterarExcluirBaseGWT {
             resposta = false;
             mb.alert("IMPMORTANTE", "A soma dos descontos das parcelas está diferente do valor informado!", null);
             valorDescParcelaAFIN_Anterior.focus();
-        }else if (cbTipocred.getValue() == null) {
+        } else if (cbTipocred.getValue() == null) {
             resposta = false;
             mb.alert("IMPMORTANTE", "O campo Tipo de crédito tem preenchimento obrigatório!", null);
         } else if (cbTipocred.getValue().getTic_nr_id() > 0 && emp_tx_numerocheque.getValue() == null) {

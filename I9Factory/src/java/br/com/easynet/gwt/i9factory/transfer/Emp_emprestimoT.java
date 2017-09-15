@@ -38,6 +38,7 @@ public class Emp_emprestimoT {
     private String emp_tx_compensado;
     private String emp_tx_acordo;
     private int emp_seq_nr_boletobb;
+    private int tac_nr_id;
 
     public void setEmp_nr_id(int emp_nr_id) {
         this.emp_nr_id = emp_nr_id;
@@ -325,5 +326,19 @@ public class Emp_emprestimoT {
      */
     public void setEmp_seq_nr_boletobb(int emp_seq_nr_boletobb) {
         this.emp_seq_nr_boletobb = emp_seq_nr_boletobb;
+    }
+
+    /**
+     * @return the tac_nr_id
+     */
+    public int getTac_nr_id() {
+        return tac_nr_id;
+    }
+
+    /**
+     * @param tac_nr_id the tac_nr_id to set
+     */
+    public void setTac_nr_id(int tac_nr_id) {
+        this.tac_nr_id = tac_nr_id;
     }
 }

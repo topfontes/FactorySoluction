@@ -30,8 +30,7 @@ public class Org_orgaoInsertJB extends SystemBase {
   }
 
   // Metodo de Eventos
-  public void insert() throws Exception {
-    
+  public void insert() throws Exception {   
     try {
       Org_orgaoDAO org_orgaoDAO =  getOrg_orgaoDAO();
       org_orgaoDAO.insert(org_orgaoT);	 

@@ -136,7 +136,7 @@ public class Ple_parcelaemprestimoTGWT extends BaseModel {
     public void setPle_bl_suspenso(boolean ple_bl_suspenso) {
         set("ple_bl_suspenso", ple_bl_suspenso);
     }
-  //ple_bl_suspenso
+    //ple_bl_suspenso
 
     public int getPle_nr_seq_boleto() {
         return ((Integer) get("ple_nr_seq_boleto")).intValue();
@@ -146,4 +146,18 @@ public class Ple_parcelaemprestimoTGWT extends BaseModel {
         set("ple_nr_seq_boleto", ple_nr_seq_boleto);
     }
 
+    public float getPle_nr_valorLiqCartao() {
+        return ((Float) get("ple_nr_valorLiqCartao")).floatValue();
+    }
+
+    public void setPle_nr_valorLiqCartao(float ple_nr_valorLiqCartao) {
+        set("ple_nr_valorLiqCartao", ple_nr_valorLiqCartao);
+    }
+    public float getTac_nr_taxa() {
+        return ((Float) get("tac_nr_taxa")).floatValue();
+    }
+
+    public void setTac_nr_taxa(float tac_nr_taxa) {
+        set("tac_nr_taxa", tac_nr_taxa);
+    }
 }

@@ -4,10 +4,10 @@
         <param-name>datasource_name</param-name>
         <param-value>jdbc/easyportalds</param-value>
     </context-param>
-    <context-param>
+<!--    <context-param>
         <param-name>datasource_name1</param-name>
         <param-value>jdbc/easyportalds1factory</param-value>
-    </context-param>
+    </context-param>-->
     <context-param>
         <param-name>type_database1</param-name>
         <param-value>ORACLE</param-value>
