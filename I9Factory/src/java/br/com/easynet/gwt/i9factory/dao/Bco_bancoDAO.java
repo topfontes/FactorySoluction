@@ -2,7 +2,6 @@ package br.com.easynet.gwt.i9factory.dao;
 
 import java.util.*;
 import java.sql.*;
-import br.com.easynet.database.DataSet;
 import br.com.jdragon.dao.*;
 import br.com.easynet.gwt.i9factory.transfer.*;
 

@@ -10,9 +10,9 @@ import javax.sql.DataSource;
 public class SystemBusinessBase extends BusinessBase {
 
     private int typeDatabase = DAOFactory.POSTGRESQL;
-    private String url = "jdbc:postgresql://127.0.0.1:5432/casserp";
+    private String url = "jdbc:postgresql://192.168.25.163:5432/casserp";
     private String user = "postgres";
-    private String pass = "postgres";
+    private String pass = "i9factory2017";
     private DAOFactory dao;
     private String datasourceName = "java:comp/env/jdbc/NOME_CONEXAO";
 
@@ -72,6 +72,15 @@ public class SystemBusinessBase extends BusinessBase {
         return new Cli_clienteDAO(dao);
     }
 
+    public Car_cartaoDAO getCar_cartaoDAO() throws Exception {
+        dao = getDAO();
+        return new Car_cartaoDAO(dao);
+    }
+//getTac_taxa_cartaoDAO
+    public Tac_taxa_cartaoDAO getTac_taxa_cartaoDAO() throws Exception {
+        dao = getDAO();
+        return new Tac_taxa_cartaoDAO(dao);
+    }
     public Cor_corretoraDAO getCor_corretoraDAO() throws Exception {
         dao = getDAO();
         return new Cor_corretoraDAO(dao);
@@ -133,15 +142,7 @@ public class SystemBusinessBase extends BusinessBase {
     }
 
     
-     public Car_cartaoDAO getCar_cartaoDAO() throws Exception {
-        dao = getDAO();
-        return new Car_cartaoDAO(dao);
-    }
-      public Tac_taxa_cartaoDAO getTac_taxa_cartaoDAO() throws Exception {
-        dao = getDAO();
-        return new Tac_taxa_cartaoDAO(dao);
-    }
-    
+
     public Tmp_tipomensalidadeDAO getTmp_tipomensalidadeDAO() throws Exception {
         dao = getDAO();
         return new Tmp_tipomensalidadeDAO(dao);
@@ -498,19 +499,12 @@ public class SystemBusinessBase extends BusinessBase {
         }
         return null;
     }
-    
-    
-
 
     public Tic_tipo_creditoDAO getTic_tipo_creditoDAO() throws Exception {
-    dao = getDAO();
-    return new Tic_tipo_creditoDAO(dao); 
-  }
+        dao = getDAO();
+        return new Tic_tipo_creditoDAO(dao);
+    }
 
-
-	 
-
-   
     public Tic_tipo_creditoT findbyIdTic_tipo_credito(Tic_tipo_creditoT tic_tipo_creditoT) throws Exception {
         try {
             Tic_tipo_creditoDAO tic_tipo_creditoDAO = getTic_tipo_creditoDAO();
@@ -525,6 +519,5 @@ public class SystemBusinessBase extends BusinessBase {
         }
         return null;
     }
- 
-     
+
 }

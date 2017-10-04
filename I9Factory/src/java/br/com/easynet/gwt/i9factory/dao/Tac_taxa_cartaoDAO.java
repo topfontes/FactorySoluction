@@ -5,20 +5,17 @@
  */
 package br.com.easynet.gwt.i9factory.dao;
 
-import br.com.easynet.gwt.i9factory.transfer.Car_cartaoT;
-import br.com.easynet.gwt.i9factory.transfer.Tac_taxa_cartaoT;
-import br.com.jdragon.dao.DAOFactory;
-import br.com.jdragon.dao.ObjectDAO;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.sql.*;
+import br.com.easynet.database.DataSet;
+import br.com.jdragon.dao.*;
+import br.com.easynet.gwt.i9factory.transfer.*;
 
 /**
  *
  * @author topfontes
  */
-public class Tac_taxa_cartaoDAO  extends ObjectDAO {
+public class Tac_taxa_cartaoDAO extends ObjectDAO {
 
     public Tac_taxa_cartaoDAO(DAOFactory dao) throws Exception {
         setDAOFactory(dao);
@@ -44,6 +41,7 @@ public class Tac_taxa_cartaoDAO  extends ObjectDAO {
 
         }
     }
+
     public void update(Tac_taxa_cartaoT tac_taxa_cartaoT) throws Exception {
         PreparedStatement pStmt = null;
         try {
@@ -63,7 +61,7 @@ public class Tac_taxa_cartaoDAO  extends ObjectDAO {
 
         }
     }
-    
+
     public void delete(Tac_taxa_cartaoT tac_taxa_cartaoT) throws Exception {
         PreparedStatement pStmt = null;
         try {
@@ -81,6 +79,7 @@ public class Tac_taxa_cartaoDAO  extends ObjectDAO {
 
         }
     }
+
     public List<Tac_taxa_cartaoT> getAll(Car_cartaoT car_cartaoT) throws Exception {
         PreparedStatement pStmt = null;
         ResultSet rs = null;
@@ -102,7 +101,8 @@ public class Tac_taxa_cartaoDAO  extends ObjectDAO {
 
         }
     }
-public List<Tac_taxa_cartaoT> getByID(Tac_taxa_cartaoT tac_taxa_cartaoT) throws Exception {
+
+    public List<Tac_taxa_cartaoT> getByID(Tac_taxa_cartaoT tac_taxa_cartaoT) throws Exception {
         PreparedStatement pStmt = null;
         ResultSet rs = null;
         try {
@@ -123,6 +123,7 @@ public List<Tac_taxa_cartaoT> getByID(Tac_taxa_cartaoT tac_taxa_cartaoT) throws 
 
         }
     }
+
     public List<Tac_taxa_cartaoT> resultTransferObject(ResultSet rs) throws Exception {
         List<Tac_taxa_cartaoT> list = new ArrayList<Tac_taxa_cartaoT>();
 
@@ -140,5 +141,5 @@ public List<Tac_taxa_cartaoT> getByID(Tac_taxa_cartaoT tac_taxa_cartaoT) throws 
         }
         return list;
     }
-    
+
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import br.com.jdragon.dao.DAOFactory;
 import br.com.easynet.gwt.i9factory.dao.*;
 import br.com.easynet.gwt.i9factory.transfer.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /** Classe Criada Automaticamente pelo "EasyNet Generate JDragon" */
 public class Cli_clienteInsertJB extends SystemBase {
@@ -45,9 +47,11 @@ public class Cli_clienteInsertJB extends SystemBase {
                 if (cli_clienteT.getCli_bt_foto() != null) {
                     cli_clienteT.setCli_tx_socio("S");
                     cli_clienteDAO.insert(cli_clienteT);
-                } else {
-                    cli_clienteDAO.insertNotImage(cli_clienteT);
                     cli_clienteT.setCli_tx_salario_minimo(salariominimo);
+                } else {
+                    cli_clienteT.setCli_tx_salario_minimo(salariominimo);
+                    cli_clienteDAO.insertNotImage(cli_clienteT);
+                    //cli_clienteT.setCli_tx_salario_minimo(salariominimo);
                 }
                 InsertOrgao();
                 insertContaCorrente();

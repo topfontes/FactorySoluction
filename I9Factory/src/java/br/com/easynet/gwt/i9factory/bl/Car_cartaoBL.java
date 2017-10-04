@@ -5,6 +5,8 @@
  */
 package br.com.easynet.gwt.i9factory.bl;
 
+import br.com.easynet.easyportal.jb.INotSecurity;
+import br.com.easynet.gwt.i9factory.jb.SystemBase;
 import br.com.easynet.gwt.i9factory.transfer.Car_cartaoT;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +15,14 @@ import java.util.List;
  *
  * @author topfontes
  */
-public class Car_cartaoBL extends SystemBusinessBase {
+public class Car_cartaoBL extends SystemBase  implements INotSecurity{
 
     public Car_cartaoBL() {
     }
 
     public boolean insert(Car_cartaoT car_cartaoT) throws Exception {
         try {
+            
             getCar_cartaoDAO().insert(car_cartaoT);
             return true;
         } catch (Exception e) {

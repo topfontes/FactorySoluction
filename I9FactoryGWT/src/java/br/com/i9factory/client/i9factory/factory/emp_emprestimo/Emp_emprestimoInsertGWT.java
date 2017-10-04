@@ -500,7 +500,7 @@ public class Emp_emprestimoInsertGWT extends CadastrarBaseGWT {
         ColumnConfig column = new ColumnConfig("idc_nr_valor", "Indice", 50);
         column.setRenderer(new GridCellRenderer<Idc_indiceTGWT>() {
             public String render(Idc_indiceTGWT model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<Idc_indiceTGWT> store, Grid<Idc_indiceTGWT> grid) {
-                NumberFormat format = NumberFormat.getFormat("0.0000");
+                NumberFormat format = NumberFormat.getFormat("0.00000");
                 config.style = "background-color: silver;";
                 return "<span style='color:green'>" + format.format(model.getIdc_nr_valor()) + "</span>";
             }

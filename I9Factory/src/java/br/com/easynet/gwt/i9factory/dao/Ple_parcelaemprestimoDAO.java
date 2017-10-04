@@ -51,6 +51,21 @@ public class Ple_parcelaemprestimoDAO extends ObjectDAO {
         }
     }
 
+    public boolean baixaCartao(java.util.Date dt_inicio, java.util.Date dt_final){
+        PreparedStatement pStmt = null;
+        try {
+            java.sql.Date dt_ini = new java.sql.Date(dt_inicio.getTime());
+            java.sql.Date dt_fim = new java.sql.Date(dt_final.getTime());
+            String sql ="";
+            pStmt = con.prepareStatement(sql);
+            ResultSet rs = pStmt.executeQuery();
+            return true;
+            
+        } catch (Exception e) {
+        }
+        return false;
+    }
+    
     public void updateDataPagamento(Ple_parcelaemprestimoT pleT) throws Exception {
         PreparedStatement pStmt = null;
         try {

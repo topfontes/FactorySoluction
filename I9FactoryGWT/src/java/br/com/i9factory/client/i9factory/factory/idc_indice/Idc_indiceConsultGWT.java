@@ -66,7 +66,7 @@ public class Idc_indiceConsultGWT extends CPConsultarBaseGWT {
         this.setHeaderVisible(false);
         this.getCpTop().setHeight(27);
         final NumberFormat currency = NumberFormat.getCurrencyFormat();
-        final NumberFormat number = NumberFormat.getFormat("0.00");
+        final NumberFormat number = NumberFormat.getFormat("0.000");
         final NumberCellRenderer<Grid<Idc_indiceTGWT>> numberRenderer = new NumberCellRenderer<Grid<Idc_indiceTGWT>>(currency);
         /*
         GridCellRenderer<Stock> change = new GridCellRenderer<Stock>() {
@@ -115,7 +115,7 @@ public class Idc_indiceConsultGWT extends CPConsultarBaseGWT {
         column.setRenderer(new GridCellRenderer<Idc_indiceTGWT>() {
 
             public String render(Idc_indiceTGWT model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<Idc_indiceTGWT> store, Grid<Idc_indiceTGWT> grid) {
-                NumberFormat format = NumberFormat.getFormat("0.00");
+                NumberFormat format = NumberFormat.getFormat("0.00000");
                 return "<span style='color:green'>" + format.format(model.getIdc_nr_valor()) + "% </span>";
             }
         });

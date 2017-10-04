@@ -5,6 +5,7 @@ import br.com.easynet.gwt.i9factory.dao.*;
 import br.com.easynet.gwt.i9factory.transfer.*;
 import java.util.List;
 import br.com.easynet.easyportal.jb.EasySecurityJB;
+import br.com.easynet.gwt.i9factory.relatorio.carteira.Carteira;
 import java.sql.PreparedStatement;
 import javax.sql.DataSource;
 
@@ -37,6 +38,7 @@ public class SystemBase extends EasySecurityJB {
 //        } 
 //        return DAOFactory.getDAOFactory(typeDatabase, url, user, pass);
 //    }
+    
     public DAOFactory getDAO() throws Exception {
         if (dao != null && dao.getConnection() != null && !dao.getConnection().isClosed()) {
             return dao;
@@ -98,6 +100,16 @@ public class SystemBase extends EasySecurityJB {
     public Cli_clienteDAO getCli_clienteDAO() throws Exception {
         dao = getDAO();
         return new Cli_clienteDAO(dao);
+    }
+    
+    public Car_cartaoDAO getCar_cartaoDAO() throws Exception {
+        dao = getDAO();
+        return new Car_cartaoDAO(dao);
+    }
+    
+    public Tac_taxa_cartaoDAO getTac_taxa_cartaoDAO() throws Exception {
+        dao = getDAO();
+        return new Tac_taxa_cartaoDAO(dao);
     }
 
     public Cor_corretoraDAO getCor_corretoraDAO() throws Exception {

@@ -27,7 +27,7 @@ public class Car_cartaoJB extends SystemBase implements INotSecurity{
     
     public void insert(){
         try {
-            car_cartaoBL.insert(car_cartaoT);
+            getCar_cartaoDAO().insert(car_cartaoT);
             setMsg(INFO,"Cadastro efetuado com sucesso!");
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,7 +36,7 @@ public class Car_cartaoJB extends SystemBase implements INotSecurity{
     
     public void update(){
         try {
-            car_cartaoBL.update(car_cartaoT);
+            getCar_cartaoDAO().update(car_cartaoT);
             setMsg("Alteracao efetuada com sucesso!");
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,7 +45,7 @@ public class Car_cartaoJB extends SystemBase implements INotSecurity{
     
     public void delete(){
         try {
-            car_cartaoBL.delete(car_cartaoT);
+            getCar_cartaoDAO().delete(car_cartaoT);
             setMsg("Exclusao efetuada com sucesso!");
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,7 +55,7 @@ public class Car_cartaoJB extends SystemBase implements INotSecurity{
     
     public void consult(){
         try {
-            setList(car_cartaoBL.consult());
+            setList(getCar_cartaoDAO().getAll());
         } catch (Exception e) {
             e.printStackTrace();
         }

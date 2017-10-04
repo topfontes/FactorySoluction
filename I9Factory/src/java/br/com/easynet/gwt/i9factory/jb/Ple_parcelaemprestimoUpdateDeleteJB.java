@@ -6,8 +6,11 @@ import br.com.easynet.jb.EasyDownloadJB;
 import br.com.jdragon.dao.DAOFactory;
 import br.com.easynet.gwt.i9factory.dao.*;
 import br.com.easynet.gwt.i9factory.transfer.*;
+import java.text.SimpleDateFormat;
 
-/** Classe Criada Automaticamente pelo "EasyNet Generate JDragon" */
+/**
+ * Classe Criada Automaticamente pelo "EasyNet Generate JDragon"
+ */
 public class Ple_parcelaemprestimoUpdateDeleteJB extends SystemBase {
 
     // Atributos e propriedades
@@ -16,6 +19,8 @@ public class Ple_parcelaemprestimoUpdateDeleteJB extends SystemBase {
     private String ids;
     private Emp_emprestimoT emp_emprestimoT = new Emp_emprestimoT();
     private boolean suspenso = false;
+    private int mes;
+    private int ano;
 
     public void setPle_parcelaemprestimoT(Ple_parcelaemprestimoT ple_parcelaemprestimoT) {
         this.ple_parcelaemprestimoT = ple_parcelaemprestimoT;
@@ -78,6 +83,24 @@ public class Ple_parcelaemprestimoUpdateDeleteJB extends SystemBase {
 
     }
 
+    public void baixaCartao() throws Exception {
+        try {
+
+            int mes_fim = mes + 1;
+            int ano_fim = ano;
+            if (mes == 12) {
+                ano_fim = ano + 1;
+                mes_fim = 1;
+            }
+            String data_ini = "01/" + Funcoes.formatarFloat("00", mes) + "/" + ano;
+            String data_fim = "01/" + Funcoes.formatarFloat("00", mes_fim) + "/" + ano_fim;
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            getPle_parcelaemprestimoDAO().baixaCartao(dateFormat.parse(data_ini), dateFormat.parse(data_fim));
+            
+        } catch (Exception e) {
+        }
+    }
+
     public void update() throws Exception {
         DAOFactory factory = null;
         try {
@@ -103,8 +126,8 @@ public class Ple_parcelaemprestimoUpdateDeleteJB extends SystemBase {
                         emp_emprestimoT.setEmp_tx_status("A");
                         edao.ExtornarBaixa(emp_emprestimoT);
                     }
-                }else{
-                   ple_parcelaemprestimoDAO.updateSuspenso(ple_parcelaemprestimoT);
+                } else {
+                    ple_parcelaemprestimoDAO.updateSuspenso(ple_parcelaemprestimoT);
                 }
                 factory.commitTransaction();
                 setMsg("Alteracao efetuada com sucesso!");

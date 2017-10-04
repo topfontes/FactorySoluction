@@ -5,14 +5,11 @@
  */
 package br.com.easynet.gwt.i9factory.dao;
 
-import br.com.easynet.gwt.i9factory.transfer.Car_cartaoT;
-import br.com.jdragon.dao.DAOFactory;
-import br.com.jdragon.dao.ObjectDAO;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.*;
+import java.sql.*;
+import br.com.easynet.database.DataSet;
+import br.com.jdragon.dao.*;
+import br.com.easynet.gwt.i9factory.transfer.*;
 /**
  *
  * @author topfontes
@@ -23,6 +20,9 @@ public class Car_cartaoDAO extends ObjectDAO {
         setDAOFactory(dao);
         con = dao.create();
     }
+
+   
+   
 
     public void insert(Car_cartaoT car_cartaoT) throws Exception {
         PreparedStatement pStmt = null;

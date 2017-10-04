@@ -52,6 +52,7 @@ import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.user.client.Window;
+
 import java.util.Date;
 import java.util.List;
 
@@ -117,6 +118,7 @@ public class Cli_clienteInsertGWT extends CadastrarBaseGWT implements IListenetR
     private Cli_clienteTGWT cli_clienteTGWT = new Cli_clienteTGWT();
     private Cco_contacorrenteTGWT cco_contacorrenteTGWT = new Cco_contacorrenteTGWT();
     private CheckBox chksalriominimo = new CheckBox();
+    private boolean cpfnull = false;
 
     public Cli_clienteInsertGWT() {
         this.setHeading("Cadastro de Clientes");
@@ -178,14 +180,14 @@ public class Cli_clienteInsertGWT extends CadastrarBaseGWT implements IListenetR
 
         cp.add(new LabelField("CPF * "));
         cli_tx_cpf.setName("cli_clienteT.cli_tx_cpf");
-        cli_tx_cpf.setAllowBlank(false);
+        //cli_tx_cpf.setAllowBlank(false);
         cli_tx_cpf.setMaxLength(11);
 
         cp.add(new LabelField("RG * "));
         cli_tx_rg.setName("cli_clienteT.cli_tx_rg");
         cli_tx_rg.setWidth(100);
         cli_tx_rg.setMaxLength(20);
-        cli_tx_rg.setAllowBlank(false);
+        //cli_tx_rg.setAllowBlank(false);
 
         cp.add(new LabelField("Matrícula "));
         cli_tx_matricula.setWidth(100);
@@ -490,6 +492,14 @@ public class Cli_clienteInsertGWT extends CadastrarBaseGWT implements IListenetR
     public void btnInsertAction(ButtonEvent ce) {
         if (cadastroValido()) {
             if (formPanel.isValid()) {
+
+                if (cli_tx_cpf.getValue().toString().trim().length() == 0) {
+                    DateTimeFormat format = DateTimeFormat.getFormat("ddMMyyHHmmss");
+                    String cpf = format.format(new Date());
+                    cli_tx_cpf.setValue(cpf);
+                    cpfnull = true;
+                }
+
                 HiddenField<String> hfOpTmp_nr_id = new HiddenField<String>();
                 //hfOpTmp_nr_id = new HiddenField<String>();
                 hfOpTmp_nr_id.setName("cli_clienteT.tmp_nr_id");
@@ -616,6 +626,9 @@ public class Cli_clienteInsertGWT extends CadastrarBaseGWT implements IListenetR
             }
             setVisible(false);
         } else {
+            if (cpfnull) {
+                cli_tx_cpf.setValue("");
+            }
             JSONObject resultadomsg = resultado.get("msg").isObject();
             mb = new MessageBox().alert("ATENÇÃO", resultadomsg.get("msg").isString().stringValue(), null);
         }
@@ -703,11 +716,12 @@ public class Cli_clienteInsertGWT extends CadastrarBaseGWT implements IListenetR
 
     public boolean cadastroValido() {
         boolean res = true;
-
-        if (!ValidacaoCPFCNPJ.isValidCPF(cli_tx_cpf.getValue().toString().trim())) {
-            res = false;
-            MessageBox.alert("IMPORTANTE", "CPF invalido!", null);
-            cli_tx_cpf.focus();
+        if (cli_tx_cpf.getValue().toString().trim().length() > 0) {
+            if (!ValidacaoCPFCNPJ.isValidCPF(cli_tx_cpf.getValue().toString().trim())) {
+                res = false;
+                MessageBox.alert("IMPORTANTE", "CPF invalido!", null);
+                cli_tx_cpf.focus();
+            }
         }
 
         return res;

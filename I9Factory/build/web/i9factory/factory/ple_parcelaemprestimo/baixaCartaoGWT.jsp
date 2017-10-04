@@ -1,17 +1,8 @@
-<%-- 
-    Document   : baixaCartaoGWT
-    Created on : 15/set/2017, 0:11:01
-    Author     : topfontes
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> 
+<jsp:useBean id="ple_parcelaemprestimoJB" class="br.com.easynet.gwt.i9factory.jb.Ple_parcelaemprestimoUpdateDeleteJB" scope="request"/>                                         
+<jsp:setProperty name="ple_parcelaemprestimoJB" property="*"/>                                         
+<jsp:setProperty name="ple_parcelaemprestimoJB" property="page" value="${pageContext}"/>                                         
+${ple_parcelaemprestimoJB.execute}                                         
+{"resultado":
+{"msg":"${ple_parcelaemprestimoJB.msg}"}}

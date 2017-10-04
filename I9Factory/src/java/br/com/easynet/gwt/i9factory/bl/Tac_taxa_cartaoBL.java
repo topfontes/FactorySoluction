@@ -5,6 +5,8 @@
  */
 package br.com.easynet.gwt.i9factory.bl;
 
+import br.com.easynet.easyportal.jb.INotSecurity;
+import br.com.easynet.gwt.i9factory.jb.SystemBase;
 import br.com.easynet.gwt.i9factory.transfer.Car_cartaoT;
 import br.com.easynet.gwt.i9factory.transfer.Tac_taxa_cartaoT;
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import java.util.List;
  *
  * @author topfontes
  */
-public class Tac_taxa_cartaoBL extends SystemBusinessBase {
+public class Tac_taxa_cartaoBL extends SystemBase implements INotSecurity{
 
     public Tac_taxa_cartaoBL() {
     }

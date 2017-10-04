@@ -31,15 +31,40 @@ public class Tac_taxa_cartaoJB extends SystemBase implements INotSecurity{
     
     public void insert(){
         try {
-            tac_taxa_cartaoBL.insert(getTac_taxa_cartaoT(), array);
+            insertItem(getTac_taxa_cartaoT(), array);
             setMsg(INFO,"Cadastro efetuado com sucesso!");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
+    public boolean insertItem(Tac_taxa_cartaoT tac_taxa_cartaoT, String array) throws Exception {
+        try {
+            String[] itens = array.split("\\$");
+            for (int i = 0; i < itens.length; i++) {
+                String[] item = itens[i].split("\\|");
+                tac_taxa_cartaoT.setTac_tx_nome(item[0]);
+                tac_taxa_cartaoT.setTac_nr_taxa(Float.parseFloat(item[1]));
+                getTac_taxa_cartaoDAO().insert(tac_taxa_cartaoT);
+            }
+            
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return false;
+    }
+    public static void main(String[] arg){
+        String a = "ABC|0.98$DEF|0.8$";
+        String[]b = a.split("$");
+        String[] c = a.split("\\$");
+        System.out.println(b.toString());
+    }
     public void update(){
         try {
-            tac_taxa_cartaoBL.update(getTac_taxa_cartaoT());
+            getTac_taxa_cartaoDAO().update(getTac_taxa_cartaoT());
             setMsg("Alteracao efetuada com sucesso!");
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,14 +72,14 @@ public class Tac_taxa_cartaoJB extends SystemBase implements INotSecurity{
     }
     public void delete(){
         try {
-            tac_taxa_cartaoBL.delete(getTac_taxa_cartaoT());
+            getTac_taxa_cartaoDAO().delete(getTac_taxa_cartaoT());
             setMsg("Exclusao efetuada com sucesso!");
         } catch (Exception e) {
         }
     }
     public void consult(){
         try { 
-            list = tac_taxa_cartaoBL.consult(car_cartaoT);
+            list = getTac_taxa_cartaoDAO().getAll(car_cartaoT);
             System.out.println(""+list.size());
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,7 +88,7 @@ public class Tac_taxa_cartaoJB extends SystemBase implements INotSecurity{
 
     public void findById(){
         try {
-            list = tac_taxa_cartaoBL.findById(tac_taxa_cartaoT);
+            list = getTac_taxa_cartaoDAO().getByID(tac_taxa_cartaoT);
         } catch (Exception e) {
         }
     }
